@@ -2,7 +2,7 @@
 
 import { Button } from "@bds-web/ui";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@cher1shrxd/loading";
 
 export default function ErrorPage() {
   return (
