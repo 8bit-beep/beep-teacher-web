@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "@bds-web/typography/tokens.tailwind.css";
+@import "@bds-web/shapes/tokens.tailwind.css";
+@import "@bds-web/colors/colors.css";
+@import "@bds-web/themes/theme.tailwind.css";
+
+.shadow-modal {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  overscroll-behavior: none;
+}
