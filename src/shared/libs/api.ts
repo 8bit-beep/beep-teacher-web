@@ -57,8 +57,16 @@ api.interceptors.response.use(
         },
       );
 
-      if (!refreshRes.ok) throw new Error("refresh failed");
+      if (!refreshRes.ok) {
+        if(typeof window !== "undefined") {
+          window.location.href = "/login";
+        } else {
+          const redirect = await import("next/navigation").then((mod) => mod.redirect);
+          redirect("/login");
+        }
+      } 
 
+      console.log("refresh response", await refreshRes.text());
       const { accessToken } = await refreshRes.json();
 
       queue.forEach((cb) => cb(accessToken));

@@ -27,18 +27,26 @@ const Table = ({ header, rows }: Props) => {
       <div className="w-full h-full overflow-y-auto">
         <table className="w-full border-collapse table-auto">
           <tbody>
-            {rows.map((row, rowIndex) => (
-              <tr key={rowIndex} className="[&_td:first-child]:pl-10 [&_td:last-child]:pr-10">
-                {row.map((cell, cellIndex) => (
-                  <td
-                    key={cellIndex}
-                    className="h-12 text-h4 text-static-black"
-                  >
-                    {cell}
-                  </td>
-                ))}
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan={header.length} className="h-20 text-center text-h4 text-greyscale-40">
+                  내용이 없습니다.
+                </td>
               </tr>
-            ))}
+            ) : (
+              rows.map((row, rowIndex) => (
+                <tr key={rowIndex} className="[&_td:first-child]:pl-10 [&_td:last-child]:pr-10">
+                  {row.map((cell, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="h-12 text-h4 text-static-black"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
