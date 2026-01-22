@@ -8,7 +8,7 @@ interface Props {
 
 const Table = ({ header, rows }: Props) => {
   return (
-    <div className="w-full h-[calc(100%-114px)]">
+    <div className="w-full h-full">
       <table className="w-full border-collapse table-auto">
         <thead>
           <tr className="[&_th:first-child]:pl-10 [&_th:last-child]:pr-10">
@@ -33,7 +33,6 @@ const Table = ({ header, rows }: Props) => {
                   <td
                     key={cellIndex}
                     className="h-12 text-h4 text-static-black"
-                    style={{ width: header[cellIndex]?.width }}
                   >
                     {cell}
                   </td>

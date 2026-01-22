@@ -4,8 +4,12 @@ import Segment from "@/shared/ui/Segment";
 import { FLOOR_OPTIONS } from "../constants/floor";
 import { useFilterRoom } from "../hooks/useFilterRoom";
 
-const FilterRoom = () => {
-  const { floor, setFloor } = useFilterRoom();
+interface Props {
+  param?: number;
+}
+
+const FilterRoom = ({ param }: Props) => {
+  const { floor, setFloor } = useFilterRoom(param);
 
   return (
     <div className="w-76">

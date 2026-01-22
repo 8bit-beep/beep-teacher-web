@@ -12,7 +12,7 @@ interface Props {
 
 const Section = ({ icon, title, description, headerOptions, children }: Props) => {
   return (
-    <section className="w-full h-full flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-t-large shadow-modal">
+    <section className="w-full h-[calc(100%-86px)] flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-t-large shadow-modal">
       <header className="h-11.5 flex items-center gap-4 px-10">
         <div className="text-static-dark">{icon}</div>
         <div className="flex-1 flex flex-col">

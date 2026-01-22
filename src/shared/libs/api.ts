@@ -1,80 +1,77 @@
-import axios, {
-  AxiosInstance,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-  AxiosError,
-} from "axios";
-import type { IncomingMessage, ServerResponse } from "http";
-import { getCookie, setCookie } from "./cookie";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { getAccessToken } from "./cookie";
 
-interface SSRContext {
-  req?: IncomingMessage;
-  res?: ServerResponse;
-};
-
-let isRefreshing = false;
-let requestQueue: Array<(token: string) => void> = [];
-
-const api: AxiosInstance = axios.create({
+const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 });
 
-api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const ssr: SSRContext =
-    (typeof (config as unknown) === "object" &&
-      (config as { ssr?: SSRContext }).ssr) ||
-    {};
-  const accessToken = getCookie("accessToken", ssr.req);
-  if (accessToken) {
-    config.headers = config.headers || {};
-    (config.headers as Record<string, string>)["Authorization"] =
-      `Bearer ${accessToken}`;
+api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  const token = await getAccessToken();
+
+  if (token) {
+    config.headers = config.headers ?? {};
+    config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
+let isRefreshing = false;
+let queue: Array<(token?: string) => void> = [];
+
 api.interceptors.response.use(
-  (response: AxiosResponse) => response,
+  (res) => {
+    console.log("response success interceptor", res.data);
+    return res;
+  },
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & {
+    const original = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
-      ssr?: SSRContext;
     };
-    const ssr = originalRequest.ssr || {};
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve) => {
-          requestQueue.push((token: string) => {
-            (originalRequest.headers as Record<string, string>)[
-              "Authorization"
-            ] = `Bearer ${token}`;
-            resolve(api(originalRequest));
-          });
-        });
-      }
-      originalRequest._retry = true;
-      isRefreshing = true;
-      try {
-        const refreshToken = getCookie("refreshToken", ssr.req);
-        const refreshRes = await api.post("/auth/refresh", { refreshToken });
-        const newAccessToken = refreshRes.data.accessToken;
-        const newRefreshToken = refreshRes.data.refreshToken;
-        setCookie("accessToken", newAccessToken, undefined, ssr.res);
-        setCookie("refreshToken", newRefreshToken, undefined, ssr.res);
-        requestQueue.forEach((cb) => cb(newAccessToken));
-        requestQueue = [];
-        (originalRequest.headers as Record<string, string>)["Authorization"] =
-          `Bearer ${newAccessToken}`;
-        return api(originalRequest);
-      } catch (refreshError) {
-        requestQueue = [];
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
-      }
+
+    if (error.response?.status !== 401 || original._retry) {
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
+
+    if (isRefreshing) {
+      return new Promise((resolve) => {
+        queue.push((token) => {
+          if (token) {
+            original.headers.Authorization = `Bearer ${token}`;
+          }
+          resolve(api(original));
+        });
+      });
+    }
+
+    original._retry = true;
+    isRefreshing = true;
+
+    try {
+      const refreshRes = await fetch(
+        `${process.env.NEXT_PUBLIC_WEB_URL}/api/auth/refresh`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      if (!refreshRes.ok) throw new Error("refresh failed");
+
+      const { accessToken } = await refreshRes.json();
+
+      queue.forEach((cb) => cb(accessToken));
+      queue = [];
+
+      original.headers.Authorization = `Bearer ${accessToken}`;
+      return api(original);
+    } catch (e) {
+      queue = [];
+      return Promise.reject(e);
+    } finally {
+      isRefreshing = false;
+    }
   },
 );
 

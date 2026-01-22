@@ -1,26 +1,28 @@
-import { DUMMY_ROOM } from "@/entities/rooms/constants/dummy";
+import { RoomApi } from "@/entities/rooms/api";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import Refresh from "@/features/manageAttends/ui/Refresh";
 import RoomItem from "@/features/manageAttends/ui/RoomItem";
 import LabIcon from "@/shared/icons/LabIcon";
+import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";
 
-export default function HomePage() {
-  const data = [DUMMY_ROOM, DUMMY_ROOM, DUMMY_ROOM, DUMMY_ROOM];
+export default async function HomePage({ searchParams }: SearchParams<{ floor?: string }>) {
+  const { floor } = await searchParams;
+  const { data } = await RoomApi.getRooms(floor);
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full flex items-center justify-between">
-        <FilterRoom />
+        <FilterRoom param={floor ? Number(floor) : undefined} />
       </div>
       <Section
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
         headerOptions={<Refresh />}>
-        <div className="px-10 h-full">
-          {data.map((room, index) => (
-            <RoomItem data={room} key={index} />
+        <div className="px-10 h-full overflow-y-scroll">
+          {data.map((room) => (
+            <RoomItem data={room} key={room.id} />
           ))}
         </div>
       </Section>

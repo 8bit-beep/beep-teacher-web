@@ -4,6 +4,6 @@ import { RoomApi } from "../api";
 export const useGetRooms = () => {
   return useSuspenseQuery({
     queryKey: ["rooms"],
-    queryFn: RoomApi.getRooms,
+    queryFn: async () => await RoomApi.getRooms(),
   });
 };
