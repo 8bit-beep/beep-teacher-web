@@ -8,6 +8,9 @@ import Image from "next/image";
 import NavItem from "./NavItem";
 import { Link } from "@cher1shrxd/loading";
 import ExcelIcon from "@/shared/icons/ExcelIcon";
+import { Suspense } from "react";
+import UserIndicator from "@/features/showUser/ui/UserIndicator";
+import SkeletonUser from "@/features/showUser/ui/SkeletonUser";
 
 const ROUTES = [
   { label: "출석 조회", path: "/", icon: <LabIcon size={16} /> },
@@ -43,6 +46,10 @@ const Sidebar = () => {
           <NavItem icon={icon} label={label} path={path} key={path} />
         ))}
       </nav>
+      <div className="flex-1" />
+      <Suspense fallback={<SkeletonUser />}>
+        <UserIndicator />
+      </Suspense>
     </aside>
   );
 };

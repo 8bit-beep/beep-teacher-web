@@ -1,6 +1,6 @@
 import { Checkpoint } from "@/entities/checkpoints/types";
 import { Room } from "@/entities/rooms/types";
-import { User } from "@/entities/user/types";
+import { User } from "@/entities/users/types";
 
 export interface Shift {
   id: number;

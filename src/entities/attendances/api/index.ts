@@ -1,10 +1,9 @@
 import api from "@/shared/libs/api"
-import { PageResponse } from "@/shared/types/page-response";
 import { Attendance } from "../types";
 
 export const AttendanceApi = {
   getAttendancesByRoomId: async (roomId: number) => {
-    return await api.get<PageResponse<Attendance>>(`/attendances?roomId=${roomId}&isCurrentCheckpoint=true`);
+    return await api.get<Attendance[]>(`/attendances?roomId=${roomId}&isCurrentCheckpoint=true`);
   },
 
   getAttendacnesByRoomIdWithAllCheckpoitns: async (roomId: number) => {

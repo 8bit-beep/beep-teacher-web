@@ -19,7 +19,6 @@ export async function POST() {
     return NextResponse.json({ message: "Refresh failed" }, { status: 401 });
   }
 
-  console.log(await res.text())
   const { accessToken, refreshToken: newRefresh } = await res.json();
 
   cookieStore.set("accessToken", accessToken, {
