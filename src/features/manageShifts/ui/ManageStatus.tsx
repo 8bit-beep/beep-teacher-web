@@ -30,13 +30,13 @@ const ManageStatus = ({ data }: Props) => {
           </Button>
         </>
       ) : (
-        <>
-          <p
-            className={`text-accent ${data.status === "APPROVED" ? "text-green-light" : "text-red-light"}`}>
+        <div
+          className={`${data.status === "APPROVED" ? "text-green-light" : "text-red-light"}`}>
+          <p className="text-accent">
             {data.status === "APPROVED" ? "승인됨" : "거절됨"}
           </p>
           <CloseIcon onClose={() => updateStatus("WAITING")} />
-        </>
+        </div>
       )}
     </div>
   );

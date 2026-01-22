@@ -6,7 +6,7 @@ import { Button } from "@bds-web/ui";
 import { Suspense } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { useToggleData } from "../hooks/useToggleData";
-import { useApprove } from "../hooks/useApprove";
+import { useApprove } from "../../manageApprovals/hooks/useApprove";
 
 interface Props {
   data: Room;

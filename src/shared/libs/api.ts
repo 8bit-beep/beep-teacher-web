@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { getAccessToken } from "./cookie";
+import { Error } from "../types/error";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -25,7 +26,8 @@ api.interceptors.response.use(
     console.log("response success interceptor", res.data);
     return res;
   },
-  async (error: AxiosError) => {
+  async (error: AxiosError<Error>) => {
+    console.log("response error interceptor", error.response?.data.message);
     const original = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
