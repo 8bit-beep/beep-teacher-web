@@ -72,6 +72,18 @@ const CreateAbsenceModal = () => {
           />
         </div>
       </div>
+      <div className="w-full max-h-32 mb-4 overflow-y-scroll">
+        <div className="w-full flex flex-col">
+          {exceptions.map((exception) => (
+            <ExceptionItem
+              data={exception}
+              key={exception.checkpointId}
+              deleteException={deleteException}
+            />
+          ))}
+          <CreateException createException={createException} />
+        </div>
+      </div>
       <div className="w-full flex items-center gap-4">
         <Button
           buttonSize="medium"
@@ -85,19 +97,7 @@ const CreateAbsenceModal = () => {
           {selectedStudents.length}명 선택됨
         </p>
       </div>
-      <div className="w-full max-h-32 mb-4 overflow-y-scroll">
-        <div className="w-full flex flex-col">
-          {exceptions.map((exception) => (
-            <ExceptionItem
-              data={exception}
-              key={exception.checkpointId}
-              deleteException={deleteException}
-            />
-          ))}
-          <div className="h-2" />
-          <CreateException createException={createException} />
-        </div>
-      </div>
+
       <Button
         buttonSize="large"
         buttonType="primary"
