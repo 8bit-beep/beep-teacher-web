@@ -16,7 +16,7 @@ const ExceptionItem = ({ data, deleteException }: Props) => {
   )?.name;
 
   return (
-    <div className="w-full flex items-center gap-2 text-body">
+    <div className="w-full flex items-center gap-2 text-body py-1.5 border-b border-greyscale-20">
       <p>{data.date}</p>
       <p>{checkpointName}</p>
       <div className="flex-1" />

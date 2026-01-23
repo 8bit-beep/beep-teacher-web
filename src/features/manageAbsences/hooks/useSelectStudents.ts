@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export const useSelectStudents = () => {
-  const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
+export const useSelectStudents = (initData?: number[]) => {
+  const [selectedStudents, setSelectedStudents] = useState<number[]>(initData || []);
 
   const toggleSelected = (studentId: number) => {
     if (selectedStudents.includes(studentId)) {

@@ -9,7 +9,7 @@ export const useFilterRoom = (param?: number) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(`/?floor=${floor.value}`);
+    router.push(floor.value !== "1" ? `/?floor=${floor.value}` : "/");
   }, [floor]);
 
   return {

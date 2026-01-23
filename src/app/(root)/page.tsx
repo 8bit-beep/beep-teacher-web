@@ -21,9 +21,13 @@ export default async function HomePage({ searchParams }: SearchParams<{ floor?: 
         icon={<LabIcon size={24} />}
         headerOptions={<Refresh />}>
         <div className="px-10 h-full overflow-y-scroll">
-          {data.map((room) => (
+          {data.length > 0 ? data.map((room) => (
             <RoomItem data={room} key={room.id} />
-          ))}
+          )) : (
+            <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
+              출석 정보가 없습니다.
+            </div>
+          )}
         </div>
       </Section>
     </div>

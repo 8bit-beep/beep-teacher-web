@@ -2,26 +2,38 @@ import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { DropdownItem } from "@bds-web/ui";
 import { useState } from "react";
 import { useSelectStudents } from "./useSelectStudents";
-import { AbsenceCheckpoint } from "@/entities/absences/types";
-import { parseDate } from "@/shared/utils/pare-date";
+import { Absence, AbsenceCheckpoint } from "@/entities/absences/types";
+import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
 import { toast } from "@cher1shrxd/toast";
-import { useCreateAbsenceMutation } from "@/entities/absences/mutations";
+import { parseDate } from "@/shared/utils/pare-date";
 
-export const useCreateAbsence = () => {
+export const useUpdateAbsence = (data: Absence) => {
   const attendTypes = useGetAttendTypes().data.data;
   const options = attendTypes.map((type) => ({
     name: type.name,
     value: `${type.id}`,
   }));
-  const [selectedType, setSelectedType] = useState<DropdownItem | null>(null);
-  const [startAt, setStartAt] = useState<Date>(new Date());
-  const [endAt, setEndAt] = useState<Date>(new Date());
-  const { selectedStudents, toggleSelected } = useSelectStudents();
+  const initType =
+    options.find((option) => option.value === `${data.typeId}`) || null;
+  const [selectedType, setSelectedType] = useState<DropdownItem | null>(
+    initType,
+  );
+  const [startAt, setStartAt] = useState<Date>(new Date(data.startDate));
+  const [endAt, setEndAt] = useState<Date>(new Date(data.endDate));
+
+  const initStudents = data.targetStudents.map((student) => student.info.id);
+
+  const { selectedStudents, toggleSelected } = useSelectStudents(initStudents);
   const [phase, setPhase] = useState<"info" | "selectStudents">("info");
-  const [exceptions, setExceptions] = useState<
-    Omit<AbsenceCheckpoint, "checkpointName">[]
-  >([]);
-  const [reason, setReason] = useState("");
+
+  const initExceptions = data.checkpoints.map((checkpoint) => ({
+    checkpointId: checkpoint.checkpointId,
+    date: checkpoint.date,
+  }));
+
+  const [exceptions, setExceptions] =
+    useState<Omit<AbsenceCheckpoint, "checkpointName">[]>(initExceptions);
+  const [reason, setReason] = useState(data.reason);
 
   const deleteException = (id: number) => {
     setExceptions((prev) =>
@@ -33,7 +45,7 @@ export const useCreateAbsence = () => {
     setExceptions((prev) => [...prev, { checkpointId, date }]);
   };
 
-  const { mutateAsync, isPending } = useCreateAbsenceMutation();
+  const { mutateAsync, isPending } = useUpdateAbsenceMutation(data.absenceId);
 
   const submit = async () => {
     if (!selectedType) {

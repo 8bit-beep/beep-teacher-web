@@ -1,6 +1,6 @@
 import { AbsenceCheckpoint } from "..";
 
-export interface CreateAbsenceDto {
+export interface AbsenceRequestDto {
   userIds: number[];
   typeId: number;
   reason: string;
@@ -9,7 +9,7 @@ export interface CreateAbsenceDto {
   checkpoints: Omit<AbsenceCheckpoint, "checkpointName">[];
 }
 
-export interface CreateAbsenceResponseDto {
+export interface AbsenceResponseDto {
   absenceId: number;
   skippedUserIds: number[];
 }
