@@ -1,4 +1,5 @@
 import { AttendType } from "@/entities/attend-types/types";
+import { StudentInfo } from "@/entities/students/types";
 
 export interface User {
   id: number;
@@ -8,12 +9,4 @@ export interface User {
   profileImage: string;
   studentInfo: StudentInfo;
   currentStatus: AttendType | null;
-}
-
-export interface StudentInfo {
-  id: number;
-  grade: number;
-  classNumber: number;
-  num: number;
-  cardId: string;
 }
