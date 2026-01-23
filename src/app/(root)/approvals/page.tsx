@@ -4,6 +4,7 @@ import Table from "@/widgets/table/ui/Table";
 import { SearchParams } from "@/shared/types/search-params";
 import { ApprovalApi } from "@/entities/approvals/api";
 import ManageApprovals from "@/features/manageApprovals/ui/ManageApprovals";
+import { parseDatetimeToTime } from "@/shared/utils/parse-datetime-to-time";
 
 export default async function ApprovalsPage({
   searchParams,
@@ -27,7 +28,7 @@ export default async function ApprovalsPage({
           ]}
           rows={data.map((approval) => [
             approval.room.name,
-            approval.approvedAt || "-",
+            approval.approvedAt ? parseDatetimeToTime(approval.approvedAt) : "-",
             approval.approvedTeacher ? approval.approvedTeacher.username : "-",
             <ManageApprovals data={approval} key={approval.room.id} />,
           ])}
