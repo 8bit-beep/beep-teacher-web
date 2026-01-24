@@ -14,7 +14,7 @@ const MemoModal = () => {
         value={memo}
         onChange={onChange}
       />
-      <Button onClick={save} disabled={isPending}>
+      <Button onClick={save} disabled={isPending} buttonSize="large" buttonType="primary">
         작성 완료
       </Button>
     </div>
