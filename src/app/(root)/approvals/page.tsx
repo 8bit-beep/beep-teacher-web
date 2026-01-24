@@ -5,6 +5,7 @@ import { SearchParams } from "@/shared/types/search-params";
 import { ApprovalApi } from "@/entities/approvals/api";
 import ManageApprovals from "@/features/manageApprovals/ui/ManageApprovals";
 import { parseDatetimeToTime } from "@/shared/utils/parse-datetime-to-time";
+import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
 
 export default async function ApprovalsPage({
   searchParams,
@@ -14,7 +15,9 @@ export default async function ApprovalsPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full flex items-center justify-end"></div>
+      <div className="w-full flex items-center justify-end">
+        <ManageMemo />
+      </div>
       <Section
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
@@ -28,7 +31,9 @@ export default async function ApprovalsPage({
           ]}
           rows={data.map((approval) => [
             approval.room.name,
-            approval.approvedAt ? parseDatetimeToTime(approval.approvedAt) : "-",
+            approval.approvedAt
+              ? parseDatetimeToTime(approval.approvedAt)
+              : "-",
             approval.approvedTeacher ? approval.approvedTeacher.username : "-",
             <ManageApprovals data={approval} key={approval.room.id} />,
           ])}

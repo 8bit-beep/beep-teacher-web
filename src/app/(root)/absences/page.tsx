@@ -1,6 +1,7 @@
 import { AbsenceApi } from "@/entities/absences/api";
 import AbsenceItem from "@/features/manageAbsences/ui/AbsenceItem";
 import CreateAbsence from "@/features/manageAbsences/ui/CreateAbsence";
+import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Pagination from "@/widgets/pagination/ui/Pagination";
@@ -16,6 +17,7 @@ export default async function AbsencesPage({
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full flex items-center justify-between">
         <CreateAbsence />
+        <ManageMemo />
       </div>
       <Section
         title="결석자 관리"

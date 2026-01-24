@@ -11,7 +11,7 @@ const AuthProvider = () => {
 
   const getToken = async () => {
     const accessToken = await getAccessToken();
-    if (!accessToken && typeof window !== "undefined") {
+    if (!accessToken) {
       router.replace("/login");
     }
   };

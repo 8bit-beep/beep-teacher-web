@@ -1,4 +1,5 @@
 import { ShiftApi } from "@/entities/shifts/api";
+import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
 import ManageStatus from "@/features/manageShifts/ui/ManageStatus";
 import PersonIcon from "@/shared/icons/PersonIcon";
 import { pad } from "@/shared/utils/pad";
@@ -10,7 +11,9 @@ export default async function ShiftsPage() {
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full flex items-center justify-end"></div>
+      <div className="w-full flex items-center justify-end">
+        <ManageMemo />
+      </div>
       <Section
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"

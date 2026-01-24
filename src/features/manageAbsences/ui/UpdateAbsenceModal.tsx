@@ -56,7 +56,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
         />
       </div>
       <textarea
-        className="w-full h-24 p-4 rounded-medium shadow-modal outline-none resize-none text-body"
+        className="w-full h-24 p-4 rounded-medium shadow-modal outline-none resize-none text-body placeholder:text-greyscale-40"
         placeholder="상세한 결석 사유를 작성해주세요. (500자 이내)"
         maxLength={500}
         value={reason}
