@@ -72,18 +72,21 @@ const CreateAbsenceModal = () => {
           />
         </div>
       </div>
-      <div className="w-full max-h-32 mb-4 overflow-y-scroll">
-        <div className="w-full flex flex-col">
-          {exceptions.map((exception) => (
-            <ExceptionItem
-              data={exception}
-              key={exception.checkpointId}
-              deleteException={deleteException}
-            />
-          ))}
-          <CreateException createException={createException} />
+      <div className="w-full flex flex-col">
+        <div className="w-full max-h-24 mb-4 overflow-y-scroll">
+          <div className="w-full flex flex-col">
+            {exceptions.map((exception) => (
+              <ExceptionItem
+                data={exception}
+                key={exception.checkpointId}
+                deleteException={deleteException}
+              />
+            ))}
+          </div>
         </div>
+        <CreateException createException={createException} />
       </div>
+
       <div className="w-full flex items-center gap-4">
         <Button
           buttonSize="medium"

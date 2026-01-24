@@ -24,14 +24,14 @@ const CreateException = ({ createException }: Props) => {
       <Button
         buttonSize="small"
         buttonType="text"
-        onClick={() => setIsCreateMode(true)} style={{ marginTop: 8 }}>
+        onClick={() => setIsCreateMode(true)}>
         결석 예외일 추가하기
       </Button>
     );
   }
 
   return (
-    <div className="w-full flex flex-col gap-2 mt-2">
+    <div className="w-full flex flex-col gap-2">
       <div className="w-full flex items-center gap-4">
         <div className="flex flex-col gap-1">
           <span className="text-caption2 text-greyscale-70">예외일</span>
