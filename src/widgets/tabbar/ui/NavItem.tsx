@@ -14,7 +14,7 @@ const NavItem = ({ icon, label, path }: Props) => {
   const pathname = usePathname();
 
   return (
-    <Link href={path} className={`${pathname === path ? "text-blue-dark" : "text-static-black"} flex flex-col items-center gap-2`}>
+    <Link href={path} className={`${pathname === path ? "text-blue-dark" : "text-static-black"} w-12 h-11 flex flex-col items-center justify-between`}>
       {icon}
       <p className="text-caption1">{label}</p>
     </Link>
