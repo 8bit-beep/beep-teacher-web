@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MemoApi } from "../api";
 import { toast } from "@cher1shrxd/toast";
 import { modal } from "@bds-web/ui";
+import { AxiosError } from "axios";
+import { Error } from "@/shared/types/error";
 
 export const useUpdateMemoMutation = () => {
   const queryClient = useQueryClient();
@@ -13,10 +15,11 @@ export const useUpdateMemoMutation = () => {
       await queryClient.refetchQueries({ queryKey: ["memos"] });
       modal.closeAll();
     },
-    onError: () => {
+    onError: (error: AxiosError<Error>) => {
       toast.error(
         "메모 저장 실패",
-        "메모 저장에 실패했습니다. 다시 시도해주세요.",
+        error.response?.data.message ||
+          "메모 저장에 실패했습니다. 다시 시도해주세요.",
       );
     },
   });
