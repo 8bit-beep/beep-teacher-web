@@ -13,7 +13,7 @@ const ManageStatus = ({ data }: Props) => {
   const { updateStatus } = useManageStatus(data.id);
 
   return (
-    <div className="flex items-center gap-2 justify-center">
+    <div className="flex items-center gap-2 justify-start">
       {data.status === "WAITING" ? (
         <>
           <Button
@@ -31,7 +31,7 @@ const ManageStatus = ({ data }: Props) => {
         </>
       ) : (
         <div
-          className={`${data.status === "APPROVED" ? "text-green-light" : "text-red-light"}`}>
+          className={`${data.status === "APPROVED" ? "text-green-light" : "text-red-light"} flex items-center justify-start gap-2`}>
           <p className="text-accent">
             {data.status === "APPROVED" ? "승인됨" : "거절됨"}
           </p>

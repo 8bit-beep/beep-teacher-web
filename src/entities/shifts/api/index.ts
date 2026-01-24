@@ -7,6 +7,6 @@ export const ShiftApi = {
   },
 
   updateShiftStatus: async (shiftId: number, status: ShiftStatus) => {
-    return await api.patch(`/shifts/${shiftId}/status`, { status });
-  }
-}
+    return await api.patch(`/shifts/${shiftId}/status?status=${status}`);
+  },
+};

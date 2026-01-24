@@ -9,13 +9,10 @@ export default function LoginPage() {
       <div
         className="w-full h-svh flex items-center justify-center bg-[url('/beep-bg.svg')] bg-no-repeat bg-center bg-cover p-8 overflow-visible">
         <div
-          className="w-212 h-134 bg-white rounded-xl flex overflow-hidden"
-          style={{
-            boxShadow: "0 0.1rem 1rem 0 rgba(0, 0, 0, 0.05)",
-          }}>
-          <div className="w-1/2 h-full bg-[url('/login-bg.svg')] bg-no-repeat bg-center" />
+          className="w-212 h-134 bg-white rounded-xl flex overflow-hidden shadow-modal">
+          <div className="w-1/2 h-full bg-[url('/login-bg.svg')] bg-no-repeat bg-center hidden xl:block" />
 
-          <div className="w-1/2 h-full bg-white flex">
+          <div className="w-full xl:w-1/2 h-full bg-white flex">
             <div className="w-full h-full flex flex-col gap-5 overflow-visible items-center justify-around rounded-xl">
               <div className="flex items-center gap-1 flex-col">
                 <Image

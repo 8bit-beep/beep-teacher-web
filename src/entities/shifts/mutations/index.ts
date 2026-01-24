@@ -5,13 +5,20 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { toast } from "@cher1shrxd/toast";
 import { ShiftStatus } from "../types";
+import { modal } from "@bds-web/ui";
 
 export const useUpdateShiftStatus = (shiftId: number) => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async (status: ShiftStatus) => await ShiftApi.updateShiftStatus(shiftId, status),
+    mutationFn: async (status: ShiftStatus) =>
+      await ShiftApi.updateShiftStatus(shiftId, status),
     onSuccess: () => {
+      modal.closeAll();
+      toast.success(
+        "신청 상태 변경 성공",
+        "실 이동 신청 상태가 성공적으로 변경되었습니다.",
+      );
       router.refresh();
     },
     onError: (error: AxiosError<Error>) => {
@@ -21,4 +28,4 @@ export const useUpdateShiftStatus = (shiftId: number) => {
       );
     },
   });
-}
+};

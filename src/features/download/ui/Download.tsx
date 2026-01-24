@@ -8,7 +8,7 @@ const Download = () => {
 
   return (
     <Button
-      buttonSize="large"
+      buttonSize="small"
       buttonType="primary"
       showIcon
       onClick={handleDownloadExcel}>

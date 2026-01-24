@@ -6,9 +6,19 @@ export const useGetCurrentApprovalByRoomId = (roomId: number) => {
     queryKey: ["approvals", roomId],
     queryFn: async () => {
       try {
-        return (await ApprovalApi.getCurrentApprovalByRoomId(roomId)).data.approved;
+        const data = (await ApprovalApi.getCurrentApprovalByRoomId(roomId))
+          .data;
+        return {
+          approved: data.approved,
+          approvedTeacherUsername: data.approvedTeacher?.username,
+          approvedAt: data.approvedAt,
+        };
       } catch {
-        return false;
+        return {
+          approved: false,
+          approvedTeacherUsername: null,
+          approvedAt: null,
+        };
       }
     },
   });

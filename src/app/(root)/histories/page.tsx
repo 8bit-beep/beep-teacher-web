@@ -16,7 +16,7 @@ export default async function HistoriesPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full hidden items-center justify-between xl:flex">
         <FilterHistory param={floor ? Number(floor) : undefined} />
         <ManageMemo />
       </div>
@@ -26,11 +26,21 @@ export default async function HistoriesPage({
         icon={<HistoryIcon size={24} />}
         headerOptions={
           <>
-            <FilterHistoryDateTime />
+            <div className="hidden items-center gap-4 xl:flex">
+              <FilterHistoryDateTime />
+            </div>
             <Download />
           </>
+        }
+        mobileFilter={
+          <div className="w-full flex flex-col gap-5">
+            <div className="flex items-center gap-4">
+              <FilterHistoryDateTime />
+            </div>
+            <FilterHistory param={floor ? Number(floor) : undefined} />
+          </div>
         }>
-        <div className="px-10 h-full overflow-y-scroll">
+        <div className="px-2 xl:px-10 h-full overflow-y-scroll">
           {data.length > 0 ? (
             data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
           ) : (

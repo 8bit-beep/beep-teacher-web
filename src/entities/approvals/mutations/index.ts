@@ -3,14 +3,17 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { toast } from "@cher1shrxd/toast";
 import { ApprovalApi } from "../api";
+import { useRouter } from "@cher1shrxd/loading";
 
 export const useApproveRoom = (roomId: number) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async () => await ApprovalApi.approveRoom(roomId),
     onSuccess: async () => {
       toast.success("승인 처리 완료", "승인 처리가 성공적으로 완료되었습니다.");
+      router.refresh();
       await queryClient.refetchQueries({ queryKey: ["approvals", roomId] });
     },
     onError: (error: AxiosError<Error>) => {
@@ -24,11 +27,13 @@ export const useApproveRoom = (roomId: number) => {
 
 export const useCancelApproval = (roomId: number) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async () => await ApprovalApi.cancelApproval(roomId),
     onSuccess: async () => {
       toast.success("승인 취소 완료", "승인 취소가 성공적으로 완료되었습니다.");
+      router.refresh();
       await queryClient.refetchQueries({ queryKey: ["approvals", roomId] });
     },
     onError: (error: AxiosError<Error>) => {

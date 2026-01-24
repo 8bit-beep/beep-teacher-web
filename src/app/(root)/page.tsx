@@ -15,7 +15,7 @@ export default async function HomePage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full hidden items-center justify-between xl:flex">
         <FilterRoom param={floor ? Number(floor) : undefined} />
         <ManageMemo />
       </div>
@@ -23,8 +23,9 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}>
-        <div className="px-10 h-full overflow-y-scroll">
+        headerOptions={<Refresh />}
+        mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
+        <div className="px-2 xl:px-10 h-full overflow-y-scroll">
           {data.length > 0 ? (
             data.map((room) => <RoomItem data={room} key={room.id} />)
           ) : (
