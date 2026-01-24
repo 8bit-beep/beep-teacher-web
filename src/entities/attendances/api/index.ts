@@ -3,7 +3,11 @@ import { Attendance } from "../types";
 
 export const AttendanceApi = {
   getAttendancesByRoomId: async (roomId: number) => {
-    return await api.get<Attendance[]>(`/attendances?roomId=${roomId}&isCurrentCheckpoint=true`);
+    try{
+      return await api.get<Attendance[]>(`/attendances?roomId=${roomId}&isCurrentCheckpoint=true`);
+    } catch {
+      return { data: [] as Attendance[] };
+    }
   },
 
   getAttendacnesByRoomIdWithAllCheckpoitns: async (roomId: number) => {

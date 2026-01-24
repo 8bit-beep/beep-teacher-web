@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const refreshToken = searchParams.get("refreshToken");
 
   if (!accessToken || !refreshToken) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect("/login");
   }
 
   const cookieStore = await cookies();
@@ -23,5 +23,5 @@ export async function GET(request: Request) {
     domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".8beep.site"
   });
 
-  return NextResponse.redirect(new URL("/", request.url));
+  return NextResponse.redirect("/");
 }
