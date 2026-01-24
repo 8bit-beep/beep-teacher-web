@@ -58,7 +58,7 @@ const CreateAbsenceModal = () => {
       />
       <div className="w-full flex flex-col gap-0.5">
         <span className="text-caption1 text-static-black">결석 기간</span>
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex items-center gap-2.5 justify-between">
           <DatePicker
             date={startAt}
             onChangeDate={setStartAt}
