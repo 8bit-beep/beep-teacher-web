@@ -12,9 +12,5 @@ export const AttendanceApi = {
 
   updateAttendanceStatus: async (data: { userId: number, statusId: number }) => {
     return await api.patch(`/attendances/status`, data);
-  },
-
-  updatePastAttendanceStatus: async (data: { userId: number, statusId: number, date: string, checkpointId: number }) => {
-    return await api.patch(`/attendances/status`, data);
   }
 }

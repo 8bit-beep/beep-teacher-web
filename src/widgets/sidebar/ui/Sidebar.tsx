@@ -7,10 +7,10 @@ import PersonIcon from "@/shared/icons/PersonIcon";
 import Image from "next/image";
 import NavItem from "./NavItem";
 import { Link } from "@cher1shrxd/loading";
-import ExcelIcon from "@/shared/icons/ExcelIcon";
 import { Suspense } from "react";
 import UserIndicator from "@/features/showUser/ui/UserIndicator";
 import SkeletonUser from "@/features/showUser/ui/SkeletonUser";
+import HistoryIcon from "@/shared/icons/HistoryIcon";
 
 const ROUTES = [
   { label: "출석 조회", path: "/", icon: <LabIcon size={16} /> },
@@ -25,7 +25,7 @@ const ROUTES = [
     path: "/approvals",
     icon: <OkIcon size={16} />,
   },
-  { label: "엑셀 다운로드", path: "/excels", icon: <ExcelIcon size={16} /> },
+  { label: "출석 기록 조회", path: "/histories", icon: <HistoryIcon size={18} /> },
 ];
 
 const Sidebar = () => {
