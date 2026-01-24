@@ -7,6 +7,6 @@ export const MemoApi = {
   },
 
   updateMemo: async (newContent: string) => {
-    return api.patch("/memos", { content: newContent });
+    return api.patch("/memos", { newContent });
   }
 }
