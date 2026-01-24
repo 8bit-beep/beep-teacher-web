@@ -7,7 +7,7 @@ export const useAllInClass = (
   classNumber: number,
   toggleSelected: (studentId: number) => void,
 ) => {
-  const students = useGetStudentsByClass(grade, classNumber).data.data.content;
+  const students = useGetStudentsByClass(grade, classNumber).data.data;
   const [isOpened, setIsOpened] = useState(false);
 
   const selectAllInClass = () => {
