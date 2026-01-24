@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 
 export default function MainLayout({ children }: PropsWithChildren) {
   return (
-    <div className="w-full h-screen flex items-start flex-col xl:flex-row">
+    <div className="w-full h-svh flex items-start flex-col xl:flex-row">
       <AuthProvider />
       <Sidebar />
       <Header />
