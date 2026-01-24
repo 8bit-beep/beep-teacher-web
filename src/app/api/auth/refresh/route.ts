@@ -23,12 +23,12 @@ export async function POST() {
 
   cookieStore.set("accessToken", accessToken, {
     path: "/",
-    domain: ".8beep.site"
+    domain:  process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".8beep.site"
   });
 
   cookieStore.set("refreshToken", newRefresh, {
     path: "/",
-    domain: ".8beep.site"
+    domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".8beep.site"
   });
 
   return NextResponse.json({ accessToken });

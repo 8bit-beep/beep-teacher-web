@@ -15,12 +15,12 @@ export async function GET(request: Request) {
 
   cookieStore.set("accessToken", accessToken, {
     path: "/",
-    domain: ".8beep.site"
+    domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".8beep.site"
   });
 
   cookieStore.set("refreshToken", refreshToken, {
     path: "/",
-    domain: ".8beep.site"
+    domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || ".8beep.site"
   });
 
   return NextResponse.redirect(new URL("/", request.url));
