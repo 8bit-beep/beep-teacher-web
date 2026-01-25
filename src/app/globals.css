@@ -77,4 +77,5 @@
   overscroll-behavior: none;
   user-select: none;
   font-family: "Pretendard", sans-serif;
+  overflow: hidden;
 }
