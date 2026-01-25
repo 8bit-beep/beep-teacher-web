@@ -19,7 +19,7 @@ const UserIndicator = () => {
         className="w-6 h-6"
       />
       <p className="text-caption1 text-static-black">{data.username}</p>
-      <div className="w-1" />
+      <div className="w-1 xl:flex-1" />
       <button
         onClick={logout}
         className="p-2 rounded-medium bg-red-light text-static-white">
