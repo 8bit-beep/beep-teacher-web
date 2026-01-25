@@ -28,7 +28,7 @@ export default async function AbsencesPage({
             <CreateAbsence />
           </div>
         }>
-        <div className="px-2 xl:px-10 h-[calc(100%-80px)] overflow-y-scroll">
+        <div className="px-2 xl:px-10 flex-1 overflow-y-scroll">
           {data.totalPages > 0 ? (
             data.content.map((absence) => (
               <AbsenceItem data={absence} key={absence.absenceId} />

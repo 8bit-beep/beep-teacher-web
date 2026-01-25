@@ -40,7 +40,7 @@ export default async function HistoriesPage({
             <FilterHistory param={floor ? Number(floor) : undefined} />
           </div>
         }>
-        <div className="px-2 xl:px-10 h-full overflow-y-scroll">
+        <div className="px-2 xl:px-10 flex-1 overflow-y-scroll">
           {data.length > 0 ? (
             data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
           ) : (

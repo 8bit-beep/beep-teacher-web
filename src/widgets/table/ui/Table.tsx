@@ -8,7 +8,7 @@ interface Props {
 
 const Table = ({ header, rows }: Props) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full flex-1 flex flex-col">
       <table className="w-full border-collapse table-auto">
         <thead>
           <tr className="[&_th:first-child]:pl-2 xl:[&_th:first-child]:pl-10 [&_th:last-child]:pr-2 xl:[&_th:last-child]:pr-10">
@@ -23,7 +23,7 @@ const Table = ({ header, rows }: Props) => {
           </tr>
         </thead>
       </table>
-      <div className="w-full h-full overflow-y-auto">
+      <div className="w-full flex-1 overflow-y-auto">
         <table className="w-full border-collapse table-auto">
           <tbody>
             {rows.length === 0 ? (
