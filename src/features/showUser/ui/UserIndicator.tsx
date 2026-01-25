@@ -10,13 +10,13 @@ const UserIndicator = () => {
   const { logout } = useLogout();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="w-fit xl:w-full flex items-center gap-2">
       <Image
         src={data.profileImage || "/default-profile.svg"}
         alt="User Profile"
         width={40}
         height={40}
-        className="w-6 h-6"
+        className="w-6 h-6 xl:w-10 xl:h-10"
       />
       <p className="text-caption1 text-static-black">{data.username}</p>
       <div className="w-1 xl:flex-1" />
