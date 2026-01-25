@@ -1,8 +1,8 @@
 import { ShiftApi } from "@/entities/shifts/api";
-import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
-import Detail from "@/features/manageShifts/ui/Detail";
-import ManageStatus from "@/features/manageShifts/ui/ManageStatus";
-import StatusIndicator from "@/features/manageShifts/ui/StatusIndicator";
+import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
+import Detail from "@/features/manage-shifts/ui/Detail";
+import ManageStatus from "@/features/manage-shifts/ui/ManageStatus";
+import StatusIndicator from "@/features/manage-shifts/ui/StatusIndicator";
 import PersonIcon from "@/shared/icons/PersonIcon";
 import { pad } from "@/shared/utils/pad";
 import Section from "@/widgets/section/ui/Section";

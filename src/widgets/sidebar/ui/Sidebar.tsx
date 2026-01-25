@@ -4,8 +4,8 @@ import Image from "next/image";
 import NavItem from "./NavItem";
 import { Link } from "@cher1shrxd/loading";
 import { Suspense } from "react";
-import UserIndicator from "@/features/showUser/ui/UserIndicator";
-import SkeletonUser from "@/features/showUser/ui/SkeletonUser";
+import UserIndicator from "@/features/show-user/ui/UserIndicator";
+import SkeletonUser from "@/features/show-user/ui/SkeletonUser";
 import { ROUTES } from "@/shared/constants/routes";
 
 const Sidebar = () => {

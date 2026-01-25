@@ -1,8 +1,8 @@
 import { RoomApi } from "@/entities/rooms/api";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
-import Refresh from "@/features/manageAttends/ui/Refresh";
-import RoomItem from "@/features/manageAttends/ui/RoomItem";
-import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
+import Refresh from "@/features/manage-attends/ui/Refresh";
+import RoomItem from "@/features/manage-attends/ui/RoomItem";
+import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";

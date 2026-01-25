@@ -1,8 +1,8 @@
 "use client";
 
-import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
-import SkeletonUser from "@/features/showUser/ui/SkeletonUser";
-import UserIndicator from "@/features/showUser/ui/UserIndicator";
+import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
+import SkeletonUser from "@/features/show-user/ui/SkeletonUser";
+import UserIndicator from "@/features/show-user/ui/UserIndicator";
 import Image from "next/image";
 import { Suspense } from "react";
 

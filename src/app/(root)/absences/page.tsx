@@ -1,7 +1,7 @@
 import { AbsenceApi } from "@/entities/absences/api";
-import AbsenceItem from "@/features/manageAbsences/ui/AbsenceItem";
-import CreateAbsence from "@/features/manageAbsences/ui/CreateAbsence";
-import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
+import AbsenceItem from "@/features/manage-absences/ui/AbsenceItem";
+import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
+import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Pagination from "@/widgets/pagination/ui/Pagination";

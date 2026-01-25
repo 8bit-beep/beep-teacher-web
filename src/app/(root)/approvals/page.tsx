@@ -3,10 +3,10 @@ import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
 import { SearchParams } from "@/shared/types/search-params";
 import { ApprovalApi } from "@/entities/approvals/api";
-import ManageApprovals from "@/features/manageApprovals/ui/ManageApprovals";
+import ManageApprovals from "@/features/manage-approvals/ui/ManageApprovals";
 import { parseDatetimeToTime } from "@/shared/utils/parse-datetime-to-time";
-import ManageMemo from "@/features/manageMemo/ui/ManageMemo";
-import MobileApprovals from "@/features/manageApprovals/ui/MobileApprovals";
+import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
+import MobileApprovals from "@/features/manage-approvals/ui/MobileApprovals";
 
 export default async function ApprovalsPage({
   searchParams,
