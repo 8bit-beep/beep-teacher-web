@@ -23,7 +23,7 @@ export default async function ApprovalsPage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<OkIcon size={24} />}>
-        <div className="w-full flex-1 xl:hidden">
+        <div className="w-full flex-1 min-h-0 overflow-y-auto xl:hidden">
           <Table
             header={[
               { title: "실 이름" },
@@ -38,7 +38,7 @@ export default async function ApprovalsPage({
             ])}
           />
         </div>
-        <div className="w-full flex-1 hidden xl:block">
+        <div className="w-full flex-1 min-h-0 overflow-y-auto hidden xl:block">
           <Table
             header={[
               { title: "실 이름" },

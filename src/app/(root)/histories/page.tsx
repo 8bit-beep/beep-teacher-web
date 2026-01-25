@@ -33,7 +33,7 @@ export default async function HistoriesPage({
           </>
         }
         mobileFilter={
-          <div className="w-full flex flex-col gap-5">
+          <div className="w-full flex flex-col md:flex-row gap-5 md:gap-4">
             <div className="flex items-center gap-4">
               <FilterHistoryDateTime />
             </div>
