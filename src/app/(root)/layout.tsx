@@ -10,7 +10,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
       <AuthProvider />
       <Sidebar />
       <Header />
-      <main className="w-full xl:w-auto flex-1 h-[calc(100%-72px)] xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
+      <main className="w-full xl:w-auto flex-1 h-[calc(100%-147px)] xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
         {children}
       </main>
       <Tabbar />
