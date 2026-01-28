@@ -41,7 +41,7 @@ export default async function HistoriesPage({
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <div className="w-full pb-15">
+          <div className="w-full pb-30">
             {data.length > 0 ? (
               data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
             ) : (

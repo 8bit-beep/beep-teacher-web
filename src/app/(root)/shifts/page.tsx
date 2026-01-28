@@ -24,14 +24,12 @@ export default async function ShiftsPage() {
           <Table
             header={[
               { title: "학번", width: "64px" },
-              { title: "이름", width: "84px" },
-              { title: "" },
+              { title: "이름" },
               { title: "신청보기", width: "120px" },
             ]}
             rows={data.map((shift) => [
               `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
               shift.user.username,
-              "",
               <StatusIndicator data={shift} key={shift.id} />,
             ])}
           />
