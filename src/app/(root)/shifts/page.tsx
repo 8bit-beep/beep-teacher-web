@@ -42,7 +42,7 @@ export default async function ShiftsPage() {
               { title: "변경 교시", width: "140px" },
               { title: "이동 내용", width: "196px" },
               { title: "신청 사유" },
-              { title: "승인 / 거절", width: "167px" },
+              { title: "승인 / 거절", width: "185px" },
             ]}
             rows={data.map((shift) => [
               `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
