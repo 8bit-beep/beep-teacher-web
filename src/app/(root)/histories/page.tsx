@@ -41,13 +41,15 @@ export default async function HistoriesPage({
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          {data.length > 0 ? (
-            data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
-          ) : (
-            <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-              출석 정보가 없습니다.
-            </div>
-          )}
+          <div className="w-full pb-15">
+            {data.length > 0 ? (
+              data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
+            ) : (
+              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
+                출석 정보가 없습니다.
+              </div>
+            )}
+          </div>
         </div>
       </Section>
     </div>

@@ -26,13 +26,15 @@ export default async function HomePage({
         headerOptions={<Refresh />}
         mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          {data.length > 0 ? (
-            data.map((room) => <RoomItem data={room} key={room.id} />)
-          ) : (
-            <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-              출석 정보가 없습니다.
-            </div>
-          )}
+          <div className="w-full pb-15">
+            {data.length > 0 ? (
+              data.map((room) => <RoomItem data={room} key={room.id} />)
+            ) : (
+              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
+                출석 정보가 없습니다.
+              </div>
+            )}
+          </div>
         </div>
       </Section>
     </div>

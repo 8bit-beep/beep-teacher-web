@@ -29,7 +29,7 @@ export default async function ShiftsPage() {
               { title: "신청보기", width: "120px" },
             ]}
             rows={data.map((shift) => [
-              `${shift.user.studentInfo?.grade || 0}${pad(shift.user.studentInfo?.classNumber || 0, 2)}${shift.user.studentInfo?.num || 0}`,
+              `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
               shift.user.username,
               "",
               <StatusIndicator data={shift} key={shift.id} />,
@@ -47,7 +47,7 @@ export default async function ShiftsPage() {
               { title: "승인 / 거절", width: "167px" },
             ]}
             rows={data.map((shift) => [
-              `${shift.user.studentInfo?.grade || 0}${pad(shift.user.studentInfo?.classNumber || 0, 2)}${shift.user.studentInfo?.num || 0}`,
+              `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
               shift.user.username,
               shift.checkpoint.name,
               `${shift.room.name}로 이동`,
