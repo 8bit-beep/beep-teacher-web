@@ -20,8 +20,8 @@ export default async function ApprovalsPage({
         <ManageMemo />
       </div>
       <Section
-        title="출석 조회"
-        description="학생들의 실 별 출석여부를 조회하세요!"
+        title="출석 승인 현황"
+        description="출석 승인 현황을 확인해 보세요!"
         icon={<OkIcon size={24} />}>
         <div className="w-full flex-1 min-h-0 overflow-y-auto xl:hidden">
           <Table
