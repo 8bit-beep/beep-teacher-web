@@ -12,7 +12,7 @@ const Detail = ({ data }: Props) => {
   return (
     <Button
       buttonSize="small"
-      buttonType="text"
+      buttonType="primary"
       onClick={() =>
         modal.open({ title: "신청 내용", content: <DetailModal data={data} /> })
       }>
