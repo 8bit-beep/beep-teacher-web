@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_IMAGE: cher1shrdx/beep-teacher-web:latest
+      DOCKER_IMAGE: cher1shrxd/beep-teacher-web:latest
 
     steps:
       - uses: actions/checkout@v4
