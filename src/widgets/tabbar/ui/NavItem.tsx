@@ -14,7 +14,7 @@ const NavItem = ({ icon, label, path }: Props) => {
   const pathname = usePathname();
 
   return (
-    <Link href={path} className={`${pathname === path ? "bg-blue-light text-static-white" : "bg-static-white text-static-black"} w-12 h-11 rounded-medium flex flex-col items-center justify-between`}>
+    <Link href={path} className={`${pathname === path ? "bg-blue-light text-static-white" : "bg-static-white text-static-black"} w-12 h-12 rounded-medium flex flex-col items-center justify-between`}>
       {icon}
       <p className="text-caption1">{label}</p>
     </Link>
