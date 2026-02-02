@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { getAccessToken } from "./cookie";
+import { getAccessToken, deleteAuthCookies } from "./cookie";
 import { Error } from "../types/error";
 
 const api = axios.create({
@@ -23,11 +23,9 @@ let queue: Array<(token?: string) => void> = [];
 
 api.interceptors.response.use(
   (res) => {
-    console.log("response success interceptor", res.data);
     return res;
   },
   async (error: AxiosError<Error>) => {
-    console.log("response error interceptor", error.response?.data.message);
     const original = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
@@ -60,15 +58,23 @@ api.interceptors.response.use(
       );
 
       if (!refreshRes.ok) {
-        if(typeof window !== "undefined") {
+        await deleteAuthCookies();
+        if (typeof window !== "undefined") {
           window.location.href = "/login";
         } else {
-          const redirect = await import("next/navigation").then((mod) => mod.redirect);
+          const redirect = await import("next/navigation").then(
+            (mod) => mod.redirect,
+          );
+          const cookies = await import("next/headers").then(
+            (mod) => mod.cookies,
+          );
+          const cookieStore = await cookies();
+          cookieStore.delete("accessToken");
+          cookieStore.delete("refreshToken");
           redirect("/login");
         }
-      } 
+      }
 
-      console.log("refresh response", await refreshRes.text());
       const { accessToken } = await refreshRes.json();
 
       queue.forEach((cb) => cb(accessToken));
@@ -78,6 +84,15 @@ api.interceptors.response.use(
       return api(original);
     } catch (e) {
       queue = [];
+      await deleteAuthCookies();
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      } else {
+        const redirect = await import("next/navigation").then(
+          (mod) => mod.redirect,
+        );
+        redirect("/login");
+      }
       return Promise.reject(e);
     } finally {
       isRefreshing = false;
