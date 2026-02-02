@@ -2,7 +2,7 @@ import { AbsenceApi } from "@/entities/absences/api";
 import AbsenceItem from "@/features/manage-absences/ui/AbsenceItem";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
-import DashboardIcon from "@/shared/icons/DashboardIcon";
+import CalendarIcon from "@/shared/icons/CalendarIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Pagination from "@/widgets/pagination/ui/Pagination";
 import Section from "@/widgets/section/ui/Section";
@@ -22,7 +22,7 @@ export default async function AbsencesPage({
       <Section
         title="결석자 관리"
         description="학생들의 결석 여부를 관리하세요!"
-        icon={<DashboardIcon size={24} />}
+        icon={<CalendarIcon size={24} />}
         headerOptions={
           <div className="xl:hidden">
             <CreateAbsence />

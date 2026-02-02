@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { getAccessToken, deleteAuthCookies } from "./cookie";
+import { getAccessToken } from "./cookie";
 import type { Error } from "../types/error";
 
 const api = axios.create({
@@ -77,8 +77,6 @@ api.interceptors.response.use(
       // 큐에 있는 요청들 실패 처리
       queue.forEach((cb) => cb());
       queue = [];
-      
-      await deleteAuthCookies();
       
       if (typeof window !== "undefined") {
         window.location.href = "/login";

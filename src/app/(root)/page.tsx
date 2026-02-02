@@ -7,6 +7,7 @@ import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";
+import { Suspense } from "react";
 
 export default async function HomePage({
   searchParams,
@@ -27,15 +28,22 @@ export default async function HomePage({
         headerOptions={<Refresh />}
         mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <div className="w-full pb-30">
-            {data.length > 0 ? (
-              data.map((room) => <RoomItem data={room} key={room.id} />)
-            ) : (
+          <Suspense
+            fallback={
               <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-                출석 정보가 없습니다.
+                불러오는 중...
               </div>
-            )}
-          </div>
+            }>
+            <div className="w-full pb-30">
+              {data.length > 0 ? (
+                data.map((room) => <RoomItem data={room} key={room.id} />)
+              ) : (
+                <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
+                  출석 정보가 없습니다.
+                </div>
+              )}
+            </div>
+          </Suspense>
         </div>
       </Section>
       <RenderManageAttendance />
