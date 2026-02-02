@@ -2,7 +2,7 @@ import { useGetHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-import { useState } from "react";
+import { useRoomStore } from "../stores/room";
 
 export const useToggleData = (data: Room) => {
   const { date } = useDateStore();
@@ -12,15 +12,14 @@ export const useToggleData = (data: Room) => {
     date,
     Number(checkpoint?.value || "1"),
   ).data.data;
-  const [isOpen, setIsOpen] = useState(false);
+  const { setRoom } = useRoomStore();
 
   const toggleOpen = () => {
-    setIsOpen((prev) => !prev);
+    setRoom(data);
   };
 
   return {
     histories,
-    isOpen,
     toggleOpen,
     date,
     checkpoint,

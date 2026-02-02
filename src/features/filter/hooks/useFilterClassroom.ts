@@ -4,14 +4,15 @@ import { CLASSROOM_OPTIONS } from "../constants/classroom";
 import { useRouter } from "@cher1shrxd/loading";
 
 export const useFilterClassroom = () => {
-  let selected = CLASSROOM_OPTIONS[0];
-  if (typeof window !== "undefined") {
-    const previous = localStorage.getItem("selectedClassroom");
-    if (previous) {
-      selected = JSON.parse(previous) as DropdownItem;
+  const [classroom, setClassroom] = useState<DropdownItem | null>(() => {
+    if (typeof window !== "undefined") {
+      const previous = localStorage.getItem("selectedClassroom");
+      if (previous) {
+        return JSON.parse(previous) as DropdownItem;
+      }
     }
-  }
-  const [classroom, setClassroom] = useState<DropdownItem | null>(selected);
+    return CLASSROOM_OPTIONS[0];
+  });
   const router = useRouter();
 
   useEffect(() => {
