@@ -1,11 +1,19 @@
 "use client";
 
-import { deleteAuthCookies } from "@/shared/libs/cookie";
 import { Link } from "@cher1shrxd/loading";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function LoginPage() {
-  deleteAuthCookies();
+  const logout = () => {
+    document.cookie = `accessToken=; path=/; max-age=0`;
+    document.cookie = `refreshToken=; path=/; max-age=0`;
+    window.location.href = "/login";
+  }
+
+  useEffect(() => {
+    logout();
+  }, []);
 
   return (
     <div className="w-full h-screen flex items-center justify-center flex-col gap-2">

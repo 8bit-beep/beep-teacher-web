@@ -1,6 +1,7 @@
 import { RoomApi } from "@/entities/rooms/api";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import Refresh from "@/features/manage-attends/ui/Refresh";
+import RenderManageAttendance from "@/features/manage-attends/ui/RenderManageAttendance";
 import RoomItem from "@/features/manage-attends/ui/RoomItem";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
@@ -37,6 +38,7 @@ export default async function HomePage({
           </div>
         </div>
       </Section>
+      <RenderManageAttendance />
     </div>
   );
 }
