@@ -8,7 +8,6 @@ export default function LoginPage() {
   const logout = () => {
     document.cookie = `accessToken=; path=/; max-age=0`;
     document.cookie = `refreshToken=; path=/; max-age=0`;
-    window.location.href = "/login";
   }
 
   useEffect(() => {
