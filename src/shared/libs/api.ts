@@ -31,6 +31,15 @@ api.interceptors.response.use(
     };
 
     if (error.response?.status !== 401 || original._retry) {
+      await deleteAuthCookies();
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      } else {
+        const redirect = await import("next/navigation").then(
+          (mod) => mod.redirect,
+        );
+        redirect("/login");
+      }
       return Promise.reject(error);
     }
 
