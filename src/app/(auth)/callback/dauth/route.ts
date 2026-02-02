@@ -15,13 +15,11 @@ export async function GET(request: Request) {
 
   cookieStore.set("accessToken", accessToken, {
     path: "/",
-    domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || "teacher.8beep.site",
     maxAge: 60 * 60 * 12,
   });
 
   cookieStore.set("refreshToken", refreshToken, {
     path: "/",
-    domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || "teacher.8beep.site",
     maxAge: 60 * 60 * 24,
   });
 
