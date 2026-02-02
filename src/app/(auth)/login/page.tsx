@@ -1,9 +1,12 @@
 "use client";
 
+import { deleteAuthCookies } from "@/shared/libs/cookie";
 import { Link } from "@cher1shrxd/loading";
 import Image from "next/image";
 
 export default function LoginPage() {
+  deleteAuthCookies();
+
   return (
     <div className="w-full h-screen flex items-center justify-center flex-col gap-2">
       <div
