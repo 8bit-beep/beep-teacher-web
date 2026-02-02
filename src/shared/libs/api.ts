@@ -30,6 +30,14 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
+    if (
+      error.response?.status === 403 ||
+      error.response?.status === 404 ||
+      error.response?.status === 400
+    ) {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status !== 401 || original._retry) {
       await deleteAuthCookies();
       if (typeof window !== "undefined") {

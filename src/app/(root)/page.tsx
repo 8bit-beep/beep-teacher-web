@@ -1,4 +1,5 @@
 import { RoomApi } from "@/entities/rooms/api";
+import { Room } from "@/entities/rooms/types";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import Refresh from "@/features/manage-attends/ui/Refresh";
 import RoomItem from "@/features/manage-attends/ui/RoomItem";
@@ -11,7 +12,13 @@ export default async function HomePage({
   searchParams,
 }: SearchParams<{ floor?: string }>) {
   const { floor } = await searchParams;
-  const { data } = await RoomApi.getRooms(floor);
+  let data: Room[];
+  try {
+    const res = await RoomApi.getRooms(floor);
+    data = res.data;
+  } catch {
+    data = [];
+  }
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
