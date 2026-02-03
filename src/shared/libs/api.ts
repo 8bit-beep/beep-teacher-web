@@ -26,7 +26,6 @@ api.interceptors.response.use(
     return res;
   },
   async (error: AxiosError<Error>) => {
-    console.log(error.config?.url, error.response?.data.message);
     const original = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
@@ -82,7 +81,6 @@ api.interceptors.response.use(
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       } else {
-        // 서버 사이드에서는 redirect 함수가 에러를 throw하므로 try-catch 밖에서 처리
         const { redirect } = await import("next/navigation");
         redirect("/login");
       }
