@@ -13,7 +13,7 @@ export default async function HomePage({
   searchParams,
 }: SearchParams<{ floor?: string }>) {
   const { floor } = await searchParams;
-  const { data } = await RoomApi.getRooms(floor);
+  const { data } = await RoomApi.getRooms(floor === "other" ? "4" : floor);
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
