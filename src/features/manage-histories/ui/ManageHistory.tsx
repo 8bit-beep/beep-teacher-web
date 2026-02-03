@@ -16,7 +16,7 @@ interface Props {
 const ManageHistory = ({ room }: Props) => {
   const { date } = useDateStore();
   const { checkpoint } = useCheckpointStore();
-  const attendances = useGetHistories(
+  const histories = useGetHistories(
     room?.id || 0,
     date,
     Number(checkpoint?.value || 1),
@@ -35,11 +35,11 @@ const ManageHistory = ({ room }: Props) => {
       </div>
       <div className="w-full flex justify-between items-center">
         <p className="text-greyscale-40 text-caption2 xl:text-caption1">
-          {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
+          {`인원 ${histories.filter((a) => a.statuses[0].status).length}/${histories.length}명`}
           {" · "}
-          {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
+          {`외박 ${histories.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
           {" · "}
-          {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
+          {`외출 ${histories.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
         </p>
       </div>
       <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll">
@@ -50,10 +50,10 @@ const ManageHistory = ({ room }: Props) => {
             </div>
           }>
           {!!room &&
-            attendances.map((attendance) => (
+            histories.map((history) => (
               <HistoryItem
-                data={attendance}
-                key={attendance.userId}
+                data={history}
+                key={history.userId}
                 roomId={room.id}
               />
             ))}
