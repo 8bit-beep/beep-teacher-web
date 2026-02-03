@@ -7,7 +7,7 @@ export const RoomApi = {
     return {
       data:
         floor || floor === undefined
-          ? data.filter((room) => room.floor === Number(floor))
+          ? data.filter((room) => room.floor === Number(floor || "1"))
           : floor === null
             ? data.filter((room) => room.floor === null)
             : data,
