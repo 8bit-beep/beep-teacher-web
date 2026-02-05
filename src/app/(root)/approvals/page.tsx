@@ -22,8 +22,9 @@ export default async function ApprovalsPage({
       <Section
         title="출석 승인 현황"
         description="출석 승인 현황을 확인해 보세요!"
-        icon={<OkIcon size={24} />}>
-        <div className="w-full h-[calc(100%-86px)] flex flex-col xl:hidden">
+        icon={<OkIcon size={24} />}
+      >
+        <div className="w-full flex-1 min-h-0 flex flex-col xl:hidden">
           <Table
             header={[
               { title: "실 이름" },
@@ -38,7 +39,7 @@ export default async function ApprovalsPage({
             ])}
           />
         </div>
-        <div className="w-full h-[calc(100%-86px)] flex-col hidden xl:flex">
+        <div className="w-full flex-1 min-h-0 flex-col hidden xl:flex">
           <Table
             header={[
               { title: "실 이름" },
