@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@bds-web/ui";
-import { useRefresh } from "../hooks/useRefresh";
+import { useRefresh } from "../../../shared/hooks/useRefresh";
 
 const Refresh = () => {
   const handleRefresh = useRefresh();
