@@ -6,15 +6,13 @@ import { PropsWithChildren } from "react";
 
 export default function MainLayout({ children }: PropsWithChildren) {
   return (
-    <PullToRefresh>
-      <div className="w-full h-svh flex items-start flex-col xl:flex-row">
-        <Sidebar />
-        <Header />
-        <main className="w-full xl:w-auto flex-1 h-[calc(100%-147px)] xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
-          {children}
-        </main>
-        <Tabbar />
-      </div>
-    </PullToRefresh>
+    <div className="w-full h-svh flex items-start flex-col xl:flex-row">
+      <Sidebar />
+      <Header />
+      <main className="w-full xl:w-auto flex-1 h-[calc(100%-147px)] xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
+        {children}
+      </main>
+      <Tabbar />
+    </div>
   );
 }
