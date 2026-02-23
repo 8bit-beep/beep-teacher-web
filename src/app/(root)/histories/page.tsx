@@ -3,6 +3,7 @@ import Download from "@/features/download/ui/Download";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
 import HistoryRoomItem from "@/features/manage-histories/ui/HistoryRoomItem";
+import RenderManageHistory from "@/features/manage-histories/ui/RenderManageHistory";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import HistoryIcon from "@/shared/icons/HistoryIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -12,7 +13,9 @@ export default async function HistoriesPage({
   searchParams,
 }: SearchParams<{ floor?: string }>) {
   const { floor } = await searchParams;
-  const { data } = await RoomApi.getRooms(floor);
+  const { data } = await RoomApi.getRooms(
+    floor === "other" ? null : floor,
+  );
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
@@ -41,15 +44,18 @@ export default async function HistoriesPage({
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          {data.length > 0 ? (
-            data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
-          ) : (
-            <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-              출석 정보가 없습니다.
-            </div>
-          )}
+          <div className="w-full pb-30">
+            {data.length > 0 ? (
+              data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
+            ) : (
+              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
+                출석 정보가 없습니다.
+              </div>
+            )}
+          </div>
         </div>
       </Section>
+      <RenderManageHistory />
     </div>
   );
 }

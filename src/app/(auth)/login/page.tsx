@@ -2,8 +2,18 @@
 
 import { Link } from "@cher1shrxd/loading";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function LoginPage() {
+  const logout = () => {
+    document.cookie = `accessToken=; path=/; max-age=0`;
+    document.cookie = `refreshToken=; path=/; max-age=0`;
+  }
+
+  useEffect(() => {
+    logout();
+  }, []);
+
   return (
     <div className="w-full h-screen flex items-center justify-center flex-col gap-2">
       <div

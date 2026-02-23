@@ -1,7 +1,6 @@
 import { ShiftApi } from "@/entities/shifts/api";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import Detail from "@/features/manage-shifts/ui/Detail";
-import ManageStatus from "@/features/manage-shifts/ui/ManageStatus";
 import StatusIndicator from "@/features/manage-shifts/ui/StatusIndicator";
 import PersonIcon from "@/shared/icons/PersonIcon";
 import { pad } from "@/shared/utils/pad";
@@ -24,14 +23,12 @@ export default async function ShiftsPage() {
           <Table
             header={[
               { title: "학번", width: "64px" },
-              { title: "이름", width: "84px" },
-              { title: "" },
+              { title: "이름" },
               { title: "신청보기", width: "120px" },
             ]}
             rows={data.map((shift) => [
-              `${shift.user.studentInfo?.grade || 0}${pad(shift.user.studentInfo?.classNumber || 0, 2)}${shift.user.studentInfo?.num || 0}`,
+              `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
               shift.user.username,
-              "",
               <StatusIndicator data={shift} key={shift.id} />,
             ])}
           />
@@ -42,17 +39,15 @@ export default async function ShiftsPage() {
               { title: "학번", width: "124px" },
               { title: "이름", width: "84px" },
               { title: "변경 교시", width: "140px" },
-              { title: "이동 내용", width: "196px" },
-              { title: "신청 사유" },
-              { title: "승인 / 거절", width: "167px" },
+              { title: "이동 내용" },
+              { title: "신청 사유", width: "165px" },
             ]}
             rows={data.map((shift) => [
-              `${shift.user.studentInfo?.grade || 0}${pad(shift.user.studentInfo?.classNumber || 0, 2)}${shift.user.studentInfo?.num || 0}`,
+              `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
               shift.user.username,
               shift.checkpoint.name,
               `${shift.room.name}로 이동`,
               <Detail data={shift} key={shift.id + 1} />,
-              <ManageStatus data={shift} key={shift.id} />,
             ])}
           />
         </div>

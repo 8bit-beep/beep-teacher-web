@@ -3,15 +3,13 @@
 import { Room } from "@/entities/rooms/types";
 import { useToggleData } from "../hooks/useToggleData";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
-import { Suspense } from "react";
-import HistoryItem from "./HistoryItem";
 
 interface Props {
   data: Room;
 }
 
 const HistoryRoomItem = ({ data }: Props) => {
-  const { histories, isOpen, toggleOpen } = useToggleData(data);
+  const { histories, toggleOpen } = useToggleData(data);
 
   return (
     <div className="w-full">
@@ -37,26 +35,10 @@ const HistoryRoomItem = ({ data }: Props) => {
           <ChevronIcon
             size={16}
             className="text-static-black"
-            rotate={isOpen ? 180 : 0}
+            rotate={-90}
           />
         </div>
       </div>
-      {isOpen && (
-        <Suspense
-          fallback={
-            <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
-              로딩중...
-            </div>
-          }>
-          {histories.map((history) => (
-            <HistoryItem
-              data={history}
-              roomId={data.id}
-              key={history.studentId}
-            />
-          ))}
-        </Suspense>
-      )}
     </div>
   );
 };
