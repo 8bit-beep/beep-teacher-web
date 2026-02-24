@@ -17,7 +17,7 @@ export interface AbsenceCheckpoint {
   date: string;
 }
 
-interface AbsenceTargetStudent {
+export interface AbsenceTargetStudent {
   name: string;
   info: StudentInfo;
 }
