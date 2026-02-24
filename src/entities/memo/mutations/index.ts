@@ -33,3 +33,9 @@ export const useUpdateMemoMutation = () => {
     },
   });
 };
+
+export const useMarkAsReadMutation = () => {
+  return useMutation({
+    mutationFn: MemoApi.markAsRead,
+  });
+};
