@@ -21,7 +21,7 @@ const Section = ({
   children,
 }: Props) => {
   return (
-    <section className="w-full h-[calc(100%-86px)] flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-t-large shadow-modal overflow-hidden">
+    <section className="w-full min-h-0 flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-t-large shadow-modal overflow-hidden">
       <header className="h-11.5 flex items-center gap-2 xl:gap-4 pr-2 pl-4 xl:pr-10 xl:pl-10">
         <div className="text-static-dark">{icon}</div>
         <div className="flex-1 flex flex-col">
