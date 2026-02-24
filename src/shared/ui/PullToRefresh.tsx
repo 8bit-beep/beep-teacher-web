@@ -9,7 +9,7 @@ const PullToRefresh = ({ children }: PropsWithChildren) => {
 
   return (
     <div
-      className="w-full h-full"
+      className="w-full flex-1 min-h-0 flex flex-col"
       onTouchStart={pullToRefresh.handlers.handleTouchStart}
       onMouseDown={pullToRefresh.handlers.handleMouseDown}
       onMouseMove={pullToRefresh.handlers.handleMouseMove}
