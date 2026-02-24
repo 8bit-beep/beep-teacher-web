@@ -4,7 +4,7 @@ import { Absence } from "@/entities/absences/types";
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Button, modal } from "@bds-web/ui";
 import UpdateAbsenceModal from "./UpdateAbsenceModal";
-import { studentLabel } from "@/shared/utils/studentLabel";
+import { studentLabel } from "@/shared/utils/student-label";
 
 
 interface Props {

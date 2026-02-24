@@ -1,5 +1,5 @@
-import { studentCode } from "./studentCode"
 import { AbsenceTargetStudent } from "@/entities/absences/types"
+import { studentCode } from "./student-code"
 
 export const studentLabel = (isGrouped: boolean, studentinfo: AbsenceTargetStudent[]) => {
     const firststudent = studentinfo[0]
