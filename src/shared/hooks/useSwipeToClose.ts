@@ -1,32 +1,47 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 
-export function useSwipeToClose(onClose: () => void) {
-  const containerRef = useRef<HTMLDivElement>(null);
+const CLOSE_ANIMATION_DURATION = 300;
 
-  const triggerClose = () => {
-    const el = containerRef.current;
-    if (el) {
-      el.classList.remove("slide-in-right");
-      el.classList.add("slide-out-right");
-    }
-    setTimeout(() => onClose(), 300);
-  };
+export function useSwipeToClose(onClose: () => void) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  const [isClosing, setIsClosing] = useState(false);
+
+  const triggerClose = useCallback(() => {
+    setIsClosing(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClosing) return;
+    const timer = setTimeout(
+      () => onCloseRef.current(),
+      CLOSE_ANIMATION_DURATION,
+    );
+    return () => clearTimeout(timer);
+  }, [isClosing]);
 
   const { ref: swipeRef, ...swipeHandlers } = useSwipeable({
     onSwipedRight: triggerClose,
     delta: 80,
     preventScrollOnSwipe: true,
     trackTouch: true,
+    trackMouse: true,
   });
 
   const mergedRef = useCallback(
     (el: HTMLDivElement | null) => {
-      (containerRef as { current: HTMLDivElement | null }).current = el;
+      containerRef.current = el;
       swipeRef(el);
     },
     [swipeRef],
   );
 
-  return { handlers: { ...swipeHandlers, ref: mergedRef } };
+  return {
+    handlers: { ...swipeHandlers, ref: mergedRef },
+    triggerClose,
+    animationClass: isClosing ? "slide-out-right" : "slide-in-right",
+  };
 }
