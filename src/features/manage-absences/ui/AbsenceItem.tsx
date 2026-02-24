@@ -4,8 +4,7 @@ import { Absence } from "@/entities/absences/types";
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Button, modal } from "@bds-web/ui";
 import UpdateAbsenceModal from "./UpdateAbsenceModal";
-import { studentCode } from "@/shared/utils/studentCode";
-import { AbsenceTargetStudent } from "@/entities/absences/types";
+import { studentLabel } from "@/shared/utils/studentLabel";
 
 
 interface Props {
@@ -17,19 +16,14 @@ const AbsenceItem = ({ data }: Props) => {
     (type) => type.id === data.typeId,
   );
 
-  const studentId = (isGrouped: boolean, studentinfo: AbsenceTargetStudent[]) => {
-    const firststudent = studentinfo[0]
-    return isGrouped ? 
-    `${studentCode(firststudent.info.grade, firststudent.info.classNumber, firststudent.info.num)} ${firststudent.name}외 ${studentinfo.length - 1}명` : 
-    `${studentCode(firststudent.info.grade, firststudent.info.classNumber, firststudent.info.num)} ${firststudent.name}`
-  }
+
 
   return (
     <div className="w-full px-2 py-2 xl:py-4 h-15 flex flex-col border-b border-greyscale-20">
       <div className="flex items-center gap-2">
         <p className="text-accent mr-4">{attendType?.name}</p>
         <p className="text-body text-greyscale-70 xl:block hidden">
-         {studentId(data.isGrouped, data.targetStudents)}
+         studentId(data.isGrouped, data.targetStudents)
          
         </p>
         <span className="text-greyscale-40 xl:block hidden">/</span>
@@ -42,7 +36,7 @@ const AbsenceItem = ({ data }: Props) => {
           buttonType="primary"
           onClick={() =>
             modal.open({
-              title: studentId(data.isGrouped, data.targetStudents),
+              title: studentLabel(data.isGrouped, data.targetStudents),
               content: <UpdateAbsenceModal data={data} />,
             })
           }>
@@ -51,7 +45,7 @@ const AbsenceItem = ({ data }: Props) => {
       </div>
       <div className="xl:hidden flex items-center gap-2">
         <p className="text-caption2 text-greyscale-70">
-          {studentId(data.isGrouped, data.targetStudents)}
+          studentId(data.isGrouped, data.targetStudents)
         </p>
         <span className="text-greyscale-40">/</span>
         <p className="text-caption2 text-greyscale-70">

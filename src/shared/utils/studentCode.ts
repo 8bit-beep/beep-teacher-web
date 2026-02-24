@@ -1,6 +1,6 @@
 import { pad } from "./pad"
 
 export const studentCode = (grade: number, classNumber: number, studentId: number) => {
-    const s =  `${grade.toString()}${classNumber.toString()}${pad(studentId, 2)}`;
-    return s
+    const studentCode =  `${grade.toString()}${classNumber.toString()}${pad(studentId, 2)}`;
+    return studentCode
 }
