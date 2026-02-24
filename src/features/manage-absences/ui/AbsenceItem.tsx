@@ -4,6 +4,8 @@ import { Absence } from "@/entities/absences/types";
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Button, modal } from "@bds-web/ui";
 import UpdateAbsenceModal from "./UpdateAbsenceModal";
+import { studentLabel } from "@/shared/utils/student-label";
+
 
 interface Props {
   data: Absence;
@@ -14,14 +16,15 @@ const AbsenceItem = ({ data }: Props) => {
     (type) => type.id === data.typeId,
   );
 
+
+
   return (
     <div className="w-full px-2 py-2 xl:py-4 h-15 flex flex-col border-b border-greyscale-20">
       <div className="flex items-center gap-2">
         <p className="text-accent mr-4">{attendType?.name}</p>
         <p className="text-body text-greyscale-70 xl:block hidden">
-          {data.isGrouped
-            ? `${data.targetStudents[0].name}외 ${data.targetStudents.length - 1}명`
-            : data.targetStudents[0].name}
+         studentId(data.isGrouped, data.targetStudents)
+         
         </p>
         <span className="text-greyscale-40 xl:block hidden">/</span>
         <p className="text-body text-greyscale-70 xl:block hidden">
@@ -33,9 +36,7 @@ const AbsenceItem = ({ data }: Props) => {
           buttonType="primary"
           onClick={() =>
             modal.open({
-              title: data.isGrouped
-                ? `${data.targetStudents[0].name}외 ${data.targetStudents.length - 1}명`
-                : data.targetStudents[0].name,
+              title: studentLabel(data.isGrouped, data.targetStudents),
               content: <UpdateAbsenceModal data={data} />,
             })
           }>
@@ -44,9 +45,7 @@ const AbsenceItem = ({ data }: Props) => {
       </div>
       <div className="xl:hidden flex items-center gap-2">
         <p className="text-caption2 text-greyscale-70">
-          {data.isGrouped
-            ? `${data.targetStudents[0].name}외 ${data.targetStudents.length - 1}명`
-            : data.targetStudents[0].name}
+          studentId(data.isGrouped, data.targetStudents)
         </p>
         <span className="text-greyscale-40">/</span>
         <p className="text-caption2 text-greyscale-70">
