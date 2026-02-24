@@ -91,3 +91,16 @@
 .slide-in-right {
   animation: slide-in-right-animation 0.3s ease-in-out forwards;
 }
+
+@keyframes slide-out-right-animation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.slide-out-right {
+  animation: slide-out-right-animation 0.3s ease-in-out forwards;
+}
