@@ -1,9 +1,8 @@
 import { useRef, useCallback, useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
+import { CLOSE_ANIMATION_DURATION } from "@/shared/constants/animation";
 
-const CLOSE_ANIMATION_DURATION = 300;
-
-export function useSwipeToClose(onClose: () => void) {
+export const useSwipeToClose = (onClose: () => void) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
