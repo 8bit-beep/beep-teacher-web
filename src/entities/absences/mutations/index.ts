@@ -9,7 +9,6 @@ import { AbsenceRequestDto } from "../types/dto";
 import {
   TOAST_FAILED_TIME,
   TOAST_SUCCESS_TIME,
-  TOAST_WARN_TIME,
 } from "@/shared/constants/toast";
 
 export const useCreateAbsenceMutation = () => {
@@ -22,7 +21,7 @@ export const useCreateAbsenceMutation = () => {
         toast.warning(
           "일부 결석 처리 실패",
           `다음 학생들의 결석 처리에 실패했습니다: ${res.data.skippedUserIds.join(", ")}`,
-          TOAST_WARN_TIME,
+          TOAST_FAILED_TIME,
         );
       } else {
         toast.success(
@@ -57,7 +56,7 @@ export const useUpdateAbsenceMutation = (absenceId: number) => {
           `다음 학생들의 결석 정보 수정에 실패했습니다: ${res.data.skippedUserIds.join(
             ", ",
           )}`,
-          TOAST_WARN_TIME,
+          TOAST_FAILED_TIME,
         );
       } else {
         toast.success(
