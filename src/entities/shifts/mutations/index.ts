@@ -7,7 +7,7 @@ import { toast } from "@cher1shrxd/toast";
 import { ShiftStatus } from "../types";
 import { modal } from "@bds-web/ui";
 import {
-  TOAST_FAILED_TIME,
+  TOAST_ISSUE_TIME,
   TOAST_SUCCESS_TIME,
 } from "@/shared/constants/toast";
 
@@ -30,7 +30,7 @@ export const useUpdateShiftStatus = (shiftId: number) => {
       toast.error(
         "근무 상태 변경에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });

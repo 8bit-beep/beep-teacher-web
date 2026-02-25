@@ -5,7 +5,7 @@ import { toast } from "@cher1shrxd/toast";
 import { ApprovalApi } from "../api";
 import { useRouter } from "@cher1shrxd/loading";
 import {
-  TOAST_FAILED_TIME,
+  TOAST_ISSUE_TIME,
   TOAST_SUCCESS_TIME,
 } from "@/shared/constants/toast";
 
@@ -28,7 +28,7 @@ export const useApproveRoom = (roomId: number) => {
       toast.error(
         "승인 처리에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });
@@ -53,7 +53,7 @@ export const useCancelApproval = (roomId: number) => {
       toast.error(
         "승인 취소에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });

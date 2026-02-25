@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { AbsenceRequestDto } from "../types/dto";
 import {
-  TOAST_FAILED_TIME,
+  TOAST_ISSUE_TIME,
   TOAST_SUCCESS_TIME,
 } from "@/shared/constants/toast";
 
@@ -21,7 +21,7 @@ export const useCreateAbsenceMutation = () => {
         toast.warning(
           "일부 결석 처리 실패",
           `다음 학생들의 결석 처리에 실패했습니다: ${res.data.skippedUserIds.join(", ")}`,
-          TOAST_FAILED_TIME,
+          TOAST_ISSUE_TIME,
         );
       } else {
         toast.success(
@@ -37,7 +37,7 @@ export const useCreateAbsenceMutation = () => {
       toast.error(
         "결석 처리 실패",
         error.response?.data.message || "결석 처리 중 오류가 발생했습니다.",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });
@@ -56,7 +56,7 @@ export const useUpdateAbsenceMutation = (absenceId: number) => {
           `다음 학생들의 결석 정보 수정에 실패했습니다: ${res.data.skippedUserIds.join(
             ", ",
           )}`,
-          TOAST_FAILED_TIME,
+          TOAST_ISSUE_TIME,
         );
       } else {
         toast.success(
@@ -73,7 +73,7 @@ export const useUpdateAbsenceMutation = (absenceId: number) => {
         "결석 정보 수정 실패",
         error.response?.data.message ||
           "결석 정보 수정 중 오류가 발생했습니다.",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });
@@ -98,7 +98,7 @@ export const useDeleteAbsenceMutation = (absenceId: number) => {
         "결석 정보 삭제 실패",
         error.response?.data.message ||
           "결석 정보 삭제 중 오류가 발생했습니다.",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });

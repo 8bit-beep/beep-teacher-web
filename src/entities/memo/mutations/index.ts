@@ -5,7 +5,7 @@ import { modal } from "@bds-web/ui";
 import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import {
-  TOAST_FAILED_TIME,
+  TOAST_ISSUE_TIME,
   TOAST_SUCCESS_TIME,
 } from "@/shared/constants/toast";
 
@@ -28,7 +28,7 @@ export const useUpdateMemoMutation = () => {
         "메모 저장 실패",
         error.response?.data.message ||
           "메모 저장에 실패했습니다. 다시 시도해주세요.",
-        TOAST_FAILED_TIME,
+        TOAST_ISSUE_TIME,
       );
     },
   });
