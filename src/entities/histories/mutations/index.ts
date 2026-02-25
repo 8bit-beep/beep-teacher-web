@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
+import { TOAST_FAILED_TIME } from "@/shared/constants/toast";
 
 export const useUpdateHistoryMutation = (roomId: number) => {
   const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ export const useUpdateHistoryMutation = (roomId: number) => {
       toast.error(
         "출석 기록 변경 실패",
         error.response?.data.message || "네트워크 오류",
+        TOAST_FAILED_TIME,
       );
     },
   });
@@ -35,7 +37,10 @@ export const useDownloadExcel = () => {
     onError: (error: AxiosError<Error>) => {
       toast.error(
         "엑셀 다운로드 실패",
-        error.status === 404 ? "해당 엑셀 파일을 찾을 수 없습니다." : "네트워크 오류",
+        error.status === 404
+          ? "해당 엑셀 파일을 찾을 수 없습니다."
+          : "네트워크 오류",
+        TOAST_FAILED_TIME,
       );
     },
   });
