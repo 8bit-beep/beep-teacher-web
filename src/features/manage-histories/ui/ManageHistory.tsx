@@ -2,13 +2,12 @@
 
 import { useGetHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
-import { useRoomStore } from "../stores/room";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { Suspense } from "react";
 import HistoryItem from "./HistoryItem";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
+import { useRoomClose } from "../hooks/useRoomClose";
 
 interface Props {
   room: Room;
@@ -22,10 +21,7 @@ const ManageHistory = ({ room }: Props) => {
     date,
     Number(checkpoint?.value || 1),
   ).data.data;
-  const { setRoom } = useRoomStore();
-  const { handlers, triggerClose, animationClass } = useSwipeToClose(
-    () => setRoom(null),
-  );
+  const { handlers, triggerClose, animationClass } = useRoomClose();
 
   return (
     <div
