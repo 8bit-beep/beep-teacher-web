@@ -23,7 +23,7 @@ const AbsenceItem = ({ data }: Props) => {
       <div className="flex items-center gap-2">
         <p className="text-accent mr-4">{attendType?.name}</p>
         <p className="text-body text-greyscale-70 xl:block hidden">
-         studentId(data.isGrouped, data.targetStudents)
+         {studentLabel(data.isGrouped, data.targetStudents)}
          
         </p>
         <span className="text-greyscale-40 xl:block hidden">/</span>
