@@ -7,8 +7,8 @@ import { toast } from "@cher1shrxd/toast";
 import { ShiftStatus } from "../types";
 import { modal } from "@bds-web/ui";
 import {
-  TOAST_ISSUE_TIME,
-  TOAST_SUCCESS_TIME,
+  TOAST_ISSUE_DURATION,
+  TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
 
 export const useUpdateShiftStatus = (shiftId: number) => {
@@ -22,7 +22,7 @@ export const useUpdateShiftStatus = (shiftId: number) => {
       toast.success(
         "신청 상태 변경 성공",
         "실 이동 신청 상태가 성공적으로 변경되었습니다.",
-        TOAST_SUCCESS_TIME,
+        TOAST_SUCCESS_DURATION,
       );
       router.refresh();
     },
@@ -30,7 +30,7 @@ export const useUpdateShiftStatus = (shiftId: number) => {
       toast.error(
         "근무 상태 변경에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
-        TOAST_ISSUE_TIME,
+        TOAST_ISSUE_DURATION,
       );
     },
   });
