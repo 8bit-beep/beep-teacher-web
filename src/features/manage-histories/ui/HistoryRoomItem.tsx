@@ -22,7 +22,7 @@ const HistoryRoomItem = ({ data }: Props) => {
               ? `${data.grade}-${data.classNumber} (${data.name})`
               : data.name}
           </p>
-          <p>{"·"}</p>
+          <p className="text-static-black text-accent">{"·"}</p>
           <p className="text-blue-light text-body">
             {`인원 ${histories.filter((a) => a.statuses[0].status).length}/${histories.length}명`}
             {" · "}
