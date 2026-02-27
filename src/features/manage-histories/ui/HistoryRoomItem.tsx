@@ -3,13 +3,15 @@
 import { Room } from "@/entities/rooms/types";
 import { useToggleData } from "../hooks/useToggleData";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
+import ManageHistory from "./ManageHistory";
 
 interface Props {
   data: Room;
 }
 
 const HistoryRoomItem = ({ data }: Props) => {
-  const { histories, toggle } = useToggleData(data);
+  const { histories, toggle, room } = useToggleData(data);
+  const isOpen = room?.id === data.id;
 
   return (
     <div className="w-full">
@@ -40,6 +42,7 @@ const HistoryRoomItem = ({ data }: Props) => {
           />
         </div>
       </div>
+      {isOpen && <ManageHistory room={data} />}
     </div>
   );
 };

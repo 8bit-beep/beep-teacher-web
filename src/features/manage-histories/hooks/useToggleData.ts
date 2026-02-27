@@ -23,5 +23,6 @@ export const useToggleData = (data: Room) => {
     toggle,
     date,
     checkpoint,
+    room,
   };
 };
