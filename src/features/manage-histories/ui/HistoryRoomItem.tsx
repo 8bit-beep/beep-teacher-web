@@ -38,7 +38,7 @@ const HistoryRoomItem = ({ data }: Props) => {
           <ChevronIcon
             size={16}
             className="text-static-black"
-            rotate={-180}
+            rotate={isOpen ? 0 : -180}
           />
         </div>
       </div>
