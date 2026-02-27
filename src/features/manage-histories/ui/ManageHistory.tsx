@@ -16,7 +16,7 @@ const ManageHistory = ({ room }: Props) => {
 
   return (
     <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
-      <div className="w-full flex p-[10px] pr-[20px]">
+      <div className="w-full flex p-[10px] pr-[20px] gap-4">
         <p className="w-[180px] text-static-black text-body text-center">학생/이름</p>
         <div className="flex-1"/>
         <p className="w-[180px] text-static-black text-body text-center">8~9교시</p>
