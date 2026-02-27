@@ -2,13 +2,12 @@
 
 import { useGetHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
-import { useRoomStore } from "../stores/room";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { Suspense } from "react";
 import HistoryItem from "./HistoryItem";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-
+import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 interface Props {
   room: Room;
 }
@@ -21,13 +20,15 @@ const ManageHistory = ({ room }: Props) => {
     date,
     Number(checkpoint?.value || 1),
   ).data.data;
-  const { setRoom } = useRoomStore();
+  const { handlers, triggerClose, animationClass } = useSwipeToClose();
 
   return (
-    <div className="w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 slide-in-right">
+    <div
+      className={`w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
+      {...handlers}>
       <div className="w-full flex justify-between items-center">
         <button
-          onClick={() => setRoom(null)}
+          onClick={triggerClose}
           className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer">
           <CloseIcon />
         </button>

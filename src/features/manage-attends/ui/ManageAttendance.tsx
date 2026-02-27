@@ -7,22 +7,23 @@ import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
 import { Button } from "@bds-web/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
-import { useRoomStore } from "../stores/room";
-
+import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 interface Props {
   room: Room;
 }
 
 const ManageAttendance = ({ room }: Props) => {
   const attendances = useGetAttendancesByRoomId(room?.id || 0).data.data;
-  const { setRoom } = useRoomStore();
   const { isApproved, toggleApproval } = useApprove(room?.id || 0);
+  const { handlers, triggerClose, animationClass } = useSwipeToClose();
 
   return (
-    <div className="w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 slide-in-right">
+    <div
+      className={`w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
+      {...handlers}>
       <div className="w-full flex justify-between items-center">
         <button
-          onClick={() => setRoom(null)}
+          onClick={triggerClose}
           className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer">
           <CloseIcon />
         </button>
