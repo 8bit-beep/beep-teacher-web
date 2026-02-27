@@ -28,10 +28,15 @@ const ManageHistory = ({ room }: Props) => {
       <div className="w-full flex justify-between items-center">
         <button
           onClick={() => setRoom(null)}
-          className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer">
+          className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer"
+        >
           <CloseIcon />
         </button>
-        <h1 className="text-h3">{room?.name}</h1>
+        <h1 className="text-h3">
+          {room?.grade && room?.classNumber
+            ? `${room?.grade}-${room?.classNumber} (${room?.name})`
+            : room?.name}
+        </h1>
       </div>
       <div className="w-full flex justify-between items-center">
         <p className="text-greyscale-40 text-caption2 xl:text-caption1">
@@ -48,7 +53,8 @@ const ManageHistory = ({ room }: Props) => {
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
               로딩중...
             </div>
-          }>
+          }
+        >
           {!!room &&
             histories.map((history) => (
               <HistoryItem
