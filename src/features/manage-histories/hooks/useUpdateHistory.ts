@@ -11,34 +11,26 @@ export const useUpdateHistory = (data: Attendance, roomId: number, index: number
     name: status.name,
     value: `${status.id}`,
   }));
+
+  const currentStatus = data.statuses[index]?.status;
   const [status, setStatus] = useState<DropdownItem | null>(
     parseToOptions.find(
-      (option) =>
-        option.name ===
-        `${data.statuses[index].status ? data.statuses[index].status?.name : "미출석"}`,
+      (option) => option.name === `${currentStatus ? currentStatus.name : "미출석"}`,
     ) || null,
   );
   const { mutateAsync } = useUpdateHistoryMutation(roomId);
 
   const updateStatus = async () => {
-    if (
-      !status ||
-      status.name ===
-        `${data.statuses[index].status ? data.statuses[index].status?.name : "미출석"}`
-    )
-      return;
+    const currentStatus = data.statuses[index]?.status; 
+    if (!status || status.name === `${currentStatus ? currentStatus.name : "미출석"}`) return;
     try {
-      await mutateAsync({
-        userId: data.userId,
-        statusId: Number(status.value),
-      });
+      await mutateAsync({ userId: data.userId, statusId: Number(status.value) });
     } catch {
       setTimeout(() => {
+        const currentStatus = data.statuses[index]?.status;  
         setStatus(
           parseToOptions.find(
-            (option) =>
-              option.name ===
-              `${data.statuses[index].status ? data.statuses[index].status?.name : "미출석"}`,
+            (option) => option.name === `${currentStatus ? currentStatus.name : "미출석"}`,
           ) || null,
         );
       }, 100);
