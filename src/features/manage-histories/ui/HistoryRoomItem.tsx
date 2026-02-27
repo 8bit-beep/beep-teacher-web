@@ -10,8 +10,7 @@ interface Props {
 }
 
 const HistoryRoomItem = ({ data }: Props) => {
-  const { histories, toggle, room } = useToggleData(data);
-  const isOpen = room?.id === data.id;
+  const { histories, toggle, isOpen } = useToggleData(data);
 
   return (
     <div className="w-full">
