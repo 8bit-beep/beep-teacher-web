@@ -1,6 +1,6 @@
 "use client";
 
-import { useRoomStore } from "../stores/room";
+import { useRoomStore } from "@/shared/stores/room";
 import ManageHistory from "./ManageHistory";
 
 const RenderManageHistory = () => {

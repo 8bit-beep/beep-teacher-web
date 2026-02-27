@@ -2,7 +2,7 @@ import { useGetHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-import { useRoomStore } from "../stores/room";
+import { useRoomStore } from "@/shared/stores/room";
 
 export const useToggleData = (data: Room) => {
   const { date } = useDateStore();

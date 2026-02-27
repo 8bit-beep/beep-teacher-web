@@ -7,8 +7,7 @@ import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
 import { Button } from "@bds-web/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
-import { useRoomClose } from "../hooks/useRoomClose";
-
+import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 interface Props {
   room: Room;
 }
@@ -16,7 +15,7 @@ interface Props {
 const ManageAttendance = ({ room }: Props) => {
   const attendances = useGetAttendancesByRoomId(room?.id || 0).data.data;
   const { isApproved, toggleApproval } = useApprove(room?.id || 0);
-  const { handlers, triggerClose, animationClass } = useRoomClose();
+  const { handlers, triggerClose, animationClass } = useSwipeToClose();
 
   return (
     <div

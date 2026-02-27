@@ -1,12 +1,11 @@
 import { useRef, useCallback, useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import { CLOSE_ANIMATION_DURATION } from "@/shared/constants/animation";
+import { useRoomStore } from "@/shared/stores/room";
 
-export const useSwipeToClose = (onClose: () => void) => {
+export const useSwipeToClose = () => {
+  const { setRoom } = useRoomStore();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
-
   const [isClosing, setIsClosing] = useState(false);
 
   const triggerClose = useCallback(() => {
@@ -15,12 +14,9 @@ export const useSwipeToClose = (onClose: () => void) => {
 
   useEffect(() => {
     if (!isClosing) return;
-    const timer = setTimeout(
-      () => onCloseRef.current(),
-      CLOSE_ANIMATION_DURATION,
-    );
+    const timer = setTimeout(() => setRoom(null), CLOSE_ANIMATION_DURATION);
     return () => clearTimeout(timer);
-  }, [isClosing]);
+  }, [isClosing, setRoom]);
 
   const { ref: swipeRef, ...swipeHandlers } = useSwipeable({
     onSwipedRight: triggerClose,
