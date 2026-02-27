@@ -12,15 +12,15 @@ export const useToggleData = (data: Room) => {
     date,
     Number(checkpoint?.value || "1"),
   ).data.data;
-  const { setRoom } = useRoomStore();
+  const { room, setRoom } = useRoomStore();
 
-  const toggleOpen = () => {
-    setRoom(data);
+  const toggle = () => {
+    setRoom(room?.id === data.id ? null : data);
   };
 
   return {
     histories,
-    toggleOpen,
+    toggle,
     date,
     checkpoint,
   };

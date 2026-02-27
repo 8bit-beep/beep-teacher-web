@@ -9,13 +9,13 @@ interface Props {
 }
 
 const HistoryRoomItem = ({ data }: Props) => {
-  const { histories, toggleOpen } = useToggleData(data);
+  const { histories, toggle } = useToggleData(data);
 
   return (
     <div className="w-full">
       <div
         className="w-full h-13.5 px-2 flex items-center justify-between border-b border-greyscale-20"
-        onClick={toggleOpen}>
+        onClick={toggle}>
         <div className="flex flex-col xl:flex-row xl:gap-[5px] items-center">
           <p className="text-static-black text-accent">
             {data.grade

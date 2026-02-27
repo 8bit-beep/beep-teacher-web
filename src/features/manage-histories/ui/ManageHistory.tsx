@@ -33,15 +33,6 @@ const ManageHistory = ({ room }: Props) => {
         </button>
         <h1 className="text-h3">{room?.name}</h1>
       </div>
-      <div className="w-full flex justify-between items-center">
-        <p className="text-greyscale-40 text-caption2 xl:text-caption1">
-          {`인원 ${histories.filter((a) => a.statuses[0].status).length}/${histories.length}명`}
-          {" · "}
-          {`외박 ${histories.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
-          {" · "}
-          {`외출 ${histories.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
-        </p>
-      </div>
       <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll">
         <Suspense
           fallback={
