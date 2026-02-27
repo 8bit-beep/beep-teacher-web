@@ -22,7 +22,7 @@ const ManageHistory = ({ room }: Props) => {
   ).data.data;
 
   return (
-    <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start">
+    <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
         <Suspense
           fallback={
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
