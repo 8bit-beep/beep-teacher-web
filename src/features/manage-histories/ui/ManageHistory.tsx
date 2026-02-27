@@ -2,7 +2,6 @@
 
 import { useGetHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
-import { useRoomStore } from "../stores/room";
 import { Suspense } from "react";
 import HistoryItem from "./HistoryItem";
 import { useCheckpointStore } from "@/features/filter/stores/checkpoint";

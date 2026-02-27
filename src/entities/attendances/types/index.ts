@@ -8,7 +8,7 @@ export interface Attendance {
   statuses: AttendanceStatus[];
 }
 
-interface AttendanceStatus {
+export interface AttendanceStatus {
   checkpoint: Omit<Checkpoint, "startAt" | "endAt" | "attendanceStartAt" | "attendanceEndAt">;
   status: AttendType | null;
 }
