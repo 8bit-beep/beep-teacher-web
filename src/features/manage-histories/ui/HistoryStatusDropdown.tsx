@@ -13,7 +13,15 @@ interface Props {
 const HistoryStatusDropdown = ({ data, roomId, index }: Props) => {
   const { status, setStatus, options } = useUpdateHistory(data, roomId, index);
 
-  return <Dropdown selected={status} onSelect={setStatus} options={options} />;
+  return (
+  <Dropdown 
+    selected={status} 
+    onSelect={setStatus} 
+    options={options} 
+    dropdownSize="medium"
+    width="180px"
+  />
+);
 };
 
 export default HistoryStatusDropdown;
