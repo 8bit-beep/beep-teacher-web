@@ -20,14 +20,20 @@ const ManageAttendance = ({ room }: Props) => {
   return (
     <div
       className={`w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
-      {...handlers}>
+      {...handlers}
+    >
       <div className="w-full flex justify-between items-center">
         <button
           onClick={triggerClose}
-          className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer">
+          className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer"
+        >
           <CloseIcon />
         </button>
-        <h1 className="text-h3">{room?.name}</h1>
+        <h1 className="text-h3">
+          {room?.grade && room?.classNumber
+            ? `${room.grade}-${room.classNumber} (${room?.name})`
+            : room?.name}
+        </h1>
       </div>
       <div className="w-full flex justify-between items-center">
         <p className="text-greyscale-40 text-caption2 xl:text-caption1">
@@ -43,7 +49,8 @@ const ManageAttendance = ({ room }: Props) => {
           onClick={(e) => {
             e.stopPropagation();
             toggleApproval();
-          }}>
+          }}
+        >
           {isApproved ? "승인 취소" : "승인하기"}
         </Button>
       </div>
@@ -53,7 +60,8 @@ const ManageAttendance = ({ room }: Props) => {
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
               로딩중...
             </div>
-          }>
+          }
+        >
           {!!room &&
             attendances.map((attendance) => (
               <AttendanceItem
