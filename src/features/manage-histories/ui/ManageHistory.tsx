@@ -30,11 +30,12 @@ const ManageHistory = ({ room }: Props) => {
             </div>
           }>
           {!!room &&
-            histories.map((history) => (
+            histories.map((history, index) => (
               <HistoryItem
                 data={history}
                 key={history.userId}
                 roomId={room.id}
+                index={index}
               />
             ))}
         </Suspense>

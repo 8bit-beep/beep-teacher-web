@@ -7,9 +7,10 @@ import { useUpdateHistory } from "../hooks/useUpdateHistory";
 interface Props {
   data: Attendance;
   roomId: number;
+  index: number;
 }
 
-const HistoryItem = ({ data, roomId }: Props) => {
+const HistoryItem = ({ data, roomId, index }: Props) => {
   const { status, setStatus, options } = useUpdateHistory(
     data,
     roomId,
@@ -17,7 +18,7 @@ const HistoryItem = ({ data, roomId }: Props) => {
 
   return (
     <div
-      className={`w-full h-14 flex items-center px-5 py-3 gap-4 ${data.statuses[0].status ? (data.statuses[0].status.name === "외박" ? "bg-red-light" : data.statuses[0].status.name === "외출" ? "bg-green-light" : "bg-static-white") : "bg-greyscale-10"}`}>
+      className={`w-full h-14 flex items-center px-5 py-3 gap-4 ${index % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
       <p className="text-body text-greyscale-40">{data.studentId}</p>
       <p className="text-accent text-static-black">{data.username}</p>
       <div className="flex-1"/>
