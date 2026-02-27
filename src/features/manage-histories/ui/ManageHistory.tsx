@@ -3,8 +3,8 @@
 import { useGetAllCheckpointHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
 import { Suspense } from "react";
-import HistoryItem from "./HistoryItem";
 import { useDateStore } from "@/features/filter/stores/date";
+import AttendanceStatusItem from "@/widgets/attendance-status-dropdown/AttendanceStatusItem";
 
 interface Props {
   room: Room;
@@ -31,13 +31,14 @@ const ManageHistory = ({ room }: Props) => {
           }>
           {!!room &&
             histories.map((history, index) => (
-              <HistoryItem
+              <AttendanceStatusItem  
                 data={history}
                 key={history.userId}
                 roomId={room.id}
                 index={index}
               />
-            ))}
+            ))
+          }
         </Suspense>
     </div>
   );
