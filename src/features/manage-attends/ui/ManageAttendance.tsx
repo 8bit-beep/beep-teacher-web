@@ -29,7 +29,7 @@ const ManageAttendance = ({ room }: Props) => {
         </button>
         <h1 className="text-h3">
           {room?.grade && room?.classNumber
-            ? `${room?.grade}-${room?.classNumber} (${room?.name})`
+            ? `${room.grade}-${room.classNumber} (${room?.name})`
             : room?.name}
         </h1>
       </div>
