@@ -1,0 +1,2 @@
+export const TOAST_SUCCESS_DURATION = 1000;
+export const TOAST_ISSUE_DURATION = 1500;

@@ -28,7 +28,8 @@ const ManageHistory = ({ room }: Props) => {
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
               로딩중...
             </div>
-          }>
+          }
+        >
           {!!room &&
             histories.map((history, index) => (
               <AttendanceStatusItem  

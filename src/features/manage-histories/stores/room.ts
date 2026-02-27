@@ -1,4 +1,3 @@
-import { Room } from "@/entities/rooms/types";
 import { create } from "zustand";
 
 interface State {
@@ -6,7 +5,7 @@ interface State {
   toggleRoom: (roomId: number) => void;
 }
 
-export const useRoomStore = create<State>((set) => ({
+export const useHistoryRoomStore = create<State>((set) => ({
   openRoomIds: [],
   toggleRoom: (roomId) =>
     set((state) => ({

@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { toast } from "@cher1shrxd/toast";
 import { useRouter } from "@cher1shrxd/loading";
+import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 
 export const useUpdateAttendanceStatus = (roomId: number) => {
   const queryClient = useQueryClient();
@@ -17,6 +18,7 @@ export const useUpdateAttendanceStatus = (roomId: number) => {
       toast.error(
         "출석 상태 변경에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
+        TOAST_ISSUE_DURATION,
       );
     },
   });
@@ -24,7 +26,7 @@ export const useUpdateAttendanceStatus = (roomId: number) => {
 
 export const useUpdateAttendanceStatusWithCheckpoint = () => {
   const router = useRouter();
-  
+
   return useMutation({
     mutationFn: AttendanceApi.updateAttendanceStatusWithCheckpoint,
     onSuccess: async () => {
@@ -34,7 +36,8 @@ export const useUpdateAttendanceStatusWithCheckpoint = () => {
       toast.error(
         "출석 상태 변경에 실패했습니다.",
         error.response?.data.message || "네트워크 오류",
+        TOAST_ISSUE_DURATION,
       );
-    }
+    },
   });
-}
+};

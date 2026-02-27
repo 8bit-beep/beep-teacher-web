@@ -1,6 +1,6 @@
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
 import { Room } from "@/entities/rooms/types";
-import { useRoomStore } from "../stores/room";
+import { useRoomStore } from "@/shared/stores/room";
 
 export const useToggleData = (data: Room) => {
   const attendances = useGetAttendancesByRoomId(data.id).data.data;
