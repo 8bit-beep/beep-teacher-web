@@ -1,10 +1,10 @@
 import { Attendance } from "@/entities/attendances/types";
 import api from "@/shared/libs/api";
 
-export const HistoryApi = {
-  getHistories: async (roomId: number, date: string, checkpointId: number) => {
+export const HistoryApi = {  
+  getAllCheckpointHistories: async (roomId: number, date: string) => {
     return await api.get<Attendance[]>(
-      `/attendances?roomId=${roomId}&isCurrentCheckpoint=false&date=${date}&checkpointId=${checkpointId}`,
+      `/attendances/all-checkpoints?roomId=${roomId}&date=${date}`,
     );
   },
 

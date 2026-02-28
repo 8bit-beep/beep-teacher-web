@@ -1,27 +1,21 @@
-import { useGetHistories } from "@/entities/histories/queries";
+import { useGetAllCheckpointHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
-import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-import { useRoomStore } from "@/shared/stores/room";
+import { useHistoryRoomStore } from "../stores/room";
 
 export const useToggleData = (data: Room) => {
   const { date } = useDateStore();
-  const { checkpoint } = useCheckpointStore();
-  const histories = useGetHistories(
-    data.id,
-    date,
-    Number(checkpoint?.value || "1"),
-  ).data.data;
-  const { setRoom } = useRoomStore();
+  const histories = useGetAllCheckpointHistories(data.id, date).data.data;
+  const { openRoomIds, toggleRoom } = useHistoryRoomStore();
 
-  const toggleOpen = () => {
-    setRoom(data);
-  };
+  const isOpen = openRoomIds.includes(data.id);
+
+  const toggle = () => toggleRoom(data.id);
 
   return {
     histories,
-    toggleOpen,
+    toggle,
+    isOpen,
     date,
-    checkpoint,
   };
 };

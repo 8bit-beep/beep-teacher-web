@@ -1,55 +1,28 @@
 "use client";
 
-import { useGetHistories } from "@/entities/histories/queries";
+import { useGetAllCheckpointHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
-import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { Suspense } from "react";
-import HistoryItem from "./HistoryItem";
-import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
-import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
+import AttendanceStatusItem from "@/widgets/attendance-status-dropdown/AttendanceStatusItem";
+
 interface Props {
   room: Room;
 }
 
 const ManageHistory = ({ room }: Props) => {
   const { date } = useDateStore();
-  const { checkpoint } = useCheckpointStore();
-  const histories = useGetHistories(
-    room?.id || 0,
-    date,
-    Number(checkpoint?.value || 1),
-  ).data.data;
-  const { handlers, triggerClose, animationClass } = useSwipeToClose();
+  const histories = useGetAllCheckpointHistories(room.id, date).data.data;
 
   return (
-    <div
-      className={`w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
-      {...handlers}
-    >
-      <div className="w-full flex justify-between items-center">
-        <button
-          onClick={triggerClose}
-          className="bg-static-white shadow-modal rounded-full p-4 cursor-pointer"
-        >
-          <CloseIcon />
-        </button>
-        <h1 className="text-h3">
-          {room?.grade && room?.classNumber
-            ? `${room.grade}-${room.classNumber} (${room?.name})`
-            : room?.name}
-        </h1>
+    <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
+      <div className="w-full flex p-[10px] pr-[20px] gap-4">
+        <p className="w-[180px] text-static-black text-body text-center">학생/이름</p>
+        <div className="flex-1"/>
+        <p className="w-[180px] text-static-black text-body text-center">8~9교시</p>
+        <p className="w-[180px] text-static-black text-body text-center">10~11교시</p>
+        <p className="w-[180px] text-static-black text-body text-center">최종</p>
       </div>
-      <div className="w-full flex justify-between items-center">
-        <p className="text-greyscale-40 text-caption2 xl:text-caption1">
-          {`인원 ${histories.filter((a) => a.statuses[0].status).length}/${histories.length}명`}
-          {" · "}
-          {`외박 ${histories.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
-          {" · "}
-          {`외출 ${histories.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
-        </p>
-      </div>
-      <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll">
         <Suspense
           fallback={
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
@@ -58,15 +31,16 @@ const ManageHistory = ({ room }: Props) => {
           }
         >
           {!!room &&
-            histories.map((history) => (
-              <HistoryItem
+            histories.map((history, index) => (
+              <AttendanceStatusItem  
                 data={history}
                 key={history.userId}
                 roomId={room.id}
+                index={index}
               />
-            ))}
+            ))
+          }
         </Suspense>
-      </div>
     </div>
   );
 };

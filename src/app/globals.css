@@ -104,3 +104,18 @@
 .slide-out-right {
   animation: slide-out-right-animation 0.3s ease-in-out forwards;
 }
+
+@keyframes slide-in-down-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-1.6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-down {
+  animation: slide-in-down-animation 0.3s ease-in-out forwards;
+}
