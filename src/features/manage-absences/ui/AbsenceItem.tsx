@@ -44,7 +44,7 @@ const AbsenceItem = ({ data }: Props) => {
       </div>
       <div className="xl:hidden flex items-center gap-2">
         <p className="text-caption2 text-greyscale-70">
-          studentId(data.isGrouped, data.targetStudents)
+          {studentLabel(data.isGrouped, data.targetStudents)}         
         </p>
         <span className="text-greyscale-40">/</span>
         <p className="text-caption2 text-greyscale-70">
