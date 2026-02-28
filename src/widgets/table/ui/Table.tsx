@@ -38,7 +38,7 @@ const Table = ({ header, rows }: Props) => {
               rows.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10" ${rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
+                  className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10 ${rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
                   {row.map((cell, cellIndex) => (
                     <td
                       key={cellIndex}
