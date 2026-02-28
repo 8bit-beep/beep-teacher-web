@@ -30,12 +30,12 @@ export const ROUTES = [
     icon: <PersonIcon size={20} />,
     mobileLabel: "실 이동",
   },
-  {
-    label: "출석 승인 현황",
-    path: "/approvals",
-    icon: <OkIcon size={20} />,
-    mobileLabel: "출석 승인",
-  },
+  // {
+  //   label: "출석 승인 현황",
+  //   path: "/approvals",
+  //   icon: <OkIcon size={20} />,
+  //   mobileLabel: "출석 승인",
+  // },
   {
     label: "출석 기록 조회",
     path: "/histories",
