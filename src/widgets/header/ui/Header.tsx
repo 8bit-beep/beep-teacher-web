@@ -8,9 +8,12 @@ import { Suspense } from "react";
 
 const Header = () => {
   return (
-    <header className="w-full flex items-center gap-4 my-4 px-2 xl:hidden">
+    <header className="w-full flex items-center gap-2 my-4 px-[54px] xl:hidden">
       <Image width={40} height={40} src="/logo.svg" alt="logo" />
-      <ManageMemo />
+      <div className="w-full flex justify-between">
+        <div></div>
+        <ManageMemo />
+      </div>
       <div className="flex-1" />
       <Suspense fallback={<SkeletonUser />}>
         <UserIndicator />
