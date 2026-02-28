@@ -8,7 +8,6 @@ import { Button } from "@bds-web/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
-import { colors } from "@bds-web/colors";
 
 interface Props {
   room: Room;
@@ -45,13 +44,11 @@ const ManageAttendance = ({ room }: Props) => {
         {" · "}
         {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
       </p>
-      <div
-        className="flex items-center gap-2"
-        style={{ color: colors.green.light }}>
+      <div className="flex items-center gap-2 text-green-light">
         {isApproved ? (
           <>
             <p className="text-accent">승인됨</p>
-            <div style={{ color: colors.red.light }}>
+            <div className="text-red-light">
               <CloseIcon onClose={toggleApproval} />
             </div>
           </>

@@ -6,7 +6,6 @@ import { useToggleData } from "../hooks/useToggleData";
 import { useApprove } from "../../manage-approvals/hooks/useApprove";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
-import { colors } from "@bds-web/colors";
 
 interface Props {
   data: Room;
@@ -34,23 +33,21 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
         <p className="text-blue-light">{stats}</p>
       </div>
       <div style={{ width: "140px" }}>
-        <p className="text-greyscale-70">{approvedAt ?? "-"}</p>
+        <p className="text-greyscale-70">{approvedAt}</p>
       </div>
       <div style={{ width: "144px" }}>
-        <p className="text-greyscale-70">{approvedTeacher ?? "-"}</p>
+        <p className="text-greyscale-70">{approvedTeacher}</p>
       </div>
       <div style={{ width: "196px" }} className="flex items-center justify-end">
         <div className="flex items-center gap-2 xl:gap-4">
-          <div
-            className="flex items-center gap-2"
-            style={{ color: colors.green.light }}>
+          <div className="flex items-center gap-2 text-green-light">
             {isApproved ? (
               <>
                 <p className="text-accent">승인됨</p>
                 <div
-                style={{ color: colors.red.light }}
-                onClick={(e) => e.stopPropagation()}>
-                <CloseIcon onClose={toggleApproval} />
+                  className="text-red-light"
+                  onClick={(e) => e.stopPropagation()}>
+                  <CloseIcon onClose={toggleApproval} />
                 </div>
               </>
             ) : (
