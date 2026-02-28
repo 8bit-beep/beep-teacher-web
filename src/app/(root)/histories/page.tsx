@@ -3,7 +3,6 @@ import Download from "@/features/download/ui/Download";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
 import HistoryRoomItem from "@/features/manage-histories/ui/HistoryRoomItem";
-import RenderManageHistory from "@/features/manage-histories/ui/RenderManageHistory";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import HistoryIcon from "@/shared/icons/HistoryIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -55,7 +54,6 @@ export default async function HistoriesPage({
           </div>
         </div>
       </Section>
-      <RenderManageHistory />
     </div>
   );
 }
