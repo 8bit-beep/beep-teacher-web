@@ -3,7 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { CLOSE_ANIMATION_DURATION } from "@/shared/constants/animation";
 import { useRoomStore } from "@/shared/stores/room";
 
-export const useSwipeToClose = (roomId: number) => {
+export const useSwipeToClose = () => {
   const { setRoom } = useRoomStore();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isClosing, setIsClosing] = useState(false);
