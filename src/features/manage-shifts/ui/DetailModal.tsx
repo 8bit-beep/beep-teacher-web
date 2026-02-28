@@ -32,7 +32,7 @@ const DetailModal = ({ data }: Props) => {
           </p>
         </div>
         <div className="w-full flex flex-col items-start gap-1 p-1">
-          <span className="text-caption1">이동 내용</span>
+          <span className="text-caption1">요청 내용</span>
           <div className="flex items-center gap-2">
             <p className="w-full text-body break-keep shadow-modal bg-static-white rounded-medium px-5 py-2">
               {data.room.name}
