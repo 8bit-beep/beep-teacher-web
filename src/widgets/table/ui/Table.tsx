@@ -43,7 +43,7 @@ const Table = ({ header, rows }: Props) => {
                     <td
                       key={cellIndex}
                       style={{ width: header[cellIndex]?.width }}
-                      className="h-12 text-h4">
+                      className="h-15 text-h4">
                       {cell}
                     </td>
                   ))}
