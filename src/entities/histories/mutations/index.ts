@@ -3,22 +3,19 @@ import { HistoryApi } from "../api";
 import { toast } from "@cher1shrxd/toast";
 import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
-import { useCheckpointStore } from "@/features/filter/stores/checkpoint";
 import { useDateStore } from "@/features/filter/stores/date";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 
-export const useUpdateHistoryMutation = (roomId: number) => {
+export const useUpdateHistoryMutation = (roomId: number, checkpointId: number) => {
   const queryClient = useQueryClient();
   const { date } = useDateStore();
-  const { checkpoint } = useCheckpointStore();
-  const checkpointId = Number(checkpoint?.value || "1");
 
   return useMutation({
     mutationFn: async (data: { userId: number; statusId: number }) =>
       await HistoryApi.updateHistory({ ...data, date, checkpointId }),
     onSuccess: async () => {
       await queryClient.refetchQueries({
-        queryKey: ["histories", roomId, date, checkpointId],
+        queryKey: ["histories", "all-checkpoints", roomId, date],
       });
     },
     onError: (error: AxiosError<Error>) => {

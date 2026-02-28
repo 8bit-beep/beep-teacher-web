@@ -13,12 +13,15 @@ export const useUpdateHistory = (data: Attendance, roomId: number, index: number
   }));
 
   const currentStatus = data.statuses[index]?.status;
+  const checkpointId = data.statuses[index]?.checkpoint.id;
+
   const [status, setStatus] = useState<DropdownItem | null>(
     parseToOptions.find(
       (option) => option.name === `${currentStatus ? currentStatus.name : "미출석"}`,
     ) || null,
   );
-  const { mutateAsync } = useUpdateHistoryMutation(roomId);
+
+  const { mutateAsync } = useUpdateHistoryMutation(roomId, checkpointId);
 
   const updateStatus = async () => {
     const currentStatus = data.statuses[index]?.status; 
