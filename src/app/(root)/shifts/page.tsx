@@ -3,6 +3,7 @@ import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import Detail from "@/features/manage-shifts/ui/Detail";
 import StatusIndicator from "@/features/manage-shifts/ui/StatusIndicator";
 import PersonIcon from "@/shared/icons/PersonIcon";
+import { StudentId } from "@/shared/ui/StudentId";
 import { pad } from "@/shared/utils/pad";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
@@ -36,15 +37,17 @@ export default async function ShiftsPage() {
         <div className="w-full flex-1 min-h-0 overflow-y-auto hidden xl:block">
           <Table
             header={[
-              { title: "학번", width: "124px" },
-              { title: "이름", width: "84px" },
+              { title: "학번/이름", width: "168px" },
               { title: "변경 교시", width: "140px" },
               { title: "이동 내용" },
               { title: "신청 사유", width: "165px" },
             ]}
             rows={data.map((shift) => [
-              `${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`,
-              shift.user.username,
+              <StudentId
+                key={shift.id}
+                id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
+                name={shift.user.username}
+              />,              
               shift.checkpoint.name,
               `${shift.room.name}로 이동`,
               <Detail data={shift} key={shift.id + 1} />,
