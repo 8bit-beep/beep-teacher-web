@@ -14,7 +14,7 @@ const ManageMemo = () => {
 
   return (
     <button
-      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "border-2 border-(--bds-color-red-light)" : ""}`}
+      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "outline-2 outline-(--bds-color-red-light)" : ""}`}
       onClick={() => {
         markAsRead();
         modal.open({ title: "메모", content: <MemoModal /> });
