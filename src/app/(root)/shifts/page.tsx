@@ -44,6 +44,7 @@ export default async function ShiftsPage() {
             ]}
             rows={data.map((shift) => [
               <StudentId
+                key={shift.id}
                 id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
                 name={shift.user.username}
               />,              
