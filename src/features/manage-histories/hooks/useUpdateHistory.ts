@@ -24,7 +24,6 @@ export const useUpdateHistory = (data: Attendance, roomId: number, index: number
   const { mutateAsync } = useUpdateHistoryMutation(roomId, checkpointId);
 
   const updateStatus = async () => {
-    const currentStatus = data.statuses[index]?.status; 
     if (!status || status.name === `${currentStatus ? currentStatus.name : "미출석"}`) return;
     try {
       await mutateAsync({ userId: data.userId, statusId: Number(status.value) });
