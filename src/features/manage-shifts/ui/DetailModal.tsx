@@ -16,27 +16,28 @@ const DetailModal = ({ data }: Props) => {
     <div className="w-full flex flex-col gap-5 max-w-lg">
       <div className="w-full flex flex-col gap-1">
         <span className="text-caption1">학번 이름</span>
-        <p className="text-h4">{`${data.user.studentInfo?.grade || 0}${data.user.studentInfo?.classNumber || 0}${pad(data.user.studentInfo?.num || 0, 2)} ${data.user.username}`}</p>
+        <p className="text-body">{`${data.user.studentInfo?.grade || 0}${data.user.studentInfo?.classNumber || 0}${pad(data.user.studentInfo?.num || 0, 2)} ${data.user.username}`}</p>
       </div>
       <div className="w-full flex flex-col gap-1">
         <span className="text-caption1">신청 사유</span>
-        <div className="w-full text-h4 whitespace-pre-wrap wrap-break-word">
+        <div className="w-full min-h-24 text-body whitespace-pre-wrap wrap-break-word shadow-modal">
           {data.reason}
         </div>
       </div>
-      <div className="w-full flex flex-col items-start gap-1">
-        <span className="text-caption1">실 이동 시간</span>
-        <p className="text-h4 break-keep shadow-modal bg-static-white rounded-medium px-5 py-2">
-          {data.checkpoint.name}
-        </p>
-      </div>
-      <div className="w-full flex flex-col items-start gap-1">
-        <span className="text-caption1">요청 내용</span>
-        <div className="flex items-center gap-2">
-          <p className="text-h4 break-keep shadow-modal bg-static-white rounded-medium px-5 py-2">
-            {data.room.name}
+      <div className="w-full flex gap-1">
+        <div className="w-full flex flex-col items-start gap-1 p-1">
+          <span className="text-caption1">실 이동 시간</span>
+          <p className="w-full text-body break-keep shadow-modal bg-static-white rounded-medium px-5 py-2">
+            {data.checkpoint.name}
           </p>
-          으로 이동
+        </div>
+        <div className="w-full flex flex-col items-start gap-1 p-1">
+          <span className="text-caption1">이동 내용</span>
+          <div className="flex items-center gap-2">
+            <p className="w-full text-body break-keep shadow-modal bg-static-white rounded-medium px-5 py-2">
+              {data.room.name}
+            </p>
+          </div>
         </div>
       </div>
       {data.status === "WAITING" ? (
