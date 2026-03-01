@@ -23,8 +23,7 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}
-        mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
+        headerOptions={<Refresh />}>
 
         <Suspense
           fallback={
