@@ -35,27 +35,28 @@ export default async function ClassroomPage({
             <FilterClassroom />
           </div>
         }>
-        <div className="w-full flex-1 min-h-0 overflow-y-auto hidden xl:block">
+        <div className="w-full flex-1 min-h-0 overflow-y-auto">
           <Table
             header={[
               { title: "학번/이름" },
-              { title: "8~9교시", width: "180px" },
-              { title: "10~11교시", width: "180px" },
+              { title: "8~9교시", width: "196px" },
+              { title: "10~11교시", width: "196px" },
               { title: "최종", width: "220px" },
             ]}
             rows={data.map((attendance, index) => [
-              <div className="flex flex-col">
+              <div className="flex gap-4">
                 <p className="text-body text-greyscale-40">{attendance.studentId}</p>
                 <p className="text-accent text-static-black">{attendance.username}</p>
               </div>,
               ...attendance.statuses.map((statusItem, statusIndex) => (
-                <ClassroomDropdown
-                  key={statusItem.checkpoint.id}
-                  data={attendance}
-                  statusIndex={statusIndex}
-                />
+                <div key={statusItem.checkpoint.id} className="pl-4">
+                    <ClassroomDropdown
+                      data={attendance}
+                      statusIndex={statusIndex}
+                    />
+                </div>
               )),
-            ])}          />
+            ])}/>
         </div>
       </Section>
     </div>
