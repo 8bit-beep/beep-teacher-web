@@ -43,7 +43,7 @@ export default async function ClassroomPage({
               { title: "10~11교시", width: "196px" },
               { title: "최종", width: "220px" },
             ]}
-            rows={data.map((attendance, index) => [
+            rows={data.map((attendance) => [
               <div className="flex gap-4">
                 <p className="text-body text-greyscale-40">{attendance.studentId}</p>
                 <p className="text-accent text-static-black">{attendance.username}</p>
