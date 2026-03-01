@@ -1,5 +1,5 @@
 import { AbsenceApi } from "@/entities/absences/api";
-import AbsenceItem from "@/features/manage-absences/ui/AbsenceItem";
+import AbsencesDropdownTable from "@/features/manage-absences/ui/AbsencesDropdownTable";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import CalendarIcon from "@/shared/icons/CalendarIcon";
@@ -29,15 +29,7 @@ export default async function AbsencesPage({
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          {data.totalPages > 0 ? (
-            data.content.map((absence) => (
-              <AbsenceItem data={absence} key={absence.absenceId} />
-            ))
-          ) : (
-            <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-              결석 정보가 없습니다.
-            </div>
-          )}
+          <AbsencesDropdownTable data={data.content} />
         </div>
         <Pagination
           totalPages={data.totalPages}

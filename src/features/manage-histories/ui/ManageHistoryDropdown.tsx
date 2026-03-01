@@ -12,9 +12,14 @@ interface Props {
 
 const ManageHistoryDropdown = ({ data, roomId, index }: Props) => {
   const { status, setStatus, options } = useUpdateHistory(data, roomId, index);
+  const shouldHighlightAbsent = status?.name === "미출석";
 
   return (
-    <div className={`${status?.name === "미출석" ? "border-2 border-[#EF5A5A] rounded-large" : ""}`}>
+    <div
+      className={
+        shouldHighlightAbsent ? "border-2 border-[#EF5A5A] rounded-large" : ""
+      }
+    >
       <Dropdown
         selected={status}
         onSelect={setStatus}
