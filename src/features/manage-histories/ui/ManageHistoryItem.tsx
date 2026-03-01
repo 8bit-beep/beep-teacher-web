@@ -1,7 +1,7 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
-import AttendanceStatusDropdown from "./AttendanceStatusDropdown";
+import AttendanceStatusDropdown from "./ManageHistoryDropdown";
 
 interface Props {
   data: Attendance;
@@ -9,7 +9,7 @@ interface Props {
   index: number;
 }
 
-const AttendanceStatusItem = ({ data, roomId, index }: Props) => {
+const ManageHistoryItem = ({ data, roomId, index }: Props) => {
   return (
     <div
       className={`w-full h-14 flex items-center px-5 py-3 gap-4 ${index % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
@@ -28,4 +28,4 @@ const AttendanceStatusItem = ({ data, roomId, index }: Props) => {
   );
 };
 
-export default AttendanceStatusItem;
+export default ManageHistoryItem;
