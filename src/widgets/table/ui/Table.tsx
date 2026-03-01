@@ -11,12 +11,12 @@ const Table = ({ header, rows }: Props) => {
     <div className="w-full flex-1 min-h-0 flex flex-col">
       <table className="w-full border-collapse table-auto">
         <thead>
-          <tr className="[&_th:first-child]:pl-2 xl:[&_th:first-child]:pl-10 [&_th:last-child]:pr-2 xl:[&_th:last-child]:pr-10">
+          <tr className="[&_th:first-child]:pl-10 [&_th:last-child]:pr-10">
             {header.map((col, index) => (
               <th
                 key={index}
                 style={{ width: col?.width }}
-                className="text-left py-3 bg-blue-light text-static-white text-caption1 xl:text-h4">
+                className="text-left py-3 bg-blue-light text-static-white text-body xl:text-h4">
                 {col.title}
               </th>
             ))}
