@@ -8,6 +8,7 @@ interface Props {
   title: string;
   description: string;
   headerOptions?: ReactNode;
+  mobileFilter?: ReactNode;
   children?: ReactNode;
 }
 
@@ -16,6 +17,7 @@ const Section = ({
   title,
   description,
   headerOptions,
+  mobileFilter,
   children,
 }: Props) => {
   return (
@@ -32,6 +34,9 @@ const Section = ({
         </div>
         <div className="flex items-center gap-3">{headerOptions}</div>
       </header>
+      {mobileFilter && (
+        <div className="w-full lg:hidden px-2">{mobileFilter}</div>
+      )}
       <PullToRefresh>{children}</PullToRefresh>
     </section>
   );
