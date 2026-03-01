@@ -14,13 +14,13 @@ const ManageMemo = () => {
 
   return (
     <button
-      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "outline-2 outline-(--bds-color-red-light)" : ""}`}
+      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "outline-2 outline-red-light" : ""}`}
       onClick={() => {
         markAsRead();
         modal.open({ title: "메모", content: <MemoModal /> });
       }}>
       <div className="relative">
-        {hasUnread && <AlertIcon className="absolute -top-1 -left-1.5 text-(--bds-color-red-light)" size={12} />}
+        {hasUnread && <AlertIcon className="absolute -top-1 -left-1.5 text-red-light" size={12} />}
         <MemoIcon className="text-blue-light" size={20} />
       </div>
       <p className="text-body text-static-black">메모</p>
