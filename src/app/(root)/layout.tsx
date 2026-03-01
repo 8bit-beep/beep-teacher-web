@@ -1,4 +1,3 @@
-import PullToRefresh from "@/shared/ui/PullToRefresh";
 import Header from "@/widgets/header/ui/Header";
 import Sidebar from "@/widgets/sidebar/ui/Sidebar";
 import Tabbar from "@/widgets/tabbar/ui/Tabbar";
