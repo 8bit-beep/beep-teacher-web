@@ -4,7 +4,7 @@ import { useGetAllCheckpointHistories } from "@/entities/histories/queries";
 import { Room } from "@/entities/rooms/types";
 import { Suspense } from "react";
 import { useDateStore } from "@/features/filter/stores/date";
-import AttendanceStatusItem from "@/widgets/attendance-status-dropdown/AttendanceStatusItem";
+import AttendanceStatusItem from "@/features/manage-histories/ui/AttendanceStatusItem";
 
 interface Props {
   room: Room;
