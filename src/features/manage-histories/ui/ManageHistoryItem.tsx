@@ -1,7 +1,7 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
-import AttendanceStatusDropdown from "./AttendanceStatusDropdown";
+import AttendanceStatusDropdown from "./ManageHistoryDropdown";
 
 interface Props {
   data: Attendance;
