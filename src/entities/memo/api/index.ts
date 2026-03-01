@@ -11,6 +11,6 @@ export const MemoApi = {
   },
 
   markAsRead: async () => {
-    return api.post("/memos");
+    return api.patch("/memos", { isRead: true });
   }
 }
