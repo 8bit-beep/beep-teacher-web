@@ -9,7 +9,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
     <div className="w-full h-svh flex items-start flex-col xl:flex-row pt-[50px] xl:p-0">
       <Sidebar />
       <Header />
-      <main className="w-full xl:w-auto flex-1 h-[calc(100%-147px)] px-[54px] xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
+      <main className="w-full xl:w-auto flex-1 h-[calc(100%-147px)] px-[54px] pb-[55px] xl:pb-0 xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
         {children}
       </main>
       <Tabbar />
