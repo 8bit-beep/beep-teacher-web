@@ -8,5 +8,9 @@ export const MemoApi = {
 
   updateMemo: async (newContent: string) => {
     return api.patch("/memos", { newContent });
+  },
+
+  markAsRead: async () => {
+    return api.post("/memos");
   }
 }
