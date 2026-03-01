@@ -17,7 +17,7 @@ const HistoryRoomItem = ({ data }: Props) => {
       <div
         className="w-full h-13.5 px-2 flex items-center justify-between border-b border-greyscale-20"
         onClick={toggle}>
-        <div className="flex flex-col xl:flex-row xl:gap-[5px] items-center">
+        <div className="flex flex-col xl:flex-row xl:gap-1.25 items-center">
           <p className="text-static-black text-accent">
             {data.grade
               ? `${data.grade}-${data.classNumber} (${data.name})`

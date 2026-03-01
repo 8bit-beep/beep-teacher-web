@@ -16,12 +16,12 @@ const ManageHistory = ({ room }: Props) => {
 
   return (
     <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
-      <div className="w-full flex p-[10px] pr-[20px] gap-4">
-        <p className="w-[180px] text-static-black text-body text-center">학생/이름</p>
+      <div className="w-full flex p-2.5 pr-5 gap-4">
+        <p className="w-45 text-static-black text-body text-center">학생/이름</p>
         <div className="flex-1"/>
-        <p className="w-[180px] text-static-black text-body text-center">8~9교시</p>
-        <p className="w-[180px] text-static-black text-body text-center">10~11교시</p>
-        <p className="w-[180px] text-static-black text-body text-center">최종</p>
+        <p className="w-45 text-static-black text-body text-center">8~9교시</p>
+        <p className="w-45 text-static-black text-body text-center">10~11교시</p>
+        <p className="w-45 text-static-black text-body text-center">최종</p>
       </div>
         <Suspense
           fallback={
