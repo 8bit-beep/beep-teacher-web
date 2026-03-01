@@ -10,7 +10,7 @@ interface Props {
   index: number;
 }
 
-const AttendanceStatusDropdown = ({ data, roomId, index }: Props) => {
+const ManageHistoryDropdown = ({ data, roomId, index }: Props) => {
   const { status, setStatus, options } = useUpdateHistory(data, roomId, index);
 
   return (
@@ -26,4 +26,4 @@ const AttendanceStatusDropdown = ({ data, roomId, index }: Props) => {
   );
 };
 
-export default AttendanceStatusDropdown;
+export default ManageHistoryDropdown;

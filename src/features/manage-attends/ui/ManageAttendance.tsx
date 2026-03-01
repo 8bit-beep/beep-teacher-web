@@ -8,6 +8,7 @@ import { Button } from "@bds-web/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
+
 interface Props {
   room: Room;
 }
@@ -36,23 +37,33 @@ const ManageAttendance = ({ room }: Props) => {
         </h1>
       </div>
       <div className="w-full flex justify-between items-center">
-        <p className="text-greyscale-40 text-caption2 xl:text-caption1">
-          {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
-          {" · "}
-          {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
-          {" · "}
-          {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
-        </p>
-        <Button
-          buttonSize="small"
-          buttonType={isApproved ? "danger" : "primary"}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleApproval();
-          }}
-        >
-          {isApproved ? "승인 취소" : "승인하기"}
-        </Button>
+      <p className="text-blue-light text-caption2 xl:text-accent">
+        {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
+        {" · "}
+        {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
+        {" · "}
+        {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
+      </p>
+      <div className="flex items-center gap-2 text-green-light">
+        {isApproved ? (
+          <>
+            <p className="text-accent">승인됨</p>
+            <div className="text-red-light">
+              <CloseIcon onClose={toggleApproval} />
+            </div>
+          </>
+        ) : (
+          <Button
+            buttonSize="small"
+            buttonType="primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleApproval();
+            }}>
+            승인하기
+          </Button>
+        )}
+      </div>
       </div>
       <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll">
         <Suspense
