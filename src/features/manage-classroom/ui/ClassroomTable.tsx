@@ -10,11 +10,11 @@ const ClassroomTable = ({ data }: Props) => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="w-full flex h-12 bg-[#3D6B9A] items-center px-5 gap-4">
+      <div className="w-full flex h-12 bg-blue-light items-center px-5 gap-4">
         <p className="text-body text-static-white">학번/이름</p>
         <div className="flex-1" />
         {checkpointNames.map((name) => (
-          <p key={name} className="w-[180px] text-body text-static-white text-center">
+          <p key={name} className="w-45 text-body text-static-white text-center">
             {name}
           </p>
         ))}
