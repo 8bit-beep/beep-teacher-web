@@ -13,7 +13,7 @@ const ClassroomDropdown = ({ data, statusIndex }: Props) => {
   const { status, setStatus, options } = useUpdateClassroom(data, statusIndex);
 
   return (
-    <div className={`${status?.name === "미출석" ? "border-2 border-[#EF5A5A] rounded-large" : ""}`}>
+    <div className={`${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
       <Dropdown
         selected={status}
         onSelect={setStatus}

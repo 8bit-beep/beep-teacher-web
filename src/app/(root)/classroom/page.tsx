@@ -26,7 +26,7 @@ export default async function ClassroomPage({
       </div>
       <Section
         title="반별 조회"
-        description="학생들의 반 별 출석여부를 조회하세요!"
+        description="학생들의 반별 출석여부를 조회하세요!"
         icon={<DashboardIcon size={24} />}
         headerOptions={
           <div className="flex items-center gap-3">
