@@ -28,9 +28,10 @@ export const useUpdateClassroom = (data: Attendance, statusIndex: number) => {
       await mutateAsync({ userId: data.userId, statusId: Number(status.value), checkpointId });
     } catch {
       setTimeout(() => {
+        const latestStatus = data.statuses[statusIndex]?.status;
         setStatus(
           options.find(
-            (option) => option.name === (currentStatus ? currentStatus.name : "미출석"),
+            (option) => option.name === (latestStatus ? latestStatus.name : "미출석"),
           ) || null,
         );
       }, 100);
