@@ -1,11 +1,12 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
-import ClassroomTable from "@/features/manage-classroom/ui/ClassroomTable";
+import ClassroomDropdown from "@/features/manage-classroom/ui/ClassroomDropdown";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
+import Table from "@/widgets/table/ui/Table";
 
 export default async function ClassroomPage({
   searchParams,
@@ -34,16 +35,27 @@ export default async function ClassroomPage({
             <FilterClassroom />
           </div>
         }>
-        <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <div className="w-full pb-30">
-            {data.length > 0 ? (
-              <ClassroomTable data={data} />
-            ) : (
-              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-                학생 정보가 없습니다.
-              </div>
-            )}
-          </div>
+        <div className="w-full flex-1 min-h-0 overflow-y-auto hidden xl:block">
+          <Table
+            header={[
+              { title: "학번/이름" },
+              { title: "8~9교시", width: "180px" },
+              { title: "10~11교시", width: "180px" },
+              { title: "최종", width: "220px" },
+            ]}
+            rows={data.map((attendance, index) => [
+              <div className="flex flex-col">
+                <p className="text-body text-greyscale-40">{attendance.studentId}</p>
+                <p className="text-accent text-static-black">{attendance.username}</p>
+              </div>,
+              ...attendance.statuses.map((statusItem, statusIndex) => (
+                <ClassroomDropdown
+                  key={statusItem.checkpoint.id}
+                  data={attendance}
+                  statusIndex={statusIndex}
+                />
+              )),
+            ])}          />
         </div>
       </Section>
     </div>
