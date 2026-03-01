@@ -3,6 +3,7 @@ import Sidebar from "@/widgets/sidebar/ui/Sidebar";
 import Tabbar from "@/widgets/tabbar/ui/Tabbar";
 import { PropsWithChildren } from "react";
 
+
 export default function MainLayout({ children }: PropsWithChildren) {
   return (
     <div className="w-full h-svh flex items-start flex-col xl:flex-row pt-[50px] xl:p-0">

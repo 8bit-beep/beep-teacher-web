@@ -16,7 +16,7 @@ export default async function HomePage({
   const { data } = await RoomApi.getRooms(
     floor === "other" ? null : floor,
   );
-
+ 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-between xl:flex">
@@ -27,8 +27,7 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}
-        mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
+        headerOptions={<Refresh />}>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <Suspense
             fallback={

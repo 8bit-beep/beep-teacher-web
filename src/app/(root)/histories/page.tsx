@@ -34,14 +34,7 @@ export default async function HistoriesPage({
             <Download />
           </>
         }
-        mobileFilter={
-          <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-4">
-            <div className="flex items-center gap-4">
-              <FilterHistoryDateTime />
-            </div>
-            <FilterHistory param={floor ? Number(floor) : undefined} />
-          </div>
-        }>
+>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <div className="w-full pb-30">
             {data.length > 0 ? (
