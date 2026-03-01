@@ -25,7 +25,7 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
 
   return (
     <div
-      className="w-full h-15 flex items-center border-b border-greyscale-20 cursor-pointer text-h4 pl-2 xl:pl-10 pr-2 xl:pr-10"
+      className="w-full h-15 flex items-center border-b border-greyscale-20 cursor-pointer text-h4 pl-10 pr-10"
       onClick={toggleOpen}>
       <div className="flex-1 flex items-center gap-2">
         <p className="text-accent">{label}</p>
