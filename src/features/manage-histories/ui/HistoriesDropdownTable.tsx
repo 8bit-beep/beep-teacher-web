@@ -7,6 +7,7 @@ import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { DropdownTableItemRenderProps } from "@/widgets/dropdown-table/ui/DropdownTable";
 import DropdownTable from "@/widgets/dropdown-table/ui/DropdownTable";
 import HistoriesDropdownContent from "./HistoriesDropdownContent";
+import MobileHistoriesDropdownContent from "./MobileHistoriesDropdownContent";
 
 interface Props {
   data: Room[];
@@ -29,7 +30,7 @@ const HistoriesDropdownTrigger = ({
       className="w-full h-13.5 px-2 flex items-center justify-between border-b border-greyscale-20"
       onClick={toggle}>
       <div className="flex flex-col xl:flex-row xl:gap-1.25 items-center">
-        <p className="w-full text-static-black text-accent">
+        <p className="w-full xl:w-fit text-static-black text-accent">
           {room.grade
             ? `${room.grade}-${room.classNumber} (${room.name})`
             : room.name}
@@ -66,9 +67,16 @@ const HistoriesDropdownTable = ({ data }: Props) => {
         </div>
       }
       renderTrigger={(room, _index, { isOpen, toggle }) => (
-        <HistoriesDropdownTrigger room={room} isOpen={isOpen} toggle={toggle} />
+        <>
+          <HistoriesDropdownTrigger room={room} isOpen={isOpen} toggle={toggle} />
+        </>
       )}
-      renderContent={(room) => <HistoriesDropdownContent room={room} />}
+      renderContent={(room) => 
+      <>
+        <div className="hidden lg:block"><HistoriesDropdownContent room={room} /></div>
+        <div className="lg:hidden"><MobileHistoriesDropdownContent room={room} /></div>
+      </>
+    }
     />
   );
 };
