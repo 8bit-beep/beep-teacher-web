@@ -1,4 +1,5 @@
 import FilterRoom from "@/features/filter/ui/FilterRoom";
+import MobileRoomTable from "@/features/manage-attends/ui/MobileRoomTable";
 import Refresh from "@/features/manage-attends/ui/Refresh";
 import RenderManageAttendance from "@/features/manage-attends/ui/RenderManageAttendance";
 import RoomTable from "@/features/manage-attends/ui/RoomTable";
@@ -23,8 +24,8 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}>
-
+        headerOptions={<Refresh />}
+        mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
         <Suspense
           fallback={
             <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
@@ -32,6 +33,7 @@ export default async function HomePage({
             </div>
           }>
           <RoomTable floor={floor} />
+          <MobileRoomTable floor={floor}/>
         </Suspense>
 
       </Section>
