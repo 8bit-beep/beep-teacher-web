@@ -31,10 +31,14 @@ export default async function ClassroomPage({
         icon={<DashboardIcon size={24} />}
         headerOptions={
           <div className="flex items-center gap-3">
-            <p className="text-body text-greyscale-40">{parseDate(new Date())}</p>
+            <p className="text-h4 text-greyscale-40">{parseDate(new Date())}</p>
+            <div className="hidden lg:block"><FilterClassroom /></div>
+          </div>}
+        mobileFilter={
+          <div className="lg:hidden">
             <FilterClassroom />
-          </div>
-        }>
+          </div>}
+        >
         <div className="w-full flex-1 min-h-0 overflow-y-auto">
           <Table
             header={[
