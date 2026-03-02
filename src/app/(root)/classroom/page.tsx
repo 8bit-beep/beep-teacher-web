@@ -40,7 +40,7 @@ export default async function ClassroomPage({
             <FilterClassroom />
           </div>}
         >
-        <div className="hidden w-full lg:flex-1 min-h-0 overflow-y-auto">
+        <div className="hidden lg:flex w-full flex-1 min-h-0 overflow-y-auto">
           <Table
             header={[
               { title: "학번/이름" },
