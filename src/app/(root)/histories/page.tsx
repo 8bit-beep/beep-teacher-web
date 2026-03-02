@@ -2,6 +2,7 @@ import { RoomApi } from "@/entities/rooms/api";
 import Download from "@/features/download/ui/Download";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
+import FilterRoom from "@/features/filter/ui/FilterRoom";
 import HistoriesDropdownTable from "@/features/manage-histories/ui/HistoriesDropdownTable";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import HistoryIcon from "@/shared/icons/HistoryIcon";
@@ -34,7 +35,12 @@ export default async function HistoriesPage({
             <Download />
           </>
         }
-        mobileFilter={null}
+        mobileFilter={
+          <div className="w-full flex flex-col gap-2">
+            <FilterHistory/>
+            <FilterHistoryDateTime />
+          </div>
+        }
       >
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <HistoriesDropdownTable data={data} />

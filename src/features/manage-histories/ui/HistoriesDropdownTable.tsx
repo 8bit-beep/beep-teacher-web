@@ -29,7 +29,7 @@ const HistoriesDropdownTrigger = ({
       className="w-full h-13.5 px-2 flex items-center justify-between border-b border-greyscale-20"
       onClick={toggle}>
       <div className="flex flex-col xl:flex-row xl:gap-1.25 items-center">
-        <p className="text-static-black text-accent">
+        <p className="w-full text-static-black text-accent">
           {room.grade
             ? `${room.grade}-${room.classNumber} (${room.name})`
             : room.name}
