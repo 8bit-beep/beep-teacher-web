@@ -99,7 +99,8 @@ const UpdateAbsenceModal = ({ data }: Props) => {
           buttonType="ghost"
           showIcon
           style={{ width: "160px" }}
-          onClick={() => setPhase("selectStudents")}>
+          onClick={() => setPhase("selectStudents")}
+        >
           결석자 선택하기
         </Button>
         <p className="text-blue-light text-caption1">
@@ -108,14 +109,15 @@ const UpdateAbsenceModal = ({ data }: Props) => {
       </div>
       <div className="w-full flex flex-col gap-2">
         <Button
-          buttonSize="large"
+          buttonSize="medium"
           buttonType="primary"
           onClick={submit}
-          disabled={disabled}>
+          disabled={disabled}
+        >
           결석 정보 수정하기
         </Button>
         <Button
-          buttonSize="small"
+          buttonSize="medium"
           buttonType="danger"
           onClick={() =>
             modal.open({
@@ -123,7 +125,8 @@ const UpdateAbsenceModal = ({ data }: Props) => {
               content: <DeleteAbsenceModal absenceId={data.absenceId} />,
             })
           }
-          disabled={disabled}>
+          disabled={disabled}
+        >
           결석 정보 삭제
         </Button>
       </div>

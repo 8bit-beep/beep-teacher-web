@@ -1,14 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { HistoryApi } from "../api";
 
-export const useGetHistories = (
-  roomId: number,
-  date: string,
-  checkpointId: number,
-) => {
+export const useGetAllCheckpointHistories = (roomId: number, date: string) => {
   return useSuspenseQuery({
-    queryKey: ["histories", roomId, date, checkpointId],
-    queryFn: async () =>
-      await HistoryApi.getHistories(roomId, date, checkpointId),
+    queryKey: ["histories", "all-checkpoints", roomId, date],
+    queryFn: async () => await HistoryApi.getAllCheckpointHistories(roomId, date),
   });
 };

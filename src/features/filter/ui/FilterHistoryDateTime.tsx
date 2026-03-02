@@ -8,9 +8,6 @@ const FilterHistoryDateTime = () => {
   const {
     selectedDate,
     setSelectedDate,
-    selectedCheckpoint,
-    setSelectedCheckpoint,
-    options,
   } = useFilterHistoryDateTime();
 
   return (
@@ -19,12 +16,6 @@ const FilterHistoryDateTime = () => {
         date={new Date(selectedDate)}
         onChangeDate={(date) => setSelectedDate(parseDate(date))}
         title="기록일 선택"
-      />
-      <Dropdown
-        onSelect={setSelectedCheckpoint}
-        selected={selectedCheckpoint}
-        options={options}
-        dropdownSize="large"
       />
     </>
   );

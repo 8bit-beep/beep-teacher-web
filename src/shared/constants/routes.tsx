@@ -2,7 +2,6 @@ import CalendarIcon from "../icons/CalendarIcon";
 import DashboardIcon from "../icons/DashboardIcon";
 import HistoryIcon from "../icons/HistoryIcon";
 import LabIcon from "../icons/LabIcon";
-import OkIcon from "../icons/OkIcon";
 import PersonIcon from "../icons/PersonIcon";
 
 export const ROUTES = [
@@ -29,12 +28,6 @@ export const ROUTES = [
     path: "/shifts",
     icon: <PersonIcon size={20} />,
     mobileLabel: "실 이동",
-  },
-  {
-    label: "출석 승인 현황",
-    path: "/approvals",
-    icon: <OkIcon size={20} />,
-    mobileLabel: "출석 승인",
   },
   {
     label: "출석 기록 조회",

@@ -1,10 +1,13 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
-import StudentItem from "@/features/manage-attends/ui/StudentItem";
+import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
+import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
+import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
+import Table from "@/widgets/table/ui/Table";
 
 export default async function ClassroomPage({
   searchParams,
@@ -24,26 +27,39 @@ export default async function ClassroomPage({
         <ManageMemo />
       </div>
       <Section
-        title="출석 조회"
-        description="학생들의 실 별 출석여부를 조회하세요!"
+        title="반별 조회"
+        description="학생들의 반별 출석여부를 조회하세요!"
         icon={<DashboardIcon size={24} />}
-        headerOptions={<FilterClassroom />}>
-        <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <div className="w-full pb-30">
-            {data.length > 0 ? (
-              data.map((attendance, idx, arr) => (
-                <StudentItem
-                  data={attendance}
-                  isLast={idx === arr.length - 1}
-                  key={attendance.studentId}
-                />
-              ))
-            ) : (
-              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-                학생 정보가 없습니다.
-              </div>
-            )}
-          </div>
+        headerOptions={
+          <div className="flex items-center gap-3">
+            <p className="text-h4 text-greyscale-40">{parseDate(new Date())}</p>
+            <div className="hidden lg:block"><FilterClassroom /></div>
+          </div>}
+        mobileFilter={
+          <div className="lg:hidden">
+            <FilterClassroom />
+          </div>}
+        >
+        <div className="hidden lg:flex w-full flex-1 min-h-0 overflow-y-auto">
+          <Table
+            header={[
+              { title: "학번/이름" },
+              { title: "8~9교시", width: "196px" },
+              { title: "10~11교시", width: "196px" },
+              { title: "최종", width: "220px" },
+            ]}
+            rows={data.map((attendance) => ClassroomItem({ data: attendance }))}
+          />
+        </div>
+        <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
+          <Table
+            header={[
+              { title: "8~9교시", align:"center", width: "180px" },
+              { title: "10~11교시", align:"center", width: "180px" },
+              { title: "최종", align:"center", width: "180px" },
+            ]}
+            rows={data.map((attendance) => MobileClassroomItem({ data: attendance }))}
+          />
         </div>
       </Section>
     </div>

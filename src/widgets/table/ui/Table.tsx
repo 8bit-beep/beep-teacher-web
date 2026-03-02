@@ -11,12 +11,14 @@ const Table = ({ header, rows }: Props) => {
     <div className="w-full flex-1 min-h-0 flex flex-col">
       <table className="w-full border-collapse table-auto">
         <thead>
-          <tr className="[&_th:first-child]:pl-2 xl:[&_th:first-child]:pl-10 [&_th:last-child]:pr-2 xl:[&_th:last-child]:pr-10">
+          <tr className="[&_th:first-child]:pl-2 lg:[&_th:first-child]:pl-10 [&_th:last-child]:pr-2 lg:[&_th:last-child]:pr-10">
             {header.map((col, index) => (
               <th
                 key={index}
                 style={{ width: col?.width }}
-                className="text-left py-3 bg-blue-light text-static-white text-caption1 xl:text-h4">
+                className={`py-3 bg-blue-light text-static-white text-caption1 lg:text-body xl:text-h4 ${
+                  col.align === "center" ? "text-center" : col.align === "right" ? "text-right" : "text-left"}`}
+              >
                 {col.title}
               </th>
             ))}
@@ -38,15 +40,15 @@ const Table = ({ header, rows }: Props) => {
               rows.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className="[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10">
+                  className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10 ${rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
                   {row.map((cell, cellIndex) => (
                     <td
                       key={cellIndex}
                       style={{ width: header[cellIndex]?.width }}
-                      className="h-12 text-h4">
+                      className="h-15 text-h4">
                       {cell}
                     </td>
-                  ))}
+                  ))}                
                 </tr>
               ))
             )}

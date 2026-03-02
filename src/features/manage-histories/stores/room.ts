@@ -1,12 +1,16 @@
-import { Room } from "@/entities/rooms/types";
 import { create } from "zustand";
 
 interface State {
-  room: Room | null;
-  setRoom: (room: Room | null) => void;
+  openRoomIds: number[];
+  toggleRoom: (roomId: number) => void;
 }
 
-export const useRoomStore = create<State>((set) => ({
-  room: null,
-  setRoom: (room) => set({ room }),
+export const useHistoryRoomStore = create<State>((set) => ({
+  openRoomIds: [],
+  toggleRoom: (roomId) =>
+    set((state) => ({
+      openRoomIds: state.openRoomIds.includes(roomId)
+        ? state.openRoomIds.filter((id) => id !== roomId)
+        : [...state.openRoomIds, roomId],
+    })),
 }));

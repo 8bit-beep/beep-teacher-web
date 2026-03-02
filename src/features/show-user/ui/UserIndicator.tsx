@@ -10,7 +10,7 @@ const UserIndicator = () => {
   const { logout } = useLogout();
 
   return (
-    <div className="w-fit xl:w-full flex items-center gap-2">
+    <div className="w-fit xl:w-full flex items-center gap-2 mr-5 lg:mr-4">
       <Image
         src={data.profileImage || "/default-profile.svg"}
         alt="User Profile"
@@ -22,7 +22,7 @@ const UserIndicator = () => {
       <div className="w-1 xl:flex-1" />
       <button
         onClick={logout}
-        className="p-2 rounded-medium bg-red-light text-static-white">
+        className="w-[28px] p-2 rounded-medium bg-red-light text-static-white">
         <OutIcon size={12} />
       </button>
     </div>

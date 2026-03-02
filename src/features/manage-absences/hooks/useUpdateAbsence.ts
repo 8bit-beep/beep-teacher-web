@@ -6,6 +6,7 @@ import { Absence, AbsenceCheckpoint } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
 import { toast } from "@cher1shrxd/toast";
 import { parseDate } from "@/shared/utils/pare-date";
+import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 
 export const useUpdateAbsence = (data: Absence) => {
   const attendTypes = useGetAttendTypes().data.data;
@@ -49,15 +50,27 @@ export const useUpdateAbsence = (data: Absence) => {
 
   const submit = async () => {
     if (!selectedType) {
-      toast.warning("조건 미충족", "결석 사유를 선택해주세요.");
+      toast.warning(
+        "조건 미충족",
+        "결석 사유를 선택해주세요.",
+        TOAST_ISSUE_DURATION,
+      );
       return;
     }
     if (selectedStudents.length === 0) {
-      toast.warning("조건 미충족", "결석 학생을 선택해주세요.");
+      toast.warning(
+        "조건 미충족",
+        "결석 학생을 선택해주세요.",
+        TOAST_ISSUE_DURATION,
+      );
       return;
     }
     if (!reason.trim()) {
-      toast.warning("조건 미충족", "상세 결석 사유를 작성해주세요.");
+      toast.warning(
+        "조건 미충족",
+        "상세 결석 사유를 작성해주세요.",
+        TOAST_ISSUE_DURATION,
+      );
       return;
     }
     await mutateAsync({
@@ -71,7 +84,10 @@ export const useUpdateAbsence = (data: Absence) => {
   };
 
   const disabled =
-    selectedStudents.length === 0 || !selectedType || !reason.trim() || isPending;
+    selectedStudents.length === 0 ||
+    !selectedType ||
+    !reason.trim() ||
+    isPending;
 
   return {
     phase,

@@ -1,5 +1,6 @@
 "use client";
 
+import PullToRefresh from "@/shared/ui/PullToRefresh";
 import { ReactNode } from "react";
 
 interface Props {
@@ -20,21 +21,23 @@ const Section = ({
   children,
 }: Props) => {
   return (
-    <section className="w-full h-[calc(100%-86px)] flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-t-large shadow-modal overflow-hidden">
-      <header className="h-11.5 flex items-center gap-2 xl:gap-4 pr-2 pl-4 xl:pr-10 xl:pl-10">
+    <section className="w-full min-h-0 flex-1 bg-static-white pt-5 flex flex-col gap-5 rounded-large xl:rounded-b-none shadow-modal overflow-hidden">
+      <header className="h-11.5 flex items-center gap-2 xl:gap-4 px-3 lg:px-10">
         <div className="text-static-dark">{icon}</div>
         <div className="flex-1 flex flex-col">
-          <h2 className="xl:text-h2 text-h3 text-static-black font-semibold">
+          <h2 className="text-accent lg:text-h3 xl:text-h2">
             {title}
           </h2>
-          <p className="xl:text-caption1 text-caption2 text-greyscale-40 hidden xl:block">
+          <p className="hidden lg:flex xl:text-caption1 text-caption2 text-greyscale-40">
             {description}
           </p>
         </div>
         <div className="flex items-center gap-3">{headerOptions}</div>
       </header>
-      {mobileFilter && <div className="w-full xl:hidden px-2">{mobileFilter}</div>}
-      {children}
+      {mobileFilter && (
+        <div className="w-full lg:hidden px-2">{mobileFilter}</div>
+      )}
+      <PullToRefresh>{children}</PullToRefresh>
     </section>
   );
 };

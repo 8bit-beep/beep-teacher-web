@@ -2,8 +2,8 @@ import { RoomApi } from "@/entities/rooms/api";
 import Download from "@/features/download/ui/Download";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
-import HistoryRoomItem from "@/features/manage-histories/ui/HistoryRoomItem";
-import RenderManageHistory from "@/features/manage-histories/ui/RenderManageHistory";
+import FilterRoom from "@/features/filter/ui/FilterRoom";
+import HistoriesDropdownTable from "@/features/manage-histories/ui/HistoriesDropdownTable";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import HistoryIcon from "@/shared/icons/HistoryIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -36,26 +36,16 @@ export default async function HistoriesPage({
           </>
         }
         mobileFilter={
-          <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-4">
-            <div className="flex items-center gap-4">
-              <FilterHistoryDateTime />
-            </div>
-            <FilterHistory param={floor ? Number(floor) : undefined} />
+          <div className="w-full flex flex-col gap-2">
+            <FilterHistory/>
+            <FilterHistoryDateTime />
           </div>
-        }>
+        }
+      >
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <div className="w-full pb-30">
-            {data.length > 0 ? (
-              data.map((room) => <HistoryRoomItem data={room} key={room.id} />)
-            ) : (
-              <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-                출석 정보가 없습니다.
-              </div>
-            )}
-          </div>
+          <HistoriesDropdownTable data={data} />
         </div>
       </Section>
-      <RenderManageHistory />
     </div>
   );
 }

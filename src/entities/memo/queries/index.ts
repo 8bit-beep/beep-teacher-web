@@ -5,5 +5,6 @@ export const useGetMemo = () => {
   return useSuspenseQuery({
     queryKey: ["memos"],
     queryFn: MemoApi.getMemo,
+    refetchInterval: 5000,
   });
 };
