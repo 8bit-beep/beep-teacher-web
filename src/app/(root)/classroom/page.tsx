@@ -25,7 +25,7 @@ export default async function ClassroomPage({
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-end xl:flex">
-        <ManageMemo />
+        <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
         title="반별 조회"

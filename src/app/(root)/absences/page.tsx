@@ -6,6 +6,7 @@ import CalendarIcon from "@/shared/icons/CalendarIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Pagination from "@/widgets/pagination/ui/Pagination";
 import Section from "@/widgets/section/ui/Section";
+import { Suspense } from "react";
 
 export default async function AbsencesPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function AbsencesPage({
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-between xl:flex">
         <CreateAbsence />
-        <ManageMemo />
+        <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
         title="결석자 관리"
