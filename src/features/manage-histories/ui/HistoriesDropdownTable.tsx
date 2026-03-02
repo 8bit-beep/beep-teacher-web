@@ -7,6 +7,7 @@ import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { DropdownTableItemRenderProps } from "@/widgets/dropdown-table/ui/DropdownTable";
 import DropdownTable from "@/widgets/dropdown-table/ui/DropdownTable";
 import HistoriesDropdownContent from "./HistoriesDropdownContent";
+import MobileHistoriesDropdownContent from "./MobileHistoriesDropdownContent";
 
 interface Props {
   data: Room[];
@@ -68,7 +69,12 @@ const HistoriesDropdownTable = ({ data }: Props) => {
       renderTrigger={(room, _index, { isOpen, toggle }) => (
         <HistoriesDropdownTrigger room={room} isOpen={isOpen} toggle={toggle} />
       )}
-      renderContent={(room) => <HistoriesDropdownContent room={room} />}
+      renderContent={(room) => 
+      <>
+        <div className="hidden lg:block"><HistoriesDropdownContent room={room} /></div>
+        <div className="lg:hidden"><MobileHistoriesDropdownContent room={room} /></div>
+      </>
+    }
     />
   );
 };

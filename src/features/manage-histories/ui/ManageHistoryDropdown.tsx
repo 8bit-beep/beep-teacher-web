@@ -20,13 +20,24 @@ const ManageHistoryDropdown = ({ data, roomId, index }: Props) => {
         shouldHighlightAbsent ? "border-2 border-[#EF5A5A] rounded-large" : ""
       }
     >
-      <Dropdown
-        selected={status}
-        onSelect={setStatus}
-        options={options}
-        dropdownSize="medium"
-        width="180px"
-      />
+      <div className="hidden lg:block">
+        <Dropdown
+          selected={status}
+          onSelect={setStatus}
+          options={options}
+          dropdownSize="medium"
+          width="180px"
+        />
+      </div>
+      <div className="lg:hidden">
+        <Dropdown
+          selected={status}
+          onSelect={setStatus}
+          options={options}
+          dropdownSize="medium"
+          width="100%"
+        />
+      </div>
     </div>
   );
 };
