@@ -25,7 +25,7 @@ const Section = ({
       <header className="h-11.5 flex items-center gap-2 xl:gap-4 px-3 lg:px-10">
         <div className="text-static-dark">{icon}</div>
         <div className="flex-1 flex flex-col">
-          <h2 className="text-accent lg:text-h3 xl:text-h2 text-static-black">
+          <h2 className="text-accent lg:text-h3 xl:text-h2">
             {title}
           </h2>
           <p className="hidden lg:flex xl:text-caption1 text-caption2 text-greyscale-40">

@@ -34,7 +34,8 @@ export default async function HistoriesPage({
             <Download />
           </>
         }
->
+        mobileFilter={null}
+      >
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <HistoriesDropdownTable data={data} />
         </div>

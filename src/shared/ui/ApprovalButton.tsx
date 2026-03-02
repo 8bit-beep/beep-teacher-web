@@ -1,8 +1,10 @@
+import type { MouseEvent } from 'react';
+
 interface Props {
-    onClick: (e: React.MouseEvent) => void;
-  }
-  
-  const ApprovalButton = ({ onClick }: Props) => {
+    onClick: (e: MouseEvent) => void;
+}
+
+const ApprovalButton = ({ onClick }: Props) => {
     return (
       <button
         onClick={(e) => {
