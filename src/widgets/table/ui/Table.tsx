@@ -16,7 +16,9 @@ const Table = ({ header, rows }: Props) => {
               <th
                 key={index}
                 style={{ width: col?.width }}
-                className="text-left py-3 bg-blue-light text-static-white text-caption1 lg:text-body xl:text-h4">
+                className={`py-3 bg-blue-light text-static-white text-caption1 lg:text-body xl:text-h4 ${
+                  col.align === "center" ? "text-center" : col.align === "right" ? "text-right" : "text-left"}`}
+              >
                 {col.title}
               </th>
             ))}

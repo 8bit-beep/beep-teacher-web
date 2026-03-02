@@ -54,9 +54,9 @@ export default async function ClassroomPage({
         <div className="lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
           <Table
             header={[
-              { title: "8~9교시" },
-              { title: "10~11교시" },
-              { title: "최종" },
+              { title: "8~9교시", align:"center", width: "180px" },
+              { title: "10~11교시", align:"center", width: "180px" },
+              { title: "최종", align:"center", width: "180px" },
             ]}
             rows={data.map((attendance) => MobileClassroomItem({ data: attendance }))}
           />
