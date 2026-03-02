@@ -51,7 +51,7 @@ export default async function ClassroomPage({
             rows={data.map((attendance) => ClassroomItem({ data: attendance }))}
           />
         </div>
-        <div className="lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
+        <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
           <Table
             header={[
               { title: "8~9교시", align:"center", width: "180px" },
