@@ -10,14 +10,24 @@ interface Props {
 
 const Detail = ({ data }: Props) => {
   return (
-    <Button
-      buttonSize="small"
-      buttonType="primary"
-      onClick={() =>
-        modal.open({ title: "신청 내용", content: <DetailModal data={data} /> })
-      }>
-      신청 내용 보기
-    </Button>
+    <>
+      <div className="hidden lg:block">
+        <Button
+            buttonSize="small"
+            buttonType="primary"
+            onClick={() =>
+              modal.open({ title: "신청 내용", content: <DetailModal data={data} /> })
+            }>
+            신청 내용 보기
+        </Button>
+      </div>
+      <p className="lg:hidden text-grayscale-70 text-body cursor-pointer"
+        onClick={() =>
+          modal.open({ title: "신청 내용", content: <DetailModal data={data} /> })
+        }>
+        상세 보기
+      </p>
+    </>
   );
 };
 
