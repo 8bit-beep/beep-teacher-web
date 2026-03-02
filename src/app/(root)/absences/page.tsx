@@ -23,7 +23,11 @@ export default async function AbsencesPage({
         title="결석자 관리"
         description="학생들의 결석 여부를 관리하세요!"
         icon={<CalendarIcon size={24} />}
-        headerOptions={""}>
+        headerOptions={
+          <div className="lg:hidden">
+            <CreateAbsence />
+          </div>
+        }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <AbsencesDropdownTable data={data.content} />
         </div>
