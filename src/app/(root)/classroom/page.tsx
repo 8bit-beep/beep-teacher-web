@@ -8,6 +8,7 @@ import { SearchParams } from "@/shared/types/search-params";
 import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
+import { Suspense } from "react";
 
 export default async function ClassroomPage({
   searchParams,
@@ -33,11 +34,11 @@ export default async function ClassroomPage({
         headerOptions={
           <div className="flex items-center gap-3">
             <p className="text-h4 text-greyscale-40">{parseDate(new Date())}</p>
-            <div className="hidden lg:block"><FilterClassroom /></div>
+            <div className="hidden lg:block"><Suspense><FilterClassroom /></Suspense></div>
           </div>}
         mobileFilter={
           <div className="lg:hidden">
-            <FilterClassroom />
+            <Suspense><FilterClassroom /></Suspense>
           </div>}
         >
         <div className="hidden lg:flex w-full flex-1 min-h-0 overflow-y-auto">
