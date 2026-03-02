@@ -20,7 +20,7 @@ export default async function ShiftsPage() {
         title="실 이동 관리"
         description="실 이동 목록을 확인해 보세요!"
         icon={<PersonIcon size={24} />}>
-        <div className="w-full flex-1 min-h-0 overflow-y-auto xl:hidden">
+        <div className="w-full flex-1 min-h-0 overflow-y-auto lg:hidden">
           <Table
             header={[
               { title: "학번/이름" },
@@ -36,7 +36,7 @@ export default async function ShiftsPage() {
             ])}
           />
         </div>
-        <div className="w-full flex-1 min-h-0 overflow-y-auto hidden xl:block">
+        <div className="w-full flex-1 min-h-0 overflow-y-auto hidden lg:block">
           <Table
             header={[
               { title: "학번/이름", width: "168px" },
