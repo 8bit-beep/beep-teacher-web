@@ -37,7 +37,7 @@ const ManageAttendance = ({ room }: Props) => {
         </h1>
       </div>
       <div className="w-full flex justify-between items-center">
-      <p className="text-blue-light text-caption2 xl:text-accent">
+      <p className="text-blue-light text-accent">
         {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
         {" · "}
         {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
