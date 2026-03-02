@@ -6,6 +6,7 @@ import PersonIcon from "@/shared/icons/PersonIcon";
 import { StudentId } from "@/shared/ui/StudentId";
 import { pad } from "@/shared/utils/pad";
 import Section from "@/widgets/section/ui/Section";
+import { Suspense } from "react";
 import Table from "@/widgets/table/ui/Table";
 
 export default async function ShiftsPage() {
@@ -14,7 +15,7 @@ export default async function ShiftsPage() {
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-end xl:flex">
-        <ManageMemo />
+        <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
         title="실 이동 관리"

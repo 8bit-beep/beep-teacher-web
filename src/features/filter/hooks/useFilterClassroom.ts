@@ -4,16 +4,13 @@ import { CLASSROOM_OPTIONS } from "../constants/classroom";
 import { useRouter } from "@cher1shrxd/loading";
 
 export const useFilterClassroom = () => {
-  const [classroom, setClassroom] = useState<DropdownItem | null>(() => {
-    if (typeof window !== "undefined") {
-      const previous = localStorage.getItem("selectedClassroom");
-      if (previous) {
-        return JSON.parse(previous) as DropdownItem;
-      }
-    }
-    return CLASSROOM_OPTIONS[0];
-  });
+  const [classroom, setClassroom] = useState<DropdownItem | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const previous = localStorage.getItem("selectedClassroom");
+    setClassroom(previous ? (JSON.parse(previous) as DropdownItem) : CLASSROOM_OPTIONS[0]);
+  }, []);
 
   useEffect(() => {
     if (classroom) {

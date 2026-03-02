@@ -18,7 +18,7 @@ export default async function HomePage({
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-between xl:flex">
         <FilterRoom param={floor ? Number(floor) : undefined} />
-        <ManageMemo />
+        <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
         title="출석 조회"
