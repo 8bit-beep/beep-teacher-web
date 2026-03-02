@@ -6,6 +6,7 @@ import { useToggleData } from "../hooks/useToggleData";
 import { useApprove } from "../../manage-approvals/hooks/useApprove";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
+import ApprovalButton from "@/shared/ui/ApprovalButton";
 
 interface Props {
   data: Room;
@@ -25,23 +26,23 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
 
   return (
     <div
-      className="w-full flex flex-col items-center border-b border-greyscale-20 cursor-pointer text-h4 px-3 py-[15px]"
+      className="w-full flex flex-col items-center border-b border-greyscale-20 cursor-pointer text-h4 px-3 py-[15px] gap-[10px]"
       onClick={toggleOpen}
     >
-      <div className="w-full flex items-center gap-2">
-        <p className="w-full text-body">{label}</p>
-        <div style={{ width: "140px" }}>
-          <p className="text-greyscale-70">{approvedAt}</p>
+      <div className="w-full">
+        <div className="w-full flex items-center gap-2">
+          <p className="w-full text-body">{label}</p>
+          <div style={{ width: "140px" }}>
+            <p className="text-greyscale-70">{approvedAt}</p>
+          </div>
+          <div style={{ width: "144px" }}>
+            <p className="text-greyscale-70">{approvedTeacher}</p>
+          </div>
+          <ChevronIcon size={16} className="text-static-black" rotate={-90} />
         </div>
-        <div style={{ width: "144px" }}>
-          <p className="text-greyscale-70">{approvedTeacher}</p>
-        </div>
-        <ChevronIcon size={16} className="text-static-black" rotate={-90} />
+        <p className="w-full text-caption1 text-blue-light">{stats}</p>
       </div>
-      <p className="w-full text-caption1 text-blue-light">{stats}</p>
-      <div style={{ width: "196px" }} className="flex items-center justify-end">
-        <div className="flex items-center gap-2 xl:gap-4">
-          <div className="flex items-center gap-2 text-green-light">
+      <div className="w-full flex items-center">
             {isApproved ? (
               <>
                 <p className="text-accent">승인됨</p>
@@ -52,18 +53,13 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
                 </div>
               </>
             ) : (
-              <Button
-                buttonSize="small"
-                buttonType="primary"
+              <ApprovalButton
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleApproval();
-                }}>
-                승인하기
-              </Button>
+                }}
+              />
             )}
-          </div>
-        </div>
       </div>
     </div>
   );
