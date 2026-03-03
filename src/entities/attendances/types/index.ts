@@ -6,6 +6,7 @@ export interface Attendance {
   studentId: string;
   username: string;
   statuses: AttendanceStatus[];
+  isLate: boolean;
 }
 
 export interface AttendanceStatus {
