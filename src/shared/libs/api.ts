@@ -7,6 +7,42 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const getRefreshUrl = () => {
+  if (typeof window !== "undefined") {
+    return "/api/auth/refresh";
+  }
+
+  if (!process.env.NEXT_PUBLIC_WEB_URL) {
+    throw new globalThis.Error("NEXT_PUBLIC_WEB_URL is not configured");
+  }
+
+  return `${process.env.NEXT_PUBLIC_WEB_URL}/api/auth/refresh`;
+};
+
+const getRefreshOptions = async (): Promise<RequestInit> => {
+  if (typeof window !== "undefined") {
+    return {
+      method: "POST",
+      credentials: "include",
+      cache: "no-store",
+    };
+  }
+
+  const { cookies } = await import("next/headers");
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map(({ name, value }) => `${name}=${value}`)
+    .join("; ");
+
+  return {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: cookieHeader ? { cookie: cookieHeader } : undefined,
+  };
+};
+
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const token = await getAccessToken();
 
@@ -30,6 +66,10 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
+    if (!original) {
+      return Promise.reject(error);
+    }
+
     // 401 에러가 아니거나 이미 재시도한 경우 에러 반환
     if (error.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
@@ -40,6 +80,7 @@ api.interceptors.response.use(
       return new Promise((resolve, reject) => {
         queue.push((token) => {
           if (token) {
+            original.headers = original.headers ?? {};
             original.headers.Authorization = `Bearer ${token}`;
             resolve(api(original));
           } else {
@@ -53,24 +94,25 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const refreshRes = await fetch(
-        `${process.env.NEXT_PUBLIC_WEB_URL}/api/auth/refresh`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
+      const refreshRes = await fetch(getRefreshUrl(), await getRefreshOptions());
 
       if (!refreshRes.ok) {
-        throw new Error("Token refresh failed");
+        throw new globalThis.Error("Token refresh failed");
       }
 
-      const { accessToken } = await refreshRes.json();
+      const { accessToken } = (await refreshRes.json()) as {
+        accessToken?: string;
+      };
+
+      if (!accessToken) {
+        throw new globalThis.Error("Token refresh failed");
+      }
 
       // 큐에 있는 요청들에 새 토큰 전달
       queue.forEach((cb) => cb(accessToken));
       queue = [];
 
+      original.headers = original.headers ?? {};
       original.headers.Authorization = `Bearer ${accessToken}`;
       return api(original);
     } catch (e) {
