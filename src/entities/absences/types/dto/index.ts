@@ -13,3 +13,7 @@ export interface AbsenceResponseDto {
   absenceId: number;
   skippedUserIds: number[];
 }
+
+export interface AbsenceReasonsResponseDto {
+  absenceTypes: string[];
+}
