@@ -1,4 +1,3 @@
-import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { DropdownItem } from "@bds-web/ui";
 import { useState } from "react";
 import { useSelectStudents } from "./useSelectStudents";
@@ -7,13 +6,10 @@ import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import { useCreateAbsenceMutation } from "@/entities/absences/mutations";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
+import { useGetAbsenceReason } from "./useGetAbsenceReason";
 
 export const useCreateAbsence = () => {
-  const attendTypes = useGetAttendTypes().data.data;
-  const options = attendTypes.map((type) => ({
-    name: type.name,
-    value: `${type.id}`,
-  }));
+  const { options } = useGetAbsenceReason();
   const [selectedType, setSelectedType] = useState<DropdownItem | null>(null);
   const [startAt, setStartAt] = useState<Date>(new Date());
   const [endAt, setEndAt] = useState<Date>(new Date());

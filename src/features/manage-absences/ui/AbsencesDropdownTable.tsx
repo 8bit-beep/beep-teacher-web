@@ -1,12 +1,12 @@
 "use client";
 
 import { Absence } from "@/entities/absences/types";
-import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { studentCode } from "@/shared/utils/student-code";
 import DropdownTable from "@/widgets/dropdown-table/ui/DropdownTable";
 import { useMemo } from "react";
 import AbsenceItem from "./AbsenceItem";
+import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";
 
 interface Props {
   data: Absence[];
@@ -26,21 +26,13 @@ interface AbsenceGroup {
 }
 
 const AbsencesDropdownTable = ({ data }: Props) => {
-  const attendTypesData = useGetAttendTypes().data?.data;
-
-  const typeNameById = useMemo(
-    () =>
-      new Map(
-        (attendTypesData ?? []).map((type) => [type.id, type.name] as const),
-      ),
-    [attendTypesData],
-  );
+  const { nameById } = useGetAbsenceReason();
 
   const groups = useMemo<AbsenceGroup[]>(() => {
     const grouped = new Map<string, AbsenceRow[]>();
 
     data.forEach((absence) => {
-      const attendTypeName = typeNameById.get(absence.typeId) ?? "기타";
+      const attendTypeName = nameById.get(absence.typeId) ?? "기타";
       const current = grouped.get(attendTypeName) ?? [];
 
       absence.targetStudents.forEach((student, index) => {
@@ -64,7 +56,7 @@ const AbsencesDropdownTable = ({ data }: Props) => {
       label,
       items,
     }));
-  }, [data, typeNameById]);
+  }, [data, nameById]);
 
   return (
     <DropdownTable
