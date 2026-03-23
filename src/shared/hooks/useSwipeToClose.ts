@@ -3,14 +3,16 @@ import { useSwipeable } from "react-swipeable";
 import { CLOSE_ANIMATION_DURATION } from "@/shared/constants/animation";
 import { useRoomStore } from "@/shared/stores/room";
 
-export const useSwipeToClose = () => {
+export const useSwipeToClose = (onClose?: () => void) => {
   const { setRoom } = useRoomStore();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isClosing, setIsClosing] = useState(false);
 
   const triggerClose = useCallback(() => {
+    if (isClosing) return;
+    onClose?.();
     setIsClosing(true);
-  }, []);
+  }, [isClosing, onClose]);
 
   useEffect(() => {
     if (!isClosing) return;
