@@ -9,9 +9,10 @@ export const useSwipeToClose = (onClose?: () => void) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const triggerClose = useCallback(() => {
+    if (isClosing) return;
     onClose?.();
     setIsClosing(true);
-  }, [onClose]);
+  }, [isClosing, onClose]);
 
   useEffect(() => {
     if (!isClosing) return;
