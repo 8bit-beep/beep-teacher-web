@@ -13,14 +13,30 @@ export const useUpdateMemoMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: MemoApi.updateMemo,
-    onSuccess: async () => {
+    mutationFn: async (
+      variables:
+        | { grade: number; content: string; mode: "create" }
+        | { grade: number; content: string; mode: "update" },
+    ) => {
+      if (variables.mode === "create") {
+        return MemoApi.createMemo({
+          grade: variables.grade,
+          content: variables.content,
+        });
+      }
+
+      return MemoApi.updateMemo({
+        grade: variables.grade,
+        content: variables.content,
+      });
+    },
+    onSuccess: async (_, variables) => {
       toast.success(
         "메모 저장 완료",
         "메모가 성공적으로 저장되었습니다.",
         TOAST_SUCCESS_DURATION,
       );
-      await queryClient.refetchQueries({ queryKey: ["memos"] });
+      await queryClient.refetchQueries({ queryKey: ["memos", variables.grade] });
       modal.closeAll();
     },
     onError: (error: AxiosError<Error>) => {
@@ -35,7 +51,12 @@ export const useUpdateMemoMutation = () => {
 };
 
 export const useMarkAsReadMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: MemoApi.markAsRead,
+    onSuccess: async (_, variables) => {
+      await queryClient.refetchQueries({ queryKey: ["memos", variables.grade] });
+    },
   });
 };
