@@ -2,8 +2,8 @@ import { useUpdateMemoMutation } from "@/entities/memo/mutations";
 import { useGetMemo } from "@/entities/memo/queries";
 import { useState } from "react";
 
-export const useUpdateMemo = () => {
-  const { data } = useGetMemo();
+export const useUpdateMemo = (grade: number) => {
+  const { data } = useGetMemo(grade);
   const [memo, setMemo] = useState(data.data.content);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -13,7 +13,12 @@ export const useUpdateMemo = () => {
   const { mutateAsync, isPending } = useUpdateMemoMutation();
 
   const save = async () => {
-    await mutateAsync(memo);
+    if (data.data.exists === false) {
+      await mutateAsync({ grade, content: memo, mode: "create" });
+      return;
+    }
+
+    await mutateAsync({ grade, content: memo, mode: "update" });
   };
 
   return {
