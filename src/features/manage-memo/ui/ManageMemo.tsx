@@ -15,7 +15,7 @@ const ManageMemo = () => {
 
   return (
     <button
-      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "outline-2 outline-red-light" : ""}`}
+      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white xl:hidden ${hasUnread ? "outline-2 outline-red-light" : ""}`}
       onClick={() => {
         if (hasUnread && data.data.exists !== false) {
           markAsRead({ grade: defaultGrade, content: data.data.content });

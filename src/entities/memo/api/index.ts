@@ -10,16 +10,6 @@ export const MemoApi = {
     } catch (error) {
       const axiosError = error as AxiosError<Error>;
 
-      if (axiosError.response?.status === 404) {
-        return {
-          data: {
-            content: "",
-            isRead: true,
-            exists: false,
-          },
-        };
-      }
-
       throw error;
     }
   },

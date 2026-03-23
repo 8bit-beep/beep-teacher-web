@@ -30,8 +30,14 @@ const Header = () => {
   }[pathname];
 
   return (
-    <header className="w-full min-h-[50px] flex items-center gap-5 my-4 px-[20px] lg:px-[54px] xl:hidden">
-      <Image width={40} height={40} src="/logo.svg" alt="logo" />
+    <header className="w-full min-h-12.5 flex items-center gap-5 my-4 px-5 lg:px-13.5 xl:hidden">
+      <Image
+        width={40}
+        height={40}
+        src="/logo.svg"
+        alt="logo"
+        style={{ width: "auto", height: "auto" }}
+      />
       <div className="w-full min-w-0 flex justify-between">
         <div className="hidden lg:flex">{headerContent}</div>
         <ManageMemo />

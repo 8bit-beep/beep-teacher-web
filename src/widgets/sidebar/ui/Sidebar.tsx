@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import UserIndicator from "@/features/show-user/ui/UserIndicator";
 import SkeletonUser from "@/features/show-user/ui/SkeletonUser";
 import { ROUTES } from "@/shared/constants/routes";
+import MemoPanel from "@/features/manage-memo/ui/MemoPanel";
 
 const Sidebar = () => {
   return (
@@ -20,16 +21,23 @@ const Sidebar = () => {
           alt="삑"
         />
       </Link>
-      <nav className="w-full flex flex-col items-start">
-        <h2 className="text-greyscale-60 my-0.75 text-caption2">메뉴</h2>
-        {ROUTES.map(({ label, path, icon }) => (
-          <NavItem icon={icon} label={label} path={path} key={path} />
-        ))}
-      </nav>
-      <div className="flex-1" />
-      <Suspense fallback={<SkeletonUser />}>
-        <UserIndicator />
-      </Suspense>
+      <div className="w-full flex-1 flex flex-col justify-between">
+        <nav className="w-full flex flex-col items-start">
+          <h2 className="text-greyscale-60 my-0.75 text-caption2">메뉴</h2>
+          {ROUTES.map(({ label, path, icon }) => (
+            <NavItem icon={icon} label={label} path={path} key={path} />
+          ))}
+        </nav>
+        <div className="w-full flex flex-col gap-4">
+          <h2 className="text-greyscale-60 my-0.75 text-caption2">메모</h2>
+          <MemoPanel />
+        </div>
+        <div className="w-full">
+          <Suspense fallback={<SkeletonUser />}>
+            <UserIndicator />
+          </Suspense>
+        </div>
+      </div>
     </aside>
   );
 };
