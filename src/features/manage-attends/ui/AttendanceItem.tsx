@@ -1,6 +1,10 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
+import {
+  isAbsenceStatusName,
+  isOutStatusName,
+} from "@/shared/utils/attendance-status";
 import { Dropdown } from "@bds-web/ui";
 import { useUpdateAttendance } from "../hooks/useUpdateAttendance";
 
@@ -12,15 +16,23 @@ interface Props {
 const AttendanceItem = ({ data, roomId }: Props) => {
   const { status, setStatus, options } = useUpdateAttendance(data, roomId);
   const currentStatus = data.statuses[0].status?.name;
+  const isAbsent = isAbsenceStatusName(currentStatus);
+  const isOut = isOutStatusName(currentStatus);
 
   return (
     <div
-      className={`w-full h-15 flex items-center px-4 gap-4 ${currentStatus ? (currentStatus === "외박" ? "bg-red-light" : currentStatus === "외출" ? "bg-green-light" : "bg-static-white") : "bg-greyscale-10"}`}>
+      className={`w-full h-15 flex items-center px-4 gap-4 ${currentStatus ? (isAbsent ? "bg-red-light" : isOut ? "bg-green-light" : "bg-static-white") : "bg-greyscale-10"}`}>
       <div
         className={`w-4.5 h-4.5 rounded-full shrink-0 ${data.isLate ? "bg-yellow-400" : "bg-transparent"}`}
       />
-      <p className={`text-body ${currentStatus === "외박" || currentStatus === "외출" ? "text-greyscale-10" : "text-greyscale-40"}`}>{data.studentId}</p>
-      <p className={`text-h4 ${currentStatus === "외박" || currentStatus === "외출" ? "text-white" : "text-static-black"}`}>{data.username}</p>
+      <p
+        className={`text-body ${isAbsent || isOut ? "text-greyscale-10" : "text-greyscale-40"}`}>
+        {data.studentId}
+      </p>
+      <p
+        className={`text-h4 ${isAbsent || isOut ? "text-white" : "text-static-black"}`}>
+        {data.username}
+      </p>
       <div className="flex-1" />
       <Dropdown selected={status} onSelect={setStatus} options={options} />
     </div>

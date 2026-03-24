@@ -5,6 +5,7 @@ import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomI
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
+import { isAbsenceStatusName } from "@/shared/utils/attendance-status";
 import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
@@ -49,7 +50,16 @@ export default async function ClassroomPage({
               { title: "10~11교시", width: "196px" },
               { title: "최종", width: "220px" },
             ]}
-            rows={data.map((attendance) => ClassroomItem({ data: attendance }))}
+            rows={data.map((attendance) => {
+              const isAbsent = attendance.statuses.some((s) =>
+                isAbsenceStatusName(s.status?.name),
+              );
+
+              return {
+                className: isAbsent ? "bg-red-light" : undefined,
+                cells: ClassroomItem({ data: attendance, isAbsent }),
+              };
+            })}
           />
         </div>
         <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
@@ -59,7 +69,16 @@ export default async function ClassroomPage({
               { title: "10~11교시", align:"center", width: "180px" },
               { title: "최종", align:"center", width: "180px" },
             ]}
-            rows={data.map((attendance) => MobileClassroomItem({ data: attendance }))}
+            rows={data.map((attendance) => {
+              const isAbsent = attendance.statuses.some((s) =>
+                isAbsenceStatusName(s.status?.name),
+              );
+
+              return {
+                className: isAbsent ? "bg-red-light" : undefined,
+                cells: MobileClassroomItem({ data: attendance, isAbsent }),
+              };
+            })}
           />
         </div>
       </Section>
