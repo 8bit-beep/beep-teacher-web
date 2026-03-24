@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
+import { TableRow } from "../types/table-data";
 import { TableHeader } from "../types/table-header";
 
 interface Props {
   header: TableHeader[];
-  rows: ReactNode[][];
+  rows: (ReactNode[] | TableRow)[];
 }
 
 const Table = ({ header, rows }: Props) => {
@@ -37,20 +38,26 @@ const Table = ({ header, rows }: Props) => {
                 </td>
               </tr>
             ) : (
-              rows.map((row, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10 ${rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}`}>
-                  {row.map((cell, cellIndex) => (
-                    <td
-                      key={cellIndex}
-                      style={{ width: header[cellIndex]?.width }}
-                      className="h-15 text-h4">
-                      {cell}
-                    </td>
-                  ))}                
-                </tr>
-              ))
+              rows.map((row, rowIndex) => {
+                const cells = Array.isArray(row) ? row : row.cells;
+                const rowClassName = Array.isArray(row) ? "" : row.className || "";
+                const defaultBg = rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white";
+
+                return (
+                  <tr
+                    key={rowIndex}
+                    className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10 ${defaultBg} ${rowClassName}`}>
+                    {cells.map((cell, cellIndex) => (
+                      <td
+                        key={cellIndex}
+                        style={{ width: header[cellIndex]?.width }}
+                        className="h-15 text-h4">
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
