@@ -11,6 +11,42 @@ export const usePullToRefresh = () => {
   const [pulled, setPulled] = useState(false);
   const maxDistance = 100;
 
+  const getScrollableChild = (
+    target: EventTarget | null,
+    boundary: HTMLElement,
+  ) => {
+    if (!(target instanceof HTMLElement)) {
+      return null;
+    }
+
+    let current: HTMLElement | null = target;
+
+    while (current && current !== boundary) {
+      const style = window.getComputedStyle(current);
+      const isScrollableY =
+        (style.overflowY === "auto" || style.overflowY === "scroll") &&
+        current.scrollHeight > current.clientHeight;
+
+      if (isScrollableY) {
+        return current;
+      }
+
+      current = current.parentElement;
+    }
+
+    return null;
+  };
+
+  const canStartPull = (target: EventTarget | null, boundary: HTMLElement) => {
+    const scrollableChild = getScrollableChild(target, boundary);
+
+    if (!scrollableChild) {
+      return true;
+    }
+
+    return scrollableChild.scrollTop <= 0;
+  };
+
   useEffect(() => {
     const touchMoveListener = (e: TouchEvent) => {
       if (isTouch && pulled) {
@@ -111,14 +147,14 @@ export const usePullToRefresh = () => {
       onEnd();
     }
   };
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (window.scrollY === 0) {
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (canStartPull(e.target, e.currentTarget)) {
       onStart(e.touches[0].clientY, true);
     }
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (window.scrollY === 0) {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (canStartPull(e.target, e.currentTarget)) {
       onStart(e.clientY, false);
     }
   };

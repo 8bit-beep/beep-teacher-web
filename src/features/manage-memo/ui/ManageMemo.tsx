@@ -8,15 +8,18 @@ import { useGetMemo } from "@/entities/memo/queries";
 import { useMarkAsReadMutation } from "@/entities/memo/mutations";
 
 const ManageMemo = () => {
-  const { data } = useGetMemo();
+  const defaultGrade = 1;
+  const { data } = useGetMemo(defaultGrade);
   const { mutate: markAsRead } = useMarkAsReadMutation();
   const hasUnread = !data.data.isRead;
 
   return (
     <button
-      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white ${hasUnread ? "outline-2 outline-red-light" : ""}`}
+      className={`relative h-10 px-6 rounded-large shadow-modal flex items-center gap-2.5 bg-static-white lg:hidden ${hasUnread ? "outline-2 outline-red-light" : ""}`}
       onClick={() => {
-        markAsRead();
+        if (hasUnread && data.data.exists !== false) {
+          markAsRead({ grade: defaultGrade, content: data.data.content });
+        }
         modal.open({ title: "메모", content: <MemoModal /> });
       }}>
       <div className="relative">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
@@ -8,6 +8,8 @@ import { Button } from "@bds-web/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
+import { toast } from "@cher1shrxd/toast";
+import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 
 interface Props {
   room: Room;
@@ -16,7 +18,13 @@ interface Props {
 const ManageAttendance = ({ room }: Props) => {
   const attendances = useGetAttendancesByRoomId(room?.id || 0).data.data;
   const { isApproved, toggleApproval } = useApprove(room?.id || 0);
-  const { handlers, triggerClose, animationClass } = useSwipeToClose();
+  const handleClose = useCallback(() => {
+    if (!isApproved) {
+      toast.warning("승인 부탁드립니다", "출석 확인 후 승인해 주세요.", TOAST_ISSUE_DURATION);
+    }
+  }, [isApproved]);
+
+  const { handlers, triggerClose, animationClass } = useSwipeToClose(handleClose);
 
   return (
     <div
