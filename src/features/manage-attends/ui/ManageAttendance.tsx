@@ -20,11 +20,16 @@ const ManageAttendance = ({ room }: Props) => {
   const { isApproved, toggleApproval } = useApprove(room?.id || 0);
   const handleClose = useCallback(() => {
     if (!isApproved) {
-      toast.warning("승인 부탁드립니다", "출석 확인 후 승인해 주세요.", TOAST_ISSUE_DURATION);
+      toast.warning(
+        "승인 부탁드립니다",
+        "출석 확인 후 승인해 주세요.",
+        TOAST_ISSUE_DURATION,
+      );
     }
   }, [isApproved]);
 
-  const { handlers, triggerClose, animationClass } = useSwipeToClose(handleClose);
+  const { handlers, triggerClose, animationClass } =
+    useSwipeToClose(handleClose);
 
   return (
     <div
@@ -45,35 +50,36 @@ const ManageAttendance = ({ room }: Props) => {
         </h1>
       </div>
       <div className="w-full flex justify-between items-center">
-      <p className="text-blue-light text-accent">
-        {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
-        {" · "}
-        {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
-        {" · "}
-        {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
-      </p>
-      <div className="flex items-center gap-2 text-green-light">
-        {isApproved ? (
-          <>
-            <p className="text-accent">승인됨</p>
-            <div className="text-red-light">
-              <CloseIcon onClose={toggleApproval} />
-            </div>
-          </>
-        ) : (
-          <Button
-            buttonSize="small"
-            buttonType="primary"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleApproval();
-            }}>
-            승인하기
-          </Button>
-        )}
+        <p className="text-blue-light text-accent">
+          {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
+          {" · "}
+          {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
+          {" · "}
+          {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
+        </p>
+        <div className="flex items-center gap-2 text-green-light">
+          {isApproved ? (
+            <>
+              <p className="text-accent">승인됨</p>
+              <div className="text-red-light">
+                <CloseIcon onClose={toggleApproval} />
+              </div>
+            </>
+          ) : (
+            <Button
+              buttonSize="small"
+              buttonType="primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleApproval();
+              }}
+            >
+              승인하기
+            </Button>
+          )}
+        </div>
       </div>
-      </div>
-      <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll">
+      <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll pb-20">
         <Suspense
           fallback={
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
