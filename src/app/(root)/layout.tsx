@@ -12,7 +12,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
       <Suspense>
         <Header />
       </Suspense>
-      <main className="w-full min-h-0 xl:w-auto flex-1 h-[calc(100%-147px)] overflow-y-auto px-5 lg:px-13.5 pb-11.75 lg:pb-0 xl:pb-0 xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
+      <main className="w-full min-h-0 xl:w-auto flex-1 h-[calc(100%-147px)] overflow-y-auto lg:pb-0 xl:pb-0 xl:h-full xl:px-13 xl:pt-13 flex flex-col gap-4.5">
         {children}
       </main>
       <TabletMemoSection />
