@@ -18,7 +18,12 @@ export const useUpdateMemo = (grade: number) => {
       return;
     }
 
-    await mutateAsync({ grade, content: memo, mode: "update" });
+    await mutateAsync({
+      grade,
+      content: memo,
+      isRead: data.data.isRead,
+      mode: "update",
+    });
   };
 
   return {

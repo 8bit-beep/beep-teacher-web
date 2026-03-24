@@ -16,7 +16,7 @@ export const useUpdateMemoMutation = () => {
     mutationFn: async (
       variables:
         | { grade: number; content: string; mode: "create" }
-        | { grade: number; content: string; mode: "update" },
+        | { grade: number; content: string; isRead: boolean; mode: "update" },
     ) => {
       if (variables.mode === "create") {
         return MemoApi.createMemo({
@@ -28,6 +28,7 @@ export const useUpdateMemoMutation = () => {
       return MemoApi.updateMemo({
         grade: variables.grade,
         content: variables.content,
+        isRead: variables.isRead,
       });
     },
     onSuccess: async (_, variables) => {
