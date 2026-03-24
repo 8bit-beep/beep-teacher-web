@@ -1,6 +1,4 @@
 import api from "@/shared/libs/api";
-import { AxiosError } from "axios";
-import { Error } from "@/shared/types/error";
 import { Memo } from "../types";
 
 export const MemoApi = {
@@ -8,27 +6,34 @@ export const MemoApi = {
     try {
       return await api.get<Memo>(`/memos/${grade}`);
     } catch (error) {
-      const axiosError = error as AxiosError<Error>;
-
       throw error;
     }
   },
 
   createMemo: async ({ grade, content }: { grade: number; content: string }) => {
     return api.post(`/memos/${grade}`, {
-      newContent: content,
+      content,
     });
   },
 
-  updateMemo: async ({ grade, content }: { grade: number; content: string }) => {
+  updateMemo: async ({
+    grade,
+    content,
+    isRead,
+  }: {
+    grade: number;
+    content: string;
+    isRead?: boolean;
+  }) => {
     return api.patch(`/memos/${grade}`, {
       newContent: content,
+      ...(typeof isRead === "boolean" ? { isRead } : {}),
     });
   },
 
   markAsRead: async ({ grade, content }: { grade: number; content: string }) => {
     return api.patch(`/memos/${grade}`, {
-      newContent: content,
+      content,
       isRead: true,
     });
   },
