@@ -7,4 +7,4 @@ export const FLOOR_OPTIONS: SegmentItem[] = [
   { label: "실습동 외", value: "other" },
 ];
 
-export const DEFAULT_FLOOR_VALUE = "2";
+

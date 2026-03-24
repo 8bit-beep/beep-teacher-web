@@ -1,5 +1,5 @@
 import api from "@/shared/libs/api";
-import { DEFAULT_FLOOR_VALUE } from "@/features/filter/constants/floor";
+
 import { Room } from "../types";
 
 export const RoomApi = {
@@ -9,7 +9,7 @@ export const RoomApi = {
       data:
         floor || floor === undefined
           ? data.filter(
-              (room) => room.floor === Number(floor || DEFAULT_FLOOR_VALUE),
+              (room) => room.floor === Number(floor || 2),
             )
           : floor === null
             ? data.filter((room) => room.floor === null)
