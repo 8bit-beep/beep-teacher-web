@@ -6,4 +6,5 @@ export const useGetCheckpoints = () => {
     queryKey: ["checkpoints"],
     queryFn: CheckpointApi.getCheckpoints,
   });
+  
 };

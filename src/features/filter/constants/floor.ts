@@ -6,3 +6,5 @@ export const FLOOR_OPTIONS: SegmentItem[] = [
   { label: "3층", value: "3" },
   { label: "실습동 외", value: "other" },
 ];
+
+export const DEFAULT_FLOOR_VALUE = "2";

@@ -14,7 +14,7 @@ const TabletMemoSection = () => {
   const hasUnread = !data.data.isRead;
 
   return (
-    <section className="w-full shrink-0 hidden lg:flex xl:hidden px-13.5">
+    <section className="w-full shrink-0 hidden lg:flex xl:hidden">
       <div className="w-full rounded-large bg-static-white shadow-modal overflow-hidden">
         <button
           type="button"
