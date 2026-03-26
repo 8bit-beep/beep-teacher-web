@@ -15,11 +15,11 @@ interface MobileHistoriesDropdownContentItemProps {
   roomId: number;
 }
 
-const MobileHistoriesDropdownContentHeader = () => {
+const MobileHistoriesDropdownContentHeader = ({ checkpointNames }: { checkpointNames: string[] }) => {
   return (
     <div className="w-full flex p-2.5 pr-5 gap-4">
       <div className="flex-1" />
-      {["8~9교시", "10~11교시", "최종"].map((label) => (
+      {checkpointNames.map((label) => (
         <p key={label} className="w-full text-static-black text-caption1 text-center">
           {label}
         </p>
@@ -57,9 +57,11 @@ const MobileHistoriesDropdownContent = ({ room }: Props) => {
   const { date } = useDateStore();
   const histories = useGetAllCheckpointHistories(room.id, date).data.data;
 
+  const checkpointNames = histories[0]?.statuses.map((s) => s.checkpoint.name) ?? [];
+
   return (
     <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
-      <MobileHistoriesDropdownContentHeader />
+      <MobileHistoriesDropdownContentHeader checkpointNames={checkpointNames} />
       <div className="w-full">
         {histories.map((history, index) => (
           <div

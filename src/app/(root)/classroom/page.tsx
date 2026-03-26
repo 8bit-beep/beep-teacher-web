@@ -23,6 +23,17 @@ export default async function ClassroomPage({
     classNumber,
   );
 
+  const firstStatuses = data[0]?.statuses ?? [];
+  const desktopStatusHeaders = firstStatuses.map((s, i) => ({
+    title: s.checkpoint.name,
+    width: i === firstStatuses.length - 1 ? "220px" : "196px",
+  }));
+  const mobileStatusHeaders = firstStatuses.map((s) => ({
+    title: s.checkpoint.name,
+    align: "center" as const,
+    width: "180px",
+  }));
+
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-end xl:flex">
@@ -46,9 +57,7 @@ export default async function ClassroomPage({
           <Table
             header={[
               { title: "학번/이름" },
-              { title: "8~9교시", width: "196px" },
-              { title: "10~11교시", width: "196px" },
-              { title: "최종", width: "220px" },
+              ...desktopStatusHeaders,
             ]}
             rows={data.map((attendance) => {
               const isAbsent = attendance.statuses.some((s) =>
@@ -64,11 +73,7 @@ export default async function ClassroomPage({
         </div>
         <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
           <Table
-            header={[
-              { title: "8~9교시", align:"center", width: "180px" },
-              { title: "10~11교시", align:"center", width: "180px" },
-              { title: "최종", align:"center", width: "180px" },
-            ]}
+            header={mobileStatusHeaders}
             rows={data.map((attendance) => {
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
