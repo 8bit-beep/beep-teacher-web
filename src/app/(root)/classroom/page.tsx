@@ -1,5 +1,6 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
+import { getClassroomTableWidths } from "@/features/manage-classroom/utils/table-widths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
@@ -24,9 +25,10 @@ export default async function ClassroomPage({
   );
 
   const firstStatuses = data[0]?.statuses ?? [];
+  const { dropdownWidth, headerWidth, lastHeaderWidth } = getClassroomTableWidths(firstStatuses.length);
   const desktopStatusHeaders = firstStatuses.map((s, i) => ({
     title: s.checkpoint.name,
-    width: i === firstStatuses.length - 1 ? "220px" : "196px",
+    width: i === firstStatuses.length - 1 ? lastHeaderWidth : headerWidth,
   }));
   const mobileStatusHeaders = firstStatuses.map((s) => ({
     title: s.checkpoint.name,
@@ -66,7 +68,7 @@ export default async function ClassroomPage({
 
               return {
                 className: isAbsent ? "bg-red-light" : undefined,
-                cells: ClassroomItem({ data: attendance, isAbsent }),
+                cells: ClassroomItem({ data: attendance, isAbsent, desktopWidth: dropdownWidth }),
               };
             })}
           />

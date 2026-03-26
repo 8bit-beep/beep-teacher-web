@@ -4,9 +4,10 @@ import ClassroomDropdown from "./ClassroomDropdown";
 interface Props {
   data: Attendance;
   isAbsent?: boolean;
+  desktopWidth?: string;
 }
 
-const ClassroomItem = ({ data, isAbsent }: Props): React.ReactNode[] => [
+const ClassroomItem = ({ data, isAbsent, desktopWidth }: Props): React.ReactNode[] => [
   <div key="student" className="flex gap-4">
     <p className={`text-body ${isAbsent ? "text-greyscale-10" : "text-greyscale-40"}`}>
       {data.studentId}
@@ -17,7 +18,7 @@ const ClassroomItem = ({ data, isAbsent }: Props): React.ReactNode[] => [
   </div>,
   ...data.statuses.map((statusItem, statusIndex) => (
     <div key={statusItem.checkpoint.id} className="pl-4">
-      <ClassroomDropdown data={data} statusIndex={statusIndex} />
+      <ClassroomDropdown data={data} statusIndex={statusIndex} desktopWidth={desktopWidth} />
     </div>
   )),
 ];
