@@ -12,7 +12,7 @@ import MemoPanel from "@/features/manage-memo/ui/MemoPanel";
 const Sidebar = () => {
   return (
     <aside className="w-[15%] min-w-45 max-w-70 h-screen bg-static-white shadow-modal px-5.5 py-13.75 hidden xl:flex flex-col items-center gap-9">
-      <Link href="/?floor=1">
+      <Link href="/?floor=2">
         <Image
           src="/logo.svg"
           loading="eager"

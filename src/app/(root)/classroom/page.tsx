@@ -1,5 +1,6 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
+import { getClassroomTableWidths } from "@/shared/constants/tableWidths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
@@ -22,6 +23,18 @@ export default async function ClassroomPage({
     grade,
     classNumber,
   );
+
+  const firstStatuses = data[0]?.statuses ?? [];
+  const { dropdownWidth, headerWidth, lastHeaderWidth } = getClassroomTableWidths(firstStatuses.length);
+  const desktopStatusHeaders = firstStatuses.map((s, i) => ({
+    title: s.checkpoint.name,
+    width: i === firstStatuses.length - 1 ? lastHeaderWidth : headerWidth,
+  }));
+  const mobileStatusHeaders = firstStatuses.map((s) => ({
+    title: s.checkpoint.name,
+    align: "center" as const,
+    width: "180px",
+  }));
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
@@ -46,9 +59,7 @@ export default async function ClassroomPage({
           <Table
             header={[
               { title: "학번/이름" },
-              { title: "8~9교시", width: "196px" },
-              { title: "10~11교시", width: "196px" },
-              { title: "최종", width: "220px" },
+              ...desktopStatusHeaders,
             ]}
             rows={data.map((attendance) => {
               const isAbsent = attendance.statuses.some((s) =>
@@ -57,18 +68,14 @@ export default async function ClassroomPage({
 
               return {
                 className: isAbsent ? "bg-red-light" : undefined,
-                cells: ClassroomItem({ data: attendance, isAbsent }),
+                cells: ClassroomItem({ data: attendance, isAbsent, desktopWidth: dropdownWidth }),
               };
             })}
           />
         </div>
         <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
           <Table
-            header={[
-              { title: "8~9교시", align:"center", width: "180px" },
-              { title: "10~11교시", align:"center", width: "180px" },
-              { title: "최종", align:"center", width: "180px" },
-            ]}
+            header={mobileStatusHeaders}
             rows={data.map((attendance) => {
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
