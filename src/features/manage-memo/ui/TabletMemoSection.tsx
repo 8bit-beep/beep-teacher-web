@@ -33,7 +33,7 @@ const TabletMemoSection = () => {
           </div>
           <ChevronIcon
             className="text-greyscale-60 transition-transform"
-            size={20}
+            size={16}
             rotate={isOpen ? 0 : 180}
           />
         </button>
