@@ -10,6 +10,7 @@ import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
+import {Link} from "@cher1shrxd/loading";
 
 const Header = () => {
   const pathname = usePathname();
@@ -31,13 +32,15 @@ const Header = () => {
 
   return (
     <header className="w-full min-h-12.5 flex items-center gap-5 my-4 px-5 lg:px-13.5 xl:hidden">
-      <Image
-        width={40}
-        height={40}
-        src="/logo.svg"
-        alt="logo"
-        style={{ width: "auto", height: "auto" }}
-      />
+      <Link href="/?floor=2">
+        <Image
+          width={40}
+          height={40}
+          src="/logo.svg"
+          alt="logo"
+          style={{ width: "auto", height: "auto" }}
+        />
+      </Link>
       <div className="w-full min-w-0 flex justify-between">
         <div className="hidden lg:flex">{headerContent}</div>
         <ManageMemo />
