@@ -15,7 +15,7 @@ const NavItem = ({ icon, label, path }: Props) => {
   const searchParams = useSearchParams();
   const floor = searchParams.get("floor");
 
-  const href = path === "/" && floor ? `/?floor=${floor}` : path;
+  const href = floor ? `${path}?floor=${floor}` : path;
 
   return (
     <Link href={href} className={`w-full h-11 px-2 flex items-center gap-2.5 rounded-small ${pathname === path ? "bg-greyscale-10 text-blue-dark" : "text-static-black"}`}>
