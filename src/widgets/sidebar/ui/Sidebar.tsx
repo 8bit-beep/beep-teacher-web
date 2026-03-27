@@ -24,9 +24,11 @@ const Sidebar = () => {
       <div className="w-full flex-1 flex flex-col justify-between">
         <nav className="w-full flex flex-col items-start">
           <h2 className="text-greyscale-60 my-0.75 text-caption2">메뉴</h2>
-          {ROUTES.map(({ label, path, icon }) => (
-            <NavItem icon={icon} label={label} path={path} key={path} />
-          ))}
+          <Suspense>
+            {ROUTES.map(({ label, path, icon }) => (
+              <NavItem icon={icon} label={label} path={path} key={path} />
+            ))}
+          </Suspense>
         </nav>
         <div className="w-full flex flex-col gap-4">
           <h2 className="text-greyscale-60 my-0.75 text-caption2">메모</h2>
