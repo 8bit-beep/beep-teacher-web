@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@cher1shrxd/loading";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react"
 
 interface Props {
@@ -12,9 +12,13 @@ interface Props {
 
 const NavItem = ({ icon, label, path }: Props) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const floor = searchParams.get("floor");
+
+  const href = path === "/" && floor ? `/?floor=${floor}` : path;
 
   return (
-    <Link href={path} className={`w-full h-11 px-2 flex items-center gap-2.5 rounded-small ${pathname === path ? "bg-greyscale-10 text-blue-dark" : "text-static-black"}`}>
+    <Link href={href} className={`w-full h-11 px-2 flex items-center gap-2.5 rounded-small ${pathname === path ? "bg-greyscale-10 text-blue-dark" : "text-static-black"}`}>
       {icon}
       <p className="text-caption2">{label}</p>
     </Link>
