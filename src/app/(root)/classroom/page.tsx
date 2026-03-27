@@ -1,6 +1,6 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
-import { getClassroomTableWidths } from "@/shared/constants/table-widths";
+import { getClassroomTableWidths } from "@/shared/constants/tableWidths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";

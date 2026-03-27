@@ -58,9 +58,9 @@ const HistoriesDropdownContent = ({ room }: Props) => {
   const histories = useGetAllCheckpointHistories(room.id, date).data.data;
 
   const checkpointNames = histories[0]?.statuses.map((s) => s.checkpoint.name) ?? [];
-  const is4OrMore = checkpointNames.length >= 4;
-  const dropdownWidth = is4OrMore ? "150px" : "180px";
-  const headerWidthClass = is4OrMore ? "w-[150px]" : "w-[180px]";
+  const checkpoint = checkpointNames.length >= 4;
+  const dropdownWidth = checkpoint ? "150px" : "180px";
+  const headerWidthClass = checkpoint ? "w-[150px]" : "w-[180px]";
 
   return (
     <div className="w-full bg-static-white xl:rounded-l-large flex flex-col items-start slide-in-down">
