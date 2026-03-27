@@ -7,9 +7,10 @@ import { useUpdateClassroom } from "../hooks/useUpdateClassroom";
 interface Props {
   data: Attendance;
   statusIndex: number;
+  desktopWidth?: string;
 }
 
-const ClassroomDropdown = ({ data, statusIndex }: Props) => {
+const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px" }: Props) => {
   const { status, setStatus, options } = useUpdateClassroom(data, statusIndex);
 
   return (
@@ -20,7 +21,7 @@ const ClassroomDropdown = ({ data, statusIndex }: Props) => {
           onSelect={setStatus}
           options={options}
           dropdownSize="medium"
-          width="180px"
+          width={desktopWidth}
         />
       </div>
       <div className={`lg:hidden ${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
