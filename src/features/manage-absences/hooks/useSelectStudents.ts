@@ -17,6 +17,7 @@ export const useSelectStudents = (initData?: number[]) => {
 
   return {
     selectedStudents,
+    setSelectedStudents,
     toggleSelected,
   };
 };
