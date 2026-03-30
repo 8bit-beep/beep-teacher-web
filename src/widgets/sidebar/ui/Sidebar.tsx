@@ -12,7 +12,7 @@ import MemoPanel from "@/features/manage-memo/ui/MemoPanel";
 const Sidebar = () => {
   return (
     <aside className="w-[15%] min-w-45 max-w-70 h-screen bg-static-white shadow-modal px-5.5 py-13.75 hidden xl:flex flex-col items-center gap-9">
-      <Link href="/?floor=1">
+      <Link href="/?floor=2">
         <Image
           src="/logo.svg"
           loading="eager"
@@ -24,9 +24,11 @@ const Sidebar = () => {
       <div className="w-full flex-1 flex flex-col justify-between">
         <nav className="w-full flex flex-col items-start">
           <h2 className="text-greyscale-60 my-0.75 text-caption2">메뉴</h2>
-          {ROUTES.map(({ label, path, icon }) => (
-            <NavItem icon={icon} label={label} path={path} key={path} />
-          ))}
+          <Suspense>
+            {ROUTES.map(({ label, path, icon }) => (
+              <NavItem icon={icon} label={label} path={path} key={path} />
+            ))}
+          </Suspense>
         </nav>
         <div className="w-full flex flex-col gap-4">
           <h2 className="text-greyscale-60 my-0.75 text-caption2">메모</h2>

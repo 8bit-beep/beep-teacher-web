@@ -8,9 +8,10 @@ interface Props {
   data: Attendance;
   roomId: number;
   index: number;
+  desktopWidth?: string;
 }
 
-const ManageHistoryDropdown = ({ data, roomId, index }: Props) => {
+const ManageHistoryDropdown = ({ data, roomId, index, desktopWidth = "180px" }: Props) => {
   const { status, setStatus, options } = useUpdateHistory(data, roomId, index);
   const shouldHighlightAbsent = status?.name === "미출석";
 
@@ -26,7 +27,7 @@ const ManageHistoryDropdown = ({ data, roomId, index }: Props) => {
           onSelect={setStatus}
           options={options}
           dropdownSize="medium"
-          width="180px"
+          width={desktopWidth}
         />
       </div>
       <div className="lg:hidden">
