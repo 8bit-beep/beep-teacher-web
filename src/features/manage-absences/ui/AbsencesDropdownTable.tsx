@@ -10,11 +10,12 @@ import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";
 
 interface Props {
   data: Absence[];
+  allData?: Absence[];
 }
 
 interface AbsenceRow {
   rowKey: string;
-  absence: Absence;
+  absences: Absence[];
   attendTypeName: string;
   studentNum: string;
   studentName: string;
@@ -25,21 +26,33 @@ interface AbsenceGroup {
   items: AbsenceRow[];
 }
 
-const AbsencesDropdownTable = ({ data }: Props) => {
+const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
   const { nameById } = useGetAbsenceReason();
 
   const groups = useMemo<AbsenceGroup[]>(() => {
     const grouped = new Map<string, AbsenceRow[]>();
+    const rowsByStudentId = new Map<
+      number,
+      Omit<AbsenceRow, "rowKey" | "attendTypeName">
+    >();
 
-    data.forEach((absence) => {
-      const attendTypeName = nameById.get(absence.typeId) ?? "기타";
-      const current = grouped.get(attendTypeName) ?? [];
+    allData.forEach((absence) => {
+      absence.targetStudents.forEach((student) => {
+        const studentId = student.info?.id;
 
-      absence.targetStudents.forEach((student, index) => {
-        current.push({
-          rowKey: `${absence.absenceId}-${index}`,
-          absence,
-          attendTypeName,
+        if (!studentId) {
+          return;
+        }
+
+        const current = rowsByStudentId.get(studentId);
+
+        if (current) {
+          current.absences.push(absence);
+          return;
+        }
+
+        rowsByStudentId.set(studentId, {
+          absences: [absence],
           studentNum: studentCode(
             student.info.grade,
             student.info.classNumber,
@@ -48,15 +61,44 @@ const AbsencesDropdownTable = ({ data }: Props) => {
           studentName: student.name,
         });
       });
+    });
 
-      grouped.set(attendTypeName, current);
+    data.forEach((absence) => {
+      const attendTypeName = nameById.get(absence.typeId) ?? "기타";
+      const current = grouped.get(attendTypeName) ?? [];
+
+      absence.targetStudents.forEach((student, index) => {
+        const studentId = student.info?.id;
+
+        if (!student.info || !studentId) {
+          return;
+        }
+
+        const studentRow = rowsByStudentId.get(studentId);
+
+        if (!studentRow) {
+          return;
+        }
+
+        current.push({
+          rowKey: `${absence.absenceId}-${index}`,
+          absences: studentRow.absences,
+          attendTypeName,
+          studentNum: studentRow.studentNum,
+          studentName: studentRow.studentName,
+        });
+      });
+
+      if (current.length > 0) {
+        grouped.set(attendTypeName, current);
+      }
     });
 
     return Array.from(grouped.entries()).map(([label, items]) => ({
       label,
       items,
     }));
-  }, [data, nameById]);
+  }, [allData, data, nameById]);
 
   return (
     <DropdownTable
@@ -96,8 +138,7 @@ const AbsencesDropdownTable = ({ data }: Props) => {
               className={index % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white"}
             >
               <AbsenceItem
-                data={row.absence}
-                attendTypeName={row.attendTypeName}
+                data={row.absences}
                 studentNum={row.studentNum}
                 studentName={row.studentName}
               />

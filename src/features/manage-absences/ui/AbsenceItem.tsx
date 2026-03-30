@@ -5,8 +5,7 @@ import { Button, modal } from "@bds-web/ui";
 import UpdateAbsenceModal from "./UpdateAbsenceModal";
 
 interface Props {
-  data: Absence;
-  attendTypeName?: string;
+  data: Absence[];
   studentNum?: string;
   studentName?: string;
 }
@@ -19,10 +18,6 @@ const AbsenceItem = ({ data, studentName, studentNum }: Props) => {
       <div className="hidden items-center gap-2 lg:flex">
         <p className="text-body text-greyscale-40 w-7">{studentNum}</p>
         <p className="text-accent text-greyscale-70">{studentName}</p>
-        <span className="text-accent text-greyscale-70">/</span>
-        <p className="text-accent text-greyscale-70">
-          {data.startDate} ~ {data.endDate}
-        </p>
         <div className="flex-1" />
         <Button
           buttonSize="small"
@@ -43,9 +38,6 @@ const AbsenceItem = ({ data, studentName, studentNum }: Props) => {
             <p className="text-caption1 text-greyscale-40 w-7">{studentNum}</p>
             <p className="text-body text-black">{studentName}</p>
           </div>
-          <p className="text-body text-greyscale-70">
-            {data.startDate} ~ {data.endDate}
-          </p>
         </div>
         <div className="flex-1" />
         <Button

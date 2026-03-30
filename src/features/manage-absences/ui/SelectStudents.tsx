@@ -9,13 +9,13 @@ import StudentItem from "./StudentItem";
 interface Props {
   selectedStudents: number[];
   toggleSelected: (studentId: number) => void;
-  setPhase: (phase: "info" | "selectStudents") => void;
+  onDone: () => void;
 }
 
 const SelectStudents = ({
   selectedStudents,
   toggleSelected,
-  setPhase,
+  onDone,
 }: Props) => {
   const { onChange, query, result } = useSearch();
 
@@ -44,7 +44,7 @@ const SelectStudents = ({
       <Button
         buttonSize="large"
         buttonType="primary"
-        onClick={() => setPhase("info")}>
+        onClick={onDone}>
         선택 완료
       </Button>
     </div>

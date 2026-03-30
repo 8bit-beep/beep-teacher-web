@@ -1,14 +1,18 @@
 import { DropdownItem } from "@bds-web/ui";
 import { useState } from "react";
-import { useSelectStudents } from "./useSelectStudents";
 import { Absence, AbsenceCheckpoint } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
 import { toast } from "@cher1shrxd/toast";
 import { parseDate } from "@/shared/utils/pare-date";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 import { useGetAbsenceReason } from "./useGetAbsenceReason";
+import { useResolveAbsenceUserIds } from "./useResolveAbsenceUserIds";
 
 export const useUpdateAbsence = (data: Absence) => {
+  if (data.absenceId === null) {
+    throw new Error("absenceId is required to update an absence.");
+  }
+
   const { options } = useGetAbsenceReason();
   const initType =
     options.find((option) => option.value === `${data.typeId}`) || null;
@@ -18,10 +22,10 @@ export const useUpdateAbsence = (data: Absence) => {
   const [startAt, setStartAt] = useState<Date>(new Date(data.startDate));
   const [endAt, setEndAt] = useState<Date>(new Date(data.endDate));
 
-  const initStudents = data.targetStudents.map((student) => student.info.id);
-
-  const { selectedStudents, toggleSelected } = useSelectStudents(initStudents);
-  const [phase, setPhase] = useState<"info" | "selectStudents">("info");
+  const { resolvedUserIds, isResolving } = useResolveAbsenceUserIds(
+    data.targetStudents,
+  );
+  const selectedStudents = resolvedUserIds;
 
   const initExceptions = data.checkpoints.map((checkpoint) => ({
     checkpointId: checkpoint.checkpointId,
@@ -83,13 +87,10 @@ export const useUpdateAbsence = (data: Absence) => {
     selectedStudents.length === 0 ||
     !selectedType ||
     !reason.trim() ||
+    isResolving ||
     isPending;
 
   return {
-    phase,
-    setPhase,
-    selectedStudents,
-    toggleSelected,
     setSelectedType,
     selectedType,
     startAt,

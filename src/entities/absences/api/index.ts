@@ -1,6 +1,5 @@
 import api from "@/shared/libs/api";
 import {
-  AbsenceReasonsResponseDto,
   AbsenceRequestDto,
   AbsenceResponseDto,
 } from "../types/dto";
@@ -12,9 +11,9 @@ export const AbsenceApi = {
     return await api.post<AbsenceResponseDto>("/absences", data);
   },
 
-  getAbsences: async (page: number) => {
+  getAbsences: async (page: number, size = 10) => {
     return await api.get<PageResponse<Absence>>(
-      `/absences?page=${page}&size=10`,
+      `/absences?page=${page}&size=${size}`,
     );
   },
 
@@ -24,9 +23,5 @@ export const AbsenceApi = {
 
   deleteAbsence: async (absenceId: number) => {
     return await api.delete(`/absences/${absenceId}`);
-  },
-
-  getReasons: async () => {
-    return await api.get<AbsenceReasonsResponseDto>("/absences/reasons");
   },
 };
