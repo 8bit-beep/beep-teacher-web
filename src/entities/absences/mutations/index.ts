@@ -11,15 +11,21 @@ import {
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
 
+interface CreateAbsenceToastState {
+  title: string;
+  description: string;
+  type: "warning" | "success";
+}
+
 export const getCreateAbsenceToastState = (
   skippedUserIds: number[],
   requestedCount: number,
-) => {
+): CreateAbsenceToastState => {
   if (requestedCount > 0 && skippedUserIds.length === requestedCount) {
     return {
       title: "이미 추가된 대상",
       description: "선택한 대상은 이미 같은 조건의 외박 정보가 등록되어 있습니다.",
-      type: "warning" as const,
+      type: "warning",
     };
   }
 
@@ -27,14 +33,14 @@ export const getCreateAbsenceToastState = (
     return {
       title: "일부 외박 처리 실패",
       description: `다음 학생들의 외박 처리에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
-      type: "warning" as const,
+      type: "warning",
     };
   }
 
   return {
     title: "외박 처리 완료",
     description: "선택한 학생들의 외박이 정상적으로 처리되었습니다.",
-    type: "success" as const,
+    type: "success",
   };
 };
 
