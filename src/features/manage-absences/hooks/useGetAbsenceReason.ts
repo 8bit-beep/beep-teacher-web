@@ -1,32 +1,29 @@
-import { useGetAllAbsencesReason } from "@/entities/absences/queries";
-import { ABSENCE_REASON_LABEL } from "@/entities/absences/constants/reason";
+import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { DropdownItem } from "@bds-web/ui";
 import { useMemo } from "react";
 
-const toAbsenceReasonLabel = (code: string) =>
-  ABSENCE_REASON_LABEL[code as keyof typeof ABSENCE_REASON_LABEL] ?? code;
+const ALLOWED_ATTEND_NAMES = new Set(["외박", "외출"]);
 
 export const useGetAbsenceReason = () => {
-  const absenceTypes = useGetAllAbsencesReason().data.data.absenceTypes;
+  const attendTypes = useGetAttendTypes().data.data.filter((type) =>
+    ALLOWED_ATTEND_NAMES.has(type.name),
+  );
 
   const options = useMemo<DropdownItem[]>(
     () =>
-      absenceTypes.map((absenceType, index) => ({
-        name: toAbsenceReasonLabel(absenceType),
-        value: `${index}`,
+      attendTypes.map((type) => ({
+        name: type.name,
+        value: `${type.id}`,
       })),
-    [absenceTypes],
+    [attendTypes],
   );
 
   const nameById = useMemo(
     () =>
       new Map(
-        absenceTypes.map(
-          (absenceType, index) =>
-            [index, toAbsenceReasonLabel(absenceType)] as const,
-        ),
+        attendTypes.map((type) => [type.id, type.name] as const),
       ),
-    [absenceTypes],
+    [attendTypes],
   );
 
   return {

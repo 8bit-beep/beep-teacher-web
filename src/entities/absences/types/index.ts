@@ -1,7 +1,7 @@
 import { StudentInfo } from "@/entities/students/types";
 
 export interface Absence {
-  absenceId: number;
+  absenceId: number | null;
   isGrouped: boolean;
   targetStudents: AbsenceTargetStudent[];
   startDate: string;
@@ -18,6 +18,7 @@ export interface AbsenceCheckpoint {
 }
 
 export interface AbsenceTargetStudent {
+  id?: number;
   name: string;
   info: StudentInfo;
 }

@@ -3,16 +3,29 @@ import AbsencesDropdownTable from "@/features/manage-absences/ui/AbsencesDropdow
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import CalendarIcon from "@/shared/icons/CalendarIcon";
-import { SearchParams } from "@/shared/types/search-params";
-import Pagination from "@/widgets/pagination/ui/Pagination";
 import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
 
-export default async function AbsencesPage({
-  searchParams,
-}: SearchParams<{ page?: string }>) {
-  const { page } = await searchParams;
-  const { data } = await AbsenceApi.getAbsences(Number(page || "0"));
+export default async function AbsencesPage() {
+  const firstPage = await AbsenceApi.getAbsences(0, 100);
+  const additionalPages =
+    firstPage.data.totalPages > 1
+      ? await Promise.all(
+          Array.from({ length: firstPage.data.totalPages - 1 }, (_, index) =>
+            AbsenceApi.getAbsences(index + 1, 100),
+          ),
+        )
+      : [];
+  const allAbsences = [
+    ...firstPage.data.content,
+    ...additionalPages.flatMap((response) => response.data.content),
+  ];
+  const today = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Seoul",
+  }).format(new Date());
+  const todayAbsences = allAbsences.filter(
+    (absence) => absence.startDate <= today && absence.endDate >= today,
+  );
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
@@ -21,7 +34,7 @@ export default async function AbsencesPage({
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
-        title="결석자 관리"
+        title="외박자 관리"
         description="학생들의 결석 여부를 관리하세요!"
         icon={<CalendarIcon size={24} />}
         headerOptions={
@@ -30,12 +43,11 @@ export default async function AbsencesPage({
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <AbsencesDropdownTable data={data.content} />
+          <AbsencesDropdownTable
+            data={todayAbsences}
+            allData={allAbsences}
+          />
         </div>
-        <Pagination
-          totalPages={data.totalPages}
-          currentPage={Number(page || "0")}
-        />
       </Section>
     </div>
   );
