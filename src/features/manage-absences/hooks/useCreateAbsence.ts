@@ -8,10 +8,11 @@ import {
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
 import { useGetAbsenceReason } from "./useGetAbsenceReason";
-import { AbsenceApi } from "@/entities/absences/api";
 import { useRouter } from "@cher1shrxd/loading";
-import { AxiosError } from "axios";
-import { Error } from "@/shared/types/error";
+import {
+  getCreateAbsenceToastState,
+  useCreateAbsenceMutation,
+} from "@/entities/absences/mutations";
 
 interface DraftAbsence {
   id: number;
@@ -39,6 +40,7 @@ export const useCreateAbsence = ({
 }: Props = {}) => {
   const router = useRouter();
   const { options } = useGetAbsenceReason();
+  const { mutateAsync } = useCreateAbsenceMutation();
   const { selectedStudents, toggleSelected } =
     useSelectStudents(initialSelectedStudents);
   const [phase, setPhase] = useState<"list" | "selectStudents" | "add">(
@@ -137,7 +139,7 @@ export const useCreateAbsence = ({
     try {
       const responses = await Promise.all(
         drafts.map((draft) =>
-          AbsenceApi.createAbsence({
+          mutateAsync({
             userIds: selectedStudents,
             startDate: draft.startDate,
             endDate: draft.endDate,
@@ -151,42 +153,27 @@ export const useCreateAbsence = ({
       const skippedUserIds = responses.flatMap(
         (response) => response.data.skippedUserIds,
       );
-      const totalRequestedCount = selectedStudents.length * drafts.length;
+      const toastState = getCreateAbsenceToastState(
+        skippedUserIds,
+        selectedStudents.length * drafts.length,
+      );
 
-      if (
-        totalRequestedCount > 0 &&
-        skippedUserIds.length === totalRequestedCount
-      ) {
-        toast.warning(
-          "이미 추가된 대상",
-          "선택한 대상은 이미 같은 조건의 결석 정보가 등록되어 있습니다.",
-          TOAST_ISSUE_DURATION,
-        );
-      } else if (skippedUserIds.length > 0) {
-        toast.warning(
-          "일부 결석 처리 실패",
-          `다음 학생들의 결석 처리에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
-          TOAST_ISSUE_DURATION,
+      if (toastState.type === "success") {
+        toast.success(
+          toastState.title,
+          toastState.description,
+          TOAST_SUCCESS_DURATION,
         );
       } else {
-        toast.success(
-          "결석 처리 완료",
-          "선택한 학생들의 결석이 정상적으로 처리되었습니다.",
-          TOAST_SUCCESS_DURATION,
+        toast.warning(
+          toastState.title,
+          toastState.description,
+          TOAST_ISSUE_DURATION,
         );
       }
 
       router.refresh();
       modal.closeAll();
-    } catch (error) {
-      const axiosError = error as AxiosError<Error>;
-
-      toast.error(
-        "결석 처리 실패",
-        axiosError.response?.data.message ||
-          "결석 처리 중 오류가 발생했습니다.",
-        TOAST_ISSUE_DURATION,
-      );
     } finally {
       setIsPending(false);
     }
