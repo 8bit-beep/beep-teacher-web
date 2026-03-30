@@ -36,6 +36,14 @@ const AddAbsenceReasonModal = ({
   const [endAt, setEndAt] = useState<Date>(new Date());
   const [isPending, setIsPending] = useState(false);
 
+  const handleStartAtChange = (date: Date) => {
+    setStartAt(date);
+
+    if (date > endAt) {
+      setEndAt(date);
+    }
+  };
+
   const submit = async () => {
     if (!selectedType) {
       toast.warning(
@@ -140,7 +148,7 @@ const AddAbsenceReasonModal = ({
         <div className="w-full flex items-center gap-2.5 justify-between">
           <DatePicker
             date={startAt}
-            onChangeDate={setStartAt}
+            onChangeDate={handleStartAtChange}
             title="시작일 선택"
           />
           <span className="text-caption1 text-static-black">~</span>

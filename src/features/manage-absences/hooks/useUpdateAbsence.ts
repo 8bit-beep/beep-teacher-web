@@ -28,6 +28,14 @@ export const useUpdateAbsence = (data: Absence) => {
   const selectedStudents = resolvedUserIds;
   const [reason, setReason] = useState(data.reason);
 
+  const handleStartAtChange = (date: Date) => {
+    setStartAt(date);
+
+    if (date > endAt) {
+      setEndAt(date);
+    }
+  };
+
   const { mutateAsync, isPending } = useUpdateAbsenceMutation(data.absenceId);
 
   const submit = async () => {
@@ -79,7 +87,7 @@ export const useUpdateAbsence = (data: Absence) => {
     setSelectedType,
     selectedType,
     startAt,
-    setStartAt,
+    setStartAt: handleStartAtChange,
     endAt,
     setEndAt,
     options,
