@@ -30,7 +30,7 @@ const hasOverlappingDateRange = (
 
 interface Props {
   initialSelectedStudents?: number[];
-  initialPhase?: "list" | "selectStudents" | "add";
+  initialPhase?: "list" | "selectStudents";
 }
 
 export const useCreateAbsence = ({
@@ -148,9 +148,21 @@ export const useCreateAbsence = ({
         ),
       );
 
-      const skippedUserIds = responses.flatMap((response) => response.data.skippedUserIds);
+      const skippedUserIds = responses.flatMap(
+        (response) => response.data.skippedUserIds,
+      );
+      const totalRequestedCount = selectedStudents.length * drafts.length;
 
-      if (skippedUserIds.length > 0) {
+      if (
+        totalRequestedCount > 0 &&
+        skippedUserIds.length === totalRequestedCount
+      ) {
+        toast.warning(
+          "이미 추가된 대상",
+          "선택한 대상은 이미 같은 조건의 결석 정보가 등록되어 있습니다.",
+          TOAST_ISSUE_DURATION,
+        );
+      } else if (skippedUserIds.length > 0) {
         toast.warning(
           "일부 결석 처리 실패",
           `다음 학생들의 결석 처리에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,

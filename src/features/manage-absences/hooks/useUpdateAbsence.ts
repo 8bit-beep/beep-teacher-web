@@ -42,10 +42,6 @@ export const useUpdateAbsence = (data: Absence) => {
     );
   };
 
-  const createException = (date: string, checkpointId: number) => {
-    setExceptions((prev) => [...prev, { checkpointId, date }]);
-  };
-
   const { mutateAsync, isPending } = useUpdateAbsenceMutation(data.absenceId);
 
   const submit = async () => {
@@ -99,7 +95,6 @@ export const useUpdateAbsence = (data: Absence) => {
     setEndAt,
     exceptions,
     deleteException,
-    createException,
     options,
     reason,
     setReason,

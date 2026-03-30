@@ -11,38 +11,6 @@ import {
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
 
-export const useCreateAbsenceMutation = () => {
-  const router = useRouter();
-
-  return useMutation({
-    mutationFn: AbsenceApi.createAbsence,
-    onSuccess: (res) => {
-      if (res.data.skippedUserIds.length > 0) {
-        toast.warning(
-          "일부 결석 처리 실패",
-          `다음 학생들의 결석 처리에 실패했습니다: ${res.data.skippedUserIds.join(", ")}`,
-          TOAST_ISSUE_DURATION,
-        );
-      } else {
-        toast.success(
-          "결석 처리 완료",
-          "선택한 학생들의 결석이 정상적으로 처리되었습니다.",
-          TOAST_SUCCESS_DURATION,
-        );
-      }
-      router.refresh();
-      modal.closeAll();
-    },
-    onError: (error: AxiosError<Error>) => {
-      toast.error(
-        "결석 처리 실패",
-        error.response?.data.message || "결석 처리 중 오류가 발생했습니다.",
-        TOAST_ISSUE_DURATION,
-      );
-    },
-  });
-};
-
 export const useUpdateAbsenceMutation = (absenceId: number) => {
   const router = useRouter();
 

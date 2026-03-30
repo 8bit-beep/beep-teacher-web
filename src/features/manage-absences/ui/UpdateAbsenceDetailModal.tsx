@@ -4,7 +4,6 @@ import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
 import ExceptionItem from "./ExceptionItem";
 import { useUpdateAbsence } from "../hooks/useUpdateAbsence";
 import { Absence } from "@/entities/absences/types";
-import DeleteAbsenceModal from "./DeleteAbsenceModal";
 
 interface Props {
   data: Absence;
@@ -61,8 +60,8 @@ const UpdateAbsenceDetailModal = ({ data }: Props) => {
           />
         </div>
       </div>
-      <div className="w-full flex flex-col gap-2">
-        {exceptions.length > 0 && (
+      {exceptions.length > 0 && (
+        <div className="w-full flex flex-col gap-2">
           <div className="w-full max-h-32 overflow-y-scroll">
             {exceptions.map((exception) => (
               <ExceptionItem
@@ -72,29 +71,25 @@ const UpdateAbsenceDetailModal = ({ data }: Props) => {
               />
             ))}
           </div>
-        )}
-      </div>
-      <div className="w-full flex flex-col gap-2">
+        </div>
+      )}
+      <div className="w-full flex items-center gap-2">
         <Button
-          buttonSize="medium"
+          buttonSize="large"
+          buttonType="ghost"
+          onClick={() => modal.close()}
+          style={{ flex: 1 }}
+        >
+          취소
+        </Button>
+        <Button
+          buttonSize="large"
           buttonType="primary"
           onClick={submit}
           disabled={disabled}
+          style={{ flex: 1 }}
         >
-          수정 완료
-        </Button>
-        <Button
-          buttonSize="medium"
-          buttonType="danger"
-          onClick={() =>
-            modal.open({
-              title: "결석 정보를 삭제하시겠습니까?",
-              content: <DeleteAbsenceModal absenceId={data.absenceId!} />,
-            })
-          }
-          disabled={disabled}
-        >
-          삭제
+          수정
         </Button>
       </div>
     </div>
