@@ -10,6 +10,7 @@ import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
+import PullToRefresh from "@/shared/ui/PullToRefresh";
 
 interface Props {
   room: Room;
@@ -87,14 +88,16 @@ const ManageAttendance = ({ room }: Props) => {
             </div>
           }
         >
-          {!!room &&
-            attendances.map((attendance) => (
-              <AttendanceItem
-                data={attendance}
-                key={attendance.userId}
-                roomId={room.id}
-              />
-            ))}
+          <PullToRefresh>
+            {!!room &&
+              attendances.map((attendance) => (
+                <AttendanceItem
+                  data={attendance}
+                  key={attendance.userId}
+                  roomId={room.id}
+                />
+              ))}
+            </PullToRefresh>
         </Suspense>
       </div>
     </div>
