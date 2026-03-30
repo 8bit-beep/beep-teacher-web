@@ -3,6 +3,7 @@
 import { AbsenceCheckpoint } from "@/entities/absences/types";
 import { useGetCheckpoints } from "@/entities/checkpoints/queries";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
+import { Button } from "@bds-web/ui";
 
 interface Props {
   data: Omit<AbsenceCheckpoint, "checkpointName">;
@@ -20,11 +21,14 @@ const ExceptionItem = ({ data, deleteException }: Props) => {
       <p>{data.date}</p>
       <p>{checkpointName}</p>
       <div className="flex-1" />
-      <button
+      <Button
+        buttonSize="small"
+        buttonType="text"
         onClick={() => deleteException(data.checkpointId)}
-        className="text-red-light cursor-pointer">
+        style={{ padding: 0, minWidth: "auto", height: "auto", color: "var(--color-red-light)" }}
+      >
         <CloseIcon />
-      </button>
+      </Button>
     </div>
   );
 };

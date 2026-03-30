@@ -7,7 +7,7 @@ import { CloseIcon } from "@/shared/icons/CloseIcon";
 
 interface Props {
   initialSelectedStudents?: number[];
-  initialPhase?: "list" | "selectStudents" | "add";
+  initialPhase?: "list" | "selectStudents";
 }
 
 const CreateAbsenceModal = ({
@@ -113,13 +113,6 @@ const CreateAbsenceModal = ({
 
   return (
     <div className="w-full flex flex-col gap-5">
-      <button
-        type="button"
-        className="w-full rounded-medium border border-dashed border-greyscale-30 py-2 flex flex-col items-center justify-center gap-1 cursor-pointer"
-        onClick={() => setPhase("add")}
-      >
-        <span className="text-title3 text-blue-light">+</span>
-      </button>
       {drafts.length > 0 && (
         <div className="w-full flex flex-col gap-2">
           {drafts.map((draft) => (
@@ -135,17 +128,32 @@ const CreateAbsenceModal = ({
                 </span>
               </p>
               <div className="flex-1" />
-              <button
-                type="button"
-                className="text-greyscale-50 cursor-pointer"
+              <Button
+                buttonSize="small"
+                buttonType="text"
                 onClick={() => deleteDraft(draft.id)}
+                style={{ padding: 0, minWidth: "auto", height: "auto" }}
               >
                 <CloseIcon />
-              </button>
+              </Button>
             </div>
           ))}
         </div>
       )}
+      <Button
+        buttonSize="medium"
+        buttonType="text"
+        onClick={() => setPhase("add")}
+        style={{
+          width: "100%",
+          border: "1px dashed var(--color-greyscale-30)",
+          borderRadius: "var(--radius-medium)",
+          paddingTop: "8px",
+          paddingBottom: "8px",
+        }}
+      >
+        <span className="text-title3 text-blue-light">+</span>
+      </Button>
 
       <div className="w-full flex items-center gap-4">
         <Button
