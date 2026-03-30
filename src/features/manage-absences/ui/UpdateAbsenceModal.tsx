@@ -215,7 +215,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
             })
           }
         >
-          결석자 선택하기
+          대상 선택하기
         </Button>
         <p className="text-blue-light text-caption1">
           {selectedStudents.length}명 선택됨

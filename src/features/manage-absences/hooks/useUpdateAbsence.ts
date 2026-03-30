@@ -1,6 +1,6 @@
 import { DropdownItem } from "@bds-web/ui";
 import { useState } from "react";
-import { Absence, AbsenceCheckpoint } from "@/entities/absences/types";
+import { Absence } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
 import { toast } from "@cher1shrxd/toast";
 import { parseDate } from "@/shared/utils/pare-date";
@@ -26,21 +26,7 @@ export const useUpdateAbsence = (data: Absence) => {
     data.targetStudents,
   );
   const selectedStudents = resolvedUserIds;
-
-  const initExceptions = data.checkpoints.map((checkpoint) => ({
-    checkpointId: checkpoint.checkpointId,
-    date: checkpoint.date,
-  }));
-
-  const [exceptions, setExceptions] =
-    useState<Omit<AbsenceCheckpoint, "checkpointName">[]>(initExceptions);
   const [reason, setReason] = useState(data.reason);
-
-  const deleteException = (id: number) => {
-    setExceptions((prev) =>
-      prev.filter((exception) => exception.checkpointId !== id),
-    );
-  };
 
   const { mutateAsync, isPending } = useUpdateAbsenceMutation(data.absenceId);
 
@@ -75,7 +61,10 @@ export const useUpdateAbsence = (data: Absence) => {
       endDate: parseDate(endAt),
       reason,
       typeId: Number(selectedType.value),
-      checkpoints: exceptions,
+      checkpoints: data.checkpoints.map((checkpoint) => ({
+        checkpointId: checkpoint.checkpointId,
+        date: checkpoint.date,
+      })),
     });
   };
 
@@ -93,8 +82,6 @@ export const useUpdateAbsence = (data: Absence) => {
     setStartAt,
     endAt,
     setEndAt,
-    exceptions,
-    deleteException,
     options,
     reason,
     setReason,
