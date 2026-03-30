@@ -44,7 +44,7 @@ export const usePullToRefresh = () => {
       return true;
     }
 
-    return scrollableChild.scrollTop <= 0;
+    return scrollableChild.scrollTop < 0;
   };
 
   useEffect(() => {
