@@ -18,22 +18,22 @@ export const getCreateAbsenceToastState = (
   if (requestedCount > 0 && skippedUserIds.length === requestedCount) {
     return {
       title: "이미 추가된 대상",
-      description: "선택한 대상은 이미 같은 조건의 결석 정보가 등록되어 있습니다.",
+      description: "선택한 대상은 이미 같은 조건의 외박 정보가 등록되어 있습니다.",
       type: "warning" as const,
     };
   }
 
   if (skippedUserIds.length > 0) {
     return {
-      title: "일부 결석 처리 실패",
-      description: `다음 학생들의 결석 처리에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
+      title: "일부 외박 처리 실패",
+      description: `다음 학생들의 외박 처리에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
       type: "warning" as const,
     };
   }
 
   return {
-    title: "결석 처리 완료",
-    description: "선택한 학생들의 결석이 정상적으로 처리되었습니다.",
+    title: "외박 처리 완료",
+    description: "선택한 학생들의 외박이 정상적으로 처리되었습니다.",
     type: "success" as const,
   };
 };
@@ -43,8 +43,8 @@ export const useCreateAbsenceMutation = () => {
     mutationFn: AbsenceApi.createAbsence,
     onError: (error: AxiosError<Error>) => {
       toast.error(
-        "결석 처리 실패",
-        error.response?.data.message || "결석 처리 중 오류가 발생했습니다.",
+        "외박 처리 실패",
+        error.response?.data.message || "외박 처리 중 오류가 발생했습니다.",
         TOAST_ISSUE_DURATION,
       );
     },
@@ -60,16 +60,16 @@ export const useUpdateAbsenceMutation = (absenceId: number) => {
     onSuccess: (res) => {
       if (res.data.skippedUserIds.length > 0) {
         toast.warning(
-          "일부 결석 정보 수정 실패",
-          `다음 학생들의 결석 정보 수정에 실패했습니다: ${res.data.skippedUserIds.join(
+          "일부 외박 정보 수정 실패",
+          `다음 학생들의 외박 정보 수정에 실패했습니다: ${res.data.skippedUserIds.join(
             ", ",
           )}`,
           TOAST_ISSUE_DURATION,
         );
       } else {
         toast.success(
-          "결석 정보 수정 완료",
-          "선택한 학생들의 결석 정보가 정상적으로 수정되었습니다.",
+          "외박 정보 수정 완료",
+          "선택한 학생들의 외박 정보가 정상적으로 수정되었습니다.",
           TOAST_SUCCESS_DURATION,
         );
       }
@@ -78,9 +78,9 @@ export const useUpdateAbsenceMutation = (absenceId: number) => {
     },
     onError: (error: AxiosError<Error>) => {
       toast.error(
-        "결석 정보 수정 실패",
+        "외박 정보 수정 실패",
         error.response?.data.message ||
-          "결석 정보 수정 중 오류가 발생했습니다.",
+          "외박 정보 수정 중 오류가 발생했습니다.",
         TOAST_ISSUE_DURATION,
       );
     },
@@ -94,8 +94,8 @@ export const useDeleteAbsenceMutation = (absenceId: number) => {
     mutationFn: async () => await AbsenceApi.deleteAbsence(absenceId),
     onSuccess: () => {
       toast.success(
-        "결석 정보 삭제 완료",
-        "결석 정보가 정상적으로 삭제되었습니다.",
+        "외박 정보 삭제 완료",
+        "외박 정보가 정상적으로 삭제되었습니다.",
         TOAST_SUCCESS_DURATION,
       );
       router.refresh();
@@ -103,9 +103,9 @@ export const useDeleteAbsenceMutation = (absenceId: number) => {
     },
     onError: (error: AxiosError<Error>) => {
       toast.error(
-        "결석 정보 삭제 실패",
+        "외박 정보 삭제 실패",
         error.response?.data.message ||
-          "결석 정보 삭제 중 오류가 발생했습니다.",
+          "외박 정보 삭제 중 오류가 발생했습니다.",
         TOAST_ISSUE_DURATION,
       );
     },
