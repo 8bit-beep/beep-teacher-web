@@ -87,7 +87,7 @@ const CreateAbsenceModal = ({
         </div>
         <div className="w-full flex items-center gap-2">
           <Button
-            buttonSize="medium"
+            buttonSize="large"
             buttonType="ghost"
             style={{ flex: 1 }}
             onClick={() => {
@@ -98,7 +98,7 @@ const CreateAbsenceModal = ({
             취소
           </Button>
           <Button
-            buttonSize="medium"
+            buttonSize="large"
             buttonType="primary"
             style={{ flex: 1 }}
             onClick={addDraft}
@@ -162,7 +162,7 @@ const CreateAbsenceModal = ({
           showIcon
           style={{ width: "160px" }}
           onClick={() => setPhase("selectStudents")}>
-          결석자 선택하기
+          대상 선택하기
         </Button>
         <p className="text-blue-light text-caption1">
           {selectedStudents.length}명 선택됨
@@ -175,7 +175,7 @@ const CreateAbsenceModal = ({
         onClick={submit}
         disabled={disabled}
       >
-        결석자 생성하기
+        완료
       </Button>
     </div>
   );

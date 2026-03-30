@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
-import ExceptionItem from "./ExceptionItem";
 import { useUpdateAbsence } from "../hooks/useUpdateAbsence";
 import { Absence } from "@/entities/absences/types";
 
@@ -17,8 +16,6 @@ const UpdateAbsenceDetailModal = ({ data }: Props) => {
     setStartAt,
     endAt,
     setEndAt,
-    deleteException,
-    exceptions,
     options,
     reason,
     setReason,
@@ -60,19 +57,6 @@ const UpdateAbsenceDetailModal = ({ data }: Props) => {
           />
         </div>
       </div>
-      {exceptions.length > 0 && (
-        <div className="w-full flex flex-col gap-2">
-          <div className="w-full max-h-32 overflow-y-scroll">
-            {exceptions.map((exception) => (
-              <ExceptionItem
-                data={exception}
-                key={exception.checkpointId}
-                deleteException={deleteException}
-              />
-            ))}
-          </div>
-        </div>
-      )}
       <div className="w-full flex items-center gap-2">
         <Button
           buttonSize="large"
