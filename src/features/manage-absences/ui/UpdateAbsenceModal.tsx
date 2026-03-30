@@ -79,14 +79,14 @@ const UpdateAbsenceModal = ({ data }: Props) => {
 
       if (skippedUserIds.length > 0) {
         toast.warning(
-          "일부 결석 정보 수정 실패",
-          `다음 학생들의 결석 정보 수정에 실패했습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
+          "일부 대상 변경 실패",
+          `다음 학생들은 선택한 외박 대상에 반영되지 않았습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
           TOAST_ISSUE_DURATION,
         );
       } else {
         toast.success(
-          "결석 인원 수정 완료",
-          "선택한 학생들로 결석 인원이 정상적으로 수정되었습니다.",
+          "외박 대상 변경 완료",
+          "선택한 학생들로 외박 대상이 정상적으로 수정되었습니다.",
           TOAST_SUCCESS_DURATION,
         );
       }
@@ -97,9 +97,9 @@ const UpdateAbsenceModal = ({ data }: Props) => {
       const axiosError = error as AxiosError<Error>;
 
       toast.error(
-        "결석 인원 수정 실패",
+        "외박 대상 변경 실패",
         axiosError.response?.data.message ||
-          "결석 인원 수정 중 오류가 발생했습니다.",
+          "외박 대상 변경 중 오류가 발생했습니다.",
         TOAST_ISSUE_DURATION,
       );
     } finally {
