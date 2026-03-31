@@ -9,7 +9,7 @@ const FilterClassroom = () => {
 
   return (
     <Dropdown selected={classroom} onSelect={setClassroom} options={CLASSROOM_OPTIONS} dropdownSize="medium" />
-  )
+  ) 
 }
 
 export default FilterClassroom
