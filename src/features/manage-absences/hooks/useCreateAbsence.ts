@@ -124,6 +124,15 @@ export const useCreateAbsence = ({
     }
   };
 
+  const handleEndAtChange = (date: Date) => {
+    if (date < startAt) {
+      setEndAt(startAt);
+      return;
+    }
+
+    setEndAt(date);
+  };
+
   const submit = async () => {
     if (selectedStudents.length === 0) {
       toast.warning(
@@ -206,7 +215,7 @@ export const useCreateAbsence = ({
     startAt,
     setStartAt: handleStartAtChange,
     endAt,
-    setEndAt,
+    setEndAt: handleEndAtChange,
     options,
     drafts,
     deleteDraft,

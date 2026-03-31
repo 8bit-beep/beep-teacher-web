@@ -44,6 +44,15 @@ const AddAbsenceReasonModal = ({
     }
   };
 
+  const handleEndAtChange = (date: Date) => {
+    if (date < startAt) {
+      setEndAt(startAt);
+      return;
+    }
+
+    setEndAt(date);
+  };
+
   const submit = async () => {
     if (!selectedType) {
       toast.warning(
@@ -141,7 +150,7 @@ const AddAbsenceReasonModal = ({
         placeholder="상세한 결석 사유를 작성해주세요. (500자 이내)"
         maxLength={500}
         value={reason}
-        onChange={(e) => setReason(e.target.value)}
+        onChange={(e) => setReason(e.target.value.slice(0, 500))}
       />
       <div className="w-full flex flex-col gap-0.5">
         <span className="text-caption1 text-static-black">결석 기간</span>
@@ -154,7 +163,7 @@ const AddAbsenceReasonModal = ({
           <span className="text-caption1 text-static-black">~</span>
           <DatePicker
             date={endAt}
-            onChangeDate={setEndAt}
+            onChangeDate={handleEndAtChange}
             title="종료일 선택"
           />
         </div>
