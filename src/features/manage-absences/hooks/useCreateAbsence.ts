@@ -31,7 +31,7 @@ const hasOverlappingDateRange = (
 
 interface Props {
   initialSelectedStudents?: number[];
-  initialPhase?: "list" | "selectStudents";
+  initialPhase?: "list" | "add";
 }
 
 export const useCreateAbsence = ({
@@ -41,11 +41,9 @@ export const useCreateAbsence = ({
   const router = useRouter();
   const { options } = useGetAbsenceReason();
   const { mutateAsync } = useCreateAbsenceMutation();
-  const { selectedStudents, toggleSelected } =
+  const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
-  const [phase, setPhase] = useState<"list" | "selectStudents" | "add">(
-    initialPhase,
-  );
+  const [phase, setPhase] = useState<"list" | "add">(initialPhase);
   const [selectedType, setSelectedType] = useState<DropdownItem | null>(null);
   const [reason, setReason] = useState("");
   const [startAt, setStartAt] = useState<Date>(new Date());
@@ -207,7 +205,7 @@ export const useCreateAbsence = ({
     phase,
     setPhase,
     selectedStudents,
-    toggleSelected,
+    setSelectedStudents,
     selectedType,
     setSelectedType,
     reason,

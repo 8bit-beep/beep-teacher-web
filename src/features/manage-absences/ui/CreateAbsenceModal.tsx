@@ -1,13 +1,13 @@
 "use client";
 
-import { Button, DatePicker, Dropdown } from "@bds-web/ui";
-import SelectStudents from "./SelectStudents";
+import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
 import { useCreateAbsence } from "../hooks/useCreateAbsence";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
+import SelectStudentsModal from "./SelectStudentsModal";
 
 interface Props {
   initialSelectedStudents?: number[];
-  initialPhase?: "list" | "selectStudents";
+  initialPhase?: "list" | "add";
 }
 
 const CreateAbsenceModal = ({
@@ -18,7 +18,7 @@ const CreateAbsenceModal = ({
     phase,
     setPhase,
     selectedStudents,
-    toggleSelected,
+    setSelectedStudents,
     setSelectedType,
     selectedType,
     reason,
@@ -39,16 +39,6 @@ const CreateAbsenceModal = ({
     initialSelectedStudents,
     initialPhase,
   });
-
-  if (phase === "selectStudents") {
-    return (
-      <SelectStudents
-        selectedStudents={selectedStudents}
-        toggleSelected={toggleSelected}
-        onDone={() => setPhase("list")}
-      />
-    );
-  }
 
   if (phase === "add") {
     return (
@@ -161,7 +151,18 @@ const CreateAbsenceModal = ({
           buttonType="ghost"
           showIcon
           style={{ width: "160px" }}
-          onClick={() => setPhase("selectStudents")}>
+          onClick={() =>
+            modal.open({
+              title: "대상 선택하기",
+              content: (
+                <SelectStudentsModal
+                  initialSelectedStudents={selectedStudents}
+                  onApply={setSelectedStudents}
+                />
+              ),
+            })
+          }
+        >
           대상 선택하기
         </Button>
         <p className="text-blue-light text-caption1">
