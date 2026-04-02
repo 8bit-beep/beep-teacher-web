@@ -18,10 +18,10 @@ export const ROUTES = [
     mobileLabel: "반별",
   },
   {
-    label: "결석자 관리",
+    label: "외박자 관리",
     path: "/absences",
     icon: <CalendarIcon size={20} />,
-    mobileLabel: "결석자",
+    mobileLabel: "외박자",
   },
   {
     label: "실 이동 관리",
