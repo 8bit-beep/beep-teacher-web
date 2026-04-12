@@ -20,12 +20,7 @@ export default async function AbsencesPage() {
     ...firstPage.data.content,
     ...additionalPages.flatMap((response) => response.data.content),
   ];
-  const today = new Intl.DateTimeFormat("sv-SE", {
-    timeZone: "Asia/Seoul",
-  }).format(new Date());
-  const todayAbsences = allAbsences.filter(
-    (absence) => absence.startDate <= today && absence.endDate >= today,
-  );
+  const { data: todayAbsences } = await AbsenceApi.getTodayAbsences();
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">

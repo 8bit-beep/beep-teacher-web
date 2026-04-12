@@ -17,6 +17,10 @@ export const AbsenceApi = {
     );
   },
 
+  getTodayAbsences: async () => {
+    return await api.get<Absence[]>("/absences/today");
+  },
+
   updateAbsence: async (absenceId: number, data: AbsenceRequestDto) => {
     return await api.patch<AbsenceResponseDto>(`/absences/${absenceId}`, data);
   },
