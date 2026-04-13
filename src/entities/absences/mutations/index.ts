@@ -47,10 +47,10 @@ export const getCreateAbsenceToastState = (
 export const useCreateAbsenceMutation = () => {
   return useMutation({
     mutationFn: AbsenceApi.createAbsence,
-    onError: (error: AxiosError<Error>) => {
+    onError: (_error: AxiosError<Error>) => {
       toast.error(
         "외박 처리 실패",
-        error.response?.data.message || "외박 처리 중 오류가 발생했습니다.",
+        "잠시 후 다시 시도해주세요.",
         TOAST_ISSUE_DURATION,
       );
     },

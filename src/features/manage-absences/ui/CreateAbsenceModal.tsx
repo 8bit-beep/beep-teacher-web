@@ -54,10 +54,10 @@ const CreateAbsenceModal = ({
         </div>
         <textarea
           className="w-full h-24 p-4 rounded-medium shadow-modal outline-none resize-none text-body placeholder:text-greyscale-40"
-          placeholder="상세한 결석 사유를 작성해주세요. (500자 이내)"
-          maxLength={500}
+          placeholder="상세한 결석 사유를 작성해주세요. (255자 이내)"
+          maxLength={255}
           value={reason}
-          onChange={(e) => setReason(e.target.value.slice(0, 500))}
+          onChange={(e) => setReason(e.target.value.slice(0, 255))}
         />
         <div className="w-full flex flex-col gap-0.5">
           <span className="text-caption1 text-static-black">결석 기간</span>

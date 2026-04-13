@@ -13,6 +13,8 @@ import {
   getCreateAbsenceToastState,
   useCreateAbsenceMutation,
 } from "@/entities/absences/mutations";
+import { useGetCheckpoints } from "@/entities/checkpoints/queries";
+import { buildAbsenceCheckpoints } from "../utils/buildAbsenceCheckpoints";
 
 interface DraftAbsence {
   id: number;
@@ -40,6 +42,7 @@ export const useCreateAbsence = ({
 }: Props = {}) => {
   const router = useRouter();
   const { options } = useGetAbsenceReason();
+  const checkpoints = useGetCheckpoints().data.data;
   const { mutateAsync } = useCreateAbsenceMutation();
   const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
@@ -160,7 +163,11 @@ export const useCreateAbsence = ({
             endDate: draft.endDate,
             reason: draft.reason,
             typeId: Number(draft.type.value),
-            checkpoints: [],
+            checkpoints: buildAbsenceCheckpoints(
+              new Date(draft.startDate),
+              new Date(draft.endDate),
+              checkpoints,
+            ),
           }),
         ),
       );
