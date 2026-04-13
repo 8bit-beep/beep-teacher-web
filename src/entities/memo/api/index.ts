@@ -1,13 +1,12 @@
 import api from "@/shared/libs/api";
+import { AxiosResponse } from "axios";
 import { Memo } from "../types";
 
 export const MemoApi = {
   getMemo: async (grade: number) => {
-    try {
-      return await api.get<Memo>(`/memos/${grade}`);
-    } catch (error) {
-      throw error;
-    }
+    return await api.get<Memo | null, AxiosResponse<Memo | null>>(`/memos/${grade}`, {
+      validateStatus: (status) => status === 200 || status === 404,
+    });
   },
 
   createMemo: async ({ grade, content }: { grade: number; content: string }) => {

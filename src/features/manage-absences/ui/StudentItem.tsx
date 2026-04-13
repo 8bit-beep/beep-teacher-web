@@ -18,7 +18,7 @@ const StudentItem = ({ data, selectedStudents, toggleSelected }: Props) => {
         {data.studentInfo.classNumber}
         {pad(data.studentInfo.num, 2)}
       </p>
-      <p className="text-body text-static-black">{data.username}</p>
+      <p className="text-body text-static-black">{data.name}</p>
       <div className="flex-1" />
       <Checkbox checked={selectedStudents.includes(data.id)} onChange={() => toggleSelected(data.id)} size={20} />
     </div>

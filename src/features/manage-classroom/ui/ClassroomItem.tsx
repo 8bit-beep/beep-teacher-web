@@ -13,7 +13,7 @@ const ClassroomItem = ({ data, isAbsent, desktopWidth }: Props): React.ReactNode
       {data.studentId}
     </p>
     <p className={`text-accent ${isAbsent ? "text-white" : "text-static-black"}`}>
-      {data.username}
+      {data.name}
     </p>
   </div>,
   ...data.statuses.map((statusItem, statusIndex) => (

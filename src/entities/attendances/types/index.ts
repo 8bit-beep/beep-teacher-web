@@ -4,7 +4,7 @@ import { Checkpoint } from "@/entities/checkpoints/types";
 export interface Attendance {
   userId: number;
   studentId: string;
-  username: string;
+  name: string;
   statuses: AttendanceStatus[];
   isLate: boolean;
 }

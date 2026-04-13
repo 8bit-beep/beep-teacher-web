@@ -9,8 +9,8 @@ import AbsenceItem from "./AbsenceItem";
 import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";
 
 interface Props {
-  data: Absence[];
-  allData?: Absence[];
+  data: Absence[] | { content?: Absence[] } | null | undefined;
+  allData?: Absence[] | { content?: Absence[] } | null | undefined;
 }
 
 interface AbsenceRow {
@@ -26,8 +26,24 @@ interface AbsenceGroup {
   items: AbsenceRow[];
 }
 
+const toAbsenceArray = (
+  value: Props["data"],
+): Absence[] => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value && Array.isArray(value.content)) {
+    return value.content;
+  }
+
+  return [];
+};
+
 const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
   const { nameById } = useGetAbsenceReason();
+  const safeData = toAbsenceArray(data);
+  const safeAllData = toAbsenceArray(allData);
 
   const groups = useMemo<AbsenceGroup[]>(() => {
     const grouped = new Map<string, AbsenceRow[]>();
@@ -36,7 +52,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
       Omit<AbsenceRow, "rowKey" | "attendTypeName">
     >();
 
-    allData.forEach((absence) => {
+    safeAllData.forEach((absence) => {
       absence.targetStudents.forEach((student) => {
         const studentId = student.info?.id;
 
@@ -63,7 +79,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
       });
     });
 
-    data.forEach((absence) => {
+    safeData.forEach((absence) => {
       const attendTypeName = nameById.get(absence.typeId) ?? "기타";
       const current = grouped.get(attendTypeName) ?? [];
 
@@ -98,7 +114,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
       label,
       items,
     }));
-  }, [allData, data, nameById]);
+  }, [nameById, safeAllData, safeData]);
 
   return (
     <DropdownTable

@@ -6,6 +6,23 @@ import CalendarIcon from "@/shared/icons/CalendarIcon";
 import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
 
+const normalizeAbsences = (value: unknown) => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (
+    value &&
+    typeof value === "object" &&
+    "content" in value &&
+    Array.isArray(value.content)
+  ) {
+    return value.content;
+  }
+
+  return [];
+};
+
 export default async function AbsencesPage() {
   const firstPage = await AbsenceApi.getAbsences(0, 100);
   const additionalPages =
@@ -39,7 +56,7 @@ export default async function AbsencesPage() {
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
           <AbsencesDropdownTable
-            data={todayAbsences}
+            data={normalizeAbsences(todayAbsences)}
             allData={allAbsences}
           />
         </div>

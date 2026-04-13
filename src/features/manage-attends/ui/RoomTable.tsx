@@ -33,7 +33,7 @@ const RoomTable = async ({ floor }: Props) => {
                   data={room}
                   key={room.id}
                   approvedAt={approval?.approvedAt ? parseDatetimeToTime(approval.approvedAt) : "-"}
-                  approvedTeacher={approval?.approvedTeacher?.username ?? "-"}
+                  approvedTeacher={approval?.approvedTeacher?.name ?? "-"}
                 />
               );
             })

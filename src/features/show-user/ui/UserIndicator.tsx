@@ -18,7 +18,7 @@ const UserIndicator = () => {
         height={40}
         className="w-6 h-6 xl:w-10 xl:h-10"
       />
-      <p className="text-caption1 text-static-black min-w-9 truncate">{data.username}</p>
+      <p className="text-caption1 text-static-black min-w-9 truncate">{data.name}</p>
       <div className="w-1 xl:flex-1" />
       <button
         onClick={logout}

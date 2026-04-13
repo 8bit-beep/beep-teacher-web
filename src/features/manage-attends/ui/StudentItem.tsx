@@ -14,7 +14,7 @@ const StudentItem = ({ data, isLast }: Props) => {
     <div
       className={`w-full h-14 flex items-center gap-4 bg-static-white${isLast ? "" : " border-b border-greyscale-20"}`}>
       <p className="text-caption1 text-greyscale-40">{data.studentId}</p>
-      <p className="text-h4 text-static-black">{data.username}</p>
+      <p className="text-h4 text-static-black">{data.name}</p>
       <div className="flex-1" />
       <Button
         onClick={() =>
