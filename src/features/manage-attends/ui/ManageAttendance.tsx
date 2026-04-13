@@ -11,6 +11,7 @@ import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 import PullToRefresh from "@/shared/ui/PullToRefresh";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 
 interface Props {
   room: Room;
@@ -50,7 +51,7 @@ const ManageAttendance = ({ room }: Props) => {
             : room?.name}
         </h1>
       </div>
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex flex-col min-[453px]:flex-row justify-between items-end min-[453px]:items-center gap-2">
         <p className="text-blue-light text-accent">
           {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
           {" · "}
@@ -58,26 +59,29 @@ const ManageAttendance = ({ room }: Props) => {
           {" · "}
           {`외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`}
         </p>
-        <div className="flex items-center gap-2 text-green-light">
-          {isApproved ? (
-            <>
-              <p className="text-accent">승인됨</p>
-              <div className="text-red-light">
-                <CloseIcon onClose={toggleApproval} />
-              </div>
-            </>
-          ) : (
-            <Button
-              buttonSize="small"
-              buttonType="primary"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleApproval();
-              }}
-            >
-              승인하기
-            </Button>
-          )}
+        <div className="flex items-center gap-2">
+          <Refresh />
+          <div className="flex items-center gap-2 text-green-light">
+            {isApproved ? (
+              <>
+                <p className="text-accent">승인됨</p>
+                <div className="text-red-light">
+                  <CloseIcon onClose={toggleApproval} />
+                </div>
+              </>
+            ) : (
+              <Button
+                buttonSize="small"
+                buttonType="primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleApproval();
+                }}
+              >
+                승인하기
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll pb-20">
@@ -97,7 +101,7 @@ const ManageAttendance = ({ room }: Props) => {
                   roomId={room.id}
                 />
               ))}
-            </PullToRefresh>
+          </PullToRefresh>
         </Suspense>
       </div>
     </div>

@@ -26,7 +26,7 @@ const AttendanceItem = ({ data, roomId }: Props) => {
         className={`w-4.5 h-4.5 rounded-full shrink-0 ${data.isLate ? "bg-yellow-400" : "bg-transparent"}`}
       />
       <p
-        className={`text-body ${isAbsent || isOut ? "text-greyscale-10" : "text-greyscale-40"}`}>
+        className={`text-body inline-block w-9 ${isAbsent || isOut ? "text-greyscale-10" : "text-greyscale-40"}`}>
         {data.studentId}
       </p>
       <p
@@ -34,7 +34,7 @@ const AttendanceItem = ({ data, roomId }: Props) => {
         {data.name}
       </p>
       <div className="flex-1" />
-      <Dropdown selected={status} onSelect={setStatus} options={options} />
+      <Dropdown selected={status} onSelect={setStatus} options={options} width={"120px"}/>
     </div>
   );
 };
