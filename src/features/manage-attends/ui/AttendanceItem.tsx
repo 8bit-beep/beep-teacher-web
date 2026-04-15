@@ -31,7 +31,7 @@ const AttendanceItem = ({ data, roomId }: Props) => {
       </p>
       <p
         className={`text-h4 inline-block min-w-12 ${isAbsent || isOut ? "text-white" : "text-static-black"}`}>
-        {data.username}
+        {data.name}
       </p>
       <div className="flex-1" />
       <Dropdown selected={status} onSelect={setStatus} options={options} width={"120px"}/>
