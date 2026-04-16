@@ -2,7 +2,6 @@
 
 import { useGetMe } from "@/entities/users/queries";
 import OutIcon from "@/shared/icons/OutIcon";
-import Image from "next/image";
 import { useLogout } from "../hooks/useLogout";
 
 const UserIndicator = () => {
@@ -11,14 +10,7 @@ const UserIndicator = () => {
 
   return (
     <div className="w-fit xl:w-full flex items-center gap-2 mr-5 lg:mr-4">
-      <Image
-        src={data.profileImage || "/default-profile.svg"}
-        alt="User Profile"
-        width={40}
-        height={40}
-        className="w-6 h-6 xl:w-10 xl:h-10"
-      />
-      <p className="text-caption1 text-static-black min-w-9 truncate">{data.name}</p>
+      <p className="text-caption1 text-static-black inline-block min-w-9 truncate">{data.username}</p>
       <div className="w-1 xl:flex-1" />
       <button
         onClick={logout}
