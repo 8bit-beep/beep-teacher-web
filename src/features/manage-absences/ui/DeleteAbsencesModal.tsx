@@ -29,8 +29,8 @@ const DeleteAbsencesModal = ({ absenceIds }: Props) => {
       );
 
       toast.success(
-        "결석 정보 삭제 완료",
-        "결석 정보가 정상적으로 삭제되었습니다.",
+        "외박 정보 삭제 완료",
+        "외박 정보가 정상적으로 삭제되었습니다.",
         TOAST_SUCCESS_DURATION,
       );
       router.refresh();
@@ -39,9 +39,9 @@ const DeleteAbsencesModal = ({ absenceIds }: Props) => {
       const axiosError = error as AxiosError<Error>;
 
       toast.error(
-        "결석 정보 삭제 실패",
+        "외박 정보 삭제 실패",
         axiosError.response?.data.message ||
-          "결석 정보 삭제 중 오류가 발생했습니다.",
+          "외박 정보 삭제 중 오류가 발생했습니다.",
         TOAST_ISSUE_DURATION,
       );
     } finally {

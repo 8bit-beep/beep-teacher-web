@@ -123,7 +123,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
       getKey={(group) => group.label}
       emptyContent={
         <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
-          결석 정보가 없습니다.
+          외박 정보가 없습니다.
         </div>
       }
       renderTrigger={(group, _index, { isOpen, toggle }) => (

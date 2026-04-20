@@ -51,7 +51,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
-        "결석 사유를 선택해주세요.",
+        "외박 사유를 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -59,7 +59,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (selectedStudents.length === 0) {
       toast.warning(
         "조건 미충족",
-        "결석 학생을 선택해주세요.",
+        "외박 학생을 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -67,7 +67,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (!reason.trim()) {
       toast.warning(
         "조건 미충족",
-        "상세 결석 사유를 작성해주세요.",
+        "상세 외박 사유를 작성해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;

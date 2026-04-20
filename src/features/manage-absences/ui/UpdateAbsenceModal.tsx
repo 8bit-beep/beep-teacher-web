@@ -48,7 +48,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
     if (selectedStudents.length === 0) {
       toast.warning(
         "조건 미충족",
-        "결석 학생을 선택해주세요.",
+        "외박 학생을 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -123,7 +123,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                 buttonType="text"
                 onClick={() =>
                   modal.open({
-                    title: "결석 상세 수정",
+                    title: "외박 상세 수정",
                     content:
                       absence.absenceId === null ? null : (
                         <UpdateAbsenceDetailModal data={absence} />
@@ -154,7 +154,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                 onClick={() =>
                   absence.absenceId !== null &&
                   modal.open({
-                    title: "결석 정보를 삭제하시겠습니까?",
+                    title: "외박 정보를 삭제하시겠습니까?",
                     content: (
                       <DeleteAbsenceModal absenceId={absence.absenceId} />
                     ),
@@ -235,7 +235,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
           buttonType="danger"
           onClick={() =>
             modal.open({
-              title: "결석 정보를 삭제하시겠습니까?",
+              title: "외박 정보를 삭제하시겠습니까?",
               content: (
                 <DeleteAbsencesModal
                   absenceIds={persistedAbsences.map(

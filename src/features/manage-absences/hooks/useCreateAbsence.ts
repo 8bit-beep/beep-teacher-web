@@ -65,7 +65,7 @@ export const useCreateAbsence = ({
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
-        "결석 사유를 선택해주세요.",
+        "외박 사유를 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -73,7 +73,7 @@ export const useCreateAbsence = ({
     if (!reason.trim()) {
       toast.warning(
         "조건 미충족",
-        "상세 결석 사유를 작성해주세요.",
+        "상세 외박 사유를 작성해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -92,8 +92,8 @@ export const useCreateAbsence = ({
 
     if (hasConflictingDraft) {
       toast.warning(
-        "중복된 결석 기간",
-        "이미 추가된 날짜에 결석 정보를 추가할 수 없습니다.",
+        "중복된 외박 기간",
+        "이미 추가된 날짜에 외박 정보를 추가할 수 없습니다.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -138,7 +138,7 @@ export const useCreateAbsence = ({
     if (selectedStudents.length === 0) {
       toast.warning(
         "조건 미충족",
-        "결석 학생을 선택해주세요.",
+        "외박 학생을 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -146,7 +146,7 @@ export const useCreateAbsence = ({
     if (drafts.length === 0) {
       toast.warning(
         "조건 미충족",
-        "추가할 결석 정보를 먼저 등록해주세요.",
+        "추가할 외박 정보를 먼저 등록해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;

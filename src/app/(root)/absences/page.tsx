@@ -47,7 +47,7 @@ export default async function AbsencesPage() {
       </div>
       <Section
         title="외박자 관리"
-        description="학생들의 결석 여부를 관리하세요!"
+        description="학생들의 외박 여부를 관리하세요!"
         icon={<CalendarIcon size={24} />}
         headerOptions={
           <div className="lg:hidden">

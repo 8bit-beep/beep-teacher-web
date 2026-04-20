@@ -60,7 +60,7 @@ const AddAbsenceReasonModal = ({
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
-        "결석 사유를 선택해주세요.",
+        "외박 사유를 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -69,7 +69,7 @@ const AddAbsenceReasonModal = ({
     if (!reason.trim()) {
       toast.warning(
         "조건 미충족",
-        "상세 결석 사유를 작성해주세요.",
+        "상세 외박 사유를 작성해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -110,8 +110,8 @@ const AddAbsenceReasonModal = ({
 
       if (toastState.type === "success") {
         toast.success(
-          "결석 추가 완료",
-          "결석 사유가 정상적으로 추가되었습니다.",
+          "외박 추가 완료",
+          "외박 사유가 정상적으로 추가되었습니다.",
           TOAST_SUCCESS_DURATION,
         );
       } else {
@@ -140,7 +140,7 @@ const AddAbsenceReasonModal = ({
   return (
     <div className="w-full flex flex-col gap-5">
       <div className="w-full flex flex-col gap-0.5 items-start">
-        <span className="text-caption1 text-static-black">결석 사유</span>
+        <span className="text-caption1 text-static-black">외박 사유</span>
         <Dropdown
           onSelect={setSelectedType}
           options={options}
@@ -150,13 +150,13 @@ const AddAbsenceReasonModal = ({
       </div>
       <textarea
         className="w-full h-24 p-4 rounded-medium shadow-modal outline-none resize-none text-body placeholder:text-greyscale-40"
-        placeholder="상세한 결석 사유를 작성해주세요. (255자 이내)"
+        placeholder="상세한 외박 사유를 작성해주세요. (255자 이내)"
         maxLength={255}
         value={reason}
         onChange={(e) => setReason(e.target.value.slice(0, 255))}
       />
       <div className="w-full flex flex-col gap-0.5">
-        <span className="text-caption1 text-static-black">결석 기간</span>
+        <span className="text-caption1 text-static-black">외박 기간</span>
         <div className="w-full flex items-center gap-2.5 justify-between">
           <DatePicker
             date={startAt}
