@@ -31,7 +31,7 @@ export default async function ShiftsPage() {
               <StudentId
                 key={shift.id}
                 id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
-                name={shift.user.username}
+                name={shift.user.name}
               />,              
               <Detail data={shift} key={shift.id + 1} />,
             ])}
@@ -49,7 +49,7 @@ export default async function ShiftsPage() {
               <StudentId
                 key={shift.id}
                 id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
-                name={shift.user.username}
+                name={shift.user.name}
               />,              
               shift.checkpoint.name,
               `${shift.room.name}로 이동`,
