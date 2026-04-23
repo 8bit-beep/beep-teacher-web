@@ -1,7 +1,6 @@
 import { ShiftApi } from "@/entities/shifts/api";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import Detail from "@/features/manage-shifts/ui/Detail";
-import StatusIndicator from "@/features/manage-shifts/ui/StatusIndicator";
 import PersonIcon from "@/shared/icons/PersonIcon";
 import { StudentId } from "@/shared/ui/StudentId";
 import { pad } from "@/shared/utils/pad";
