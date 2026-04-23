@@ -36,7 +36,7 @@ const MobileHistoriesDropdownContentItem = ({
     <div className="w-full flex flex-col gap-2">
       <div className="w-full flex flex-row gap-2">
         <p className="text-accent text-greyscale-40">{data.studentId}</p>
-        <p className="text-accent text-static-black">{data.username}</p>
+        <p className="text-accent text-static-black">{data.name}</p>
       </div>
       <div className="w-full flex flex-row gap-2">
         {data.statuses.map((statusItem, statusIndex) => (

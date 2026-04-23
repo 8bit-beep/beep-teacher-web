@@ -1,7 +1,6 @@
 import { ShiftApi } from "@/entities/shifts/api";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import Detail from "@/features/manage-shifts/ui/Detail";
-import StatusIndicator from "@/features/manage-shifts/ui/StatusIndicator";
 import PersonIcon from "@/shared/icons/PersonIcon";
 import { StudentId } from "@/shared/ui/StudentId";
 import { pad } from "@/shared/utils/pad";
@@ -31,7 +30,7 @@ export default async function ShiftsPage() {
               <StudentId
                 key={shift.id}
                 id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
-                name={shift.user.username}
+                name={shift.user.name}
               />,              
               <Detail data={shift} key={shift.id + 1} />,
             ])}
@@ -49,7 +48,7 @@ export default async function ShiftsPage() {
               <StudentId
                 key={shift.id}
                 id={`${shift.user.studentInfo?.grade || 0}${shift.user.studentInfo?.classNumber || 0}${pad(shift.user.studentInfo?.num || 0, 2)}`}
-                name={shift.user.username}
+                name={shift.user.name}
               />,              
               shift.checkpoint.name,
               `${shift.room.name}로 이동`,

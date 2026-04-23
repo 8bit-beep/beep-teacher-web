@@ -16,7 +16,7 @@ const DetailModal = ({ data }: Props) => {
     <div className="w-full flex flex-col gap-5 max-w-lg">
       <div className="w-full flex flex-col gap-1">
         <span className="text-caption1">학번 이름</span>
-        <p className="text-body">{`${data.user.studentInfo?.grade || 0}${data.user.studentInfo?.classNumber || 0}${pad(data.user.studentInfo?.num || 0, 2)} ${data.user.username}`}</p>
+        <p className="text-body">{`${data.user.studentInfo?.grade || 0}${data.user.studentInfo?.classNumber || 0}${pad(data.user.studentInfo?.num || 0, 2)} ${data.user.name}`}</p>
       </div>
       <div className="w-full flex flex-col gap-1">
         <span className="text-caption1">신청 사유</span>

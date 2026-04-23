@@ -38,7 +38,7 @@ const HistoriesDropdownContentItem = ({
   return (
     <>
       <p className="text-body text-greyscale-40">{data.studentId}</p>
-      <p className="text-accent text-static-black">{data.username}</p>
+      <p className="text-accent text-static-black">{data.name}</p>
       <div className="flex-1" />
       {data.statuses.map((statusItem, statusIndex) => (
         <ManageHistoryDropdown
