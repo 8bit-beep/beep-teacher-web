@@ -13,7 +13,7 @@ const MobileClassroomItem = ({ data, isAbsent }: Props): React.ReactNode[] => [
         {data.studentId}
       </p>
       <p className={`text-accent ${isAbsent ? "text-white" : "text-static-black"}`}>
-        {data.username}
+        {data.name}
       </p>
     </div>
     <div className="flex flex-row gap-2">

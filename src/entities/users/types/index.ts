@@ -4,7 +4,7 @@ import { StudentInfo } from "@/entities/students/types";
 export interface User {
   id: number;
   email: string;
-  username: string;
+  name: string;
   role: "STUDENT";
   profileImage: string;
   studentInfo: StudentInfo;
