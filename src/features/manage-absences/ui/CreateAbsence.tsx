@@ -10,11 +10,11 @@ const CreateAbsence = () => {
       buttonType="primary"
       onClick={() =>
         modal.open({
-          title: "결석자 생성하기",
+          title: "외박자 추가하기",
           content: <CreateAbsenceModal />,
         })
       }>
-      결석자 생성
+      외박자 추가하기
     </Button>
   );
 };

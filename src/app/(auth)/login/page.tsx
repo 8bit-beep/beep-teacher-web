@@ -31,6 +31,7 @@ export default function LoginPage() {
                   className="w-14"
                   src="logo.svg"
                   alt="logo"
+                  style={{ width: "3.5rem", height: "auto" }}
                 />
                 <p className="text-body text-center text-blue-light">
                   인원체크를 간편하게
@@ -49,6 +50,7 @@ export default function LoginPage() {
                     className="w-5"
                     src="/dodam-logo.svg"
                     alt="dodamlogo"
+                    style={{ width: "1.25rem", height: "auto" }}
                   />
                 </Link>
               </button>

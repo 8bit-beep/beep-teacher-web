@@ -17,7 +17,7 @@ export const useApprove = (roomId: number) => {
   return {
     isApproved: data.approved,
     toggleApproval,
-    teacher: data.approvedTeacherUsername,
+    teacher: data.approvedTeacherName,
     approvedAt: data.approvedAt,
   }
 }

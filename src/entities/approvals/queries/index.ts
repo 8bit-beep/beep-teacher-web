@@ -10,13 +10,13 @@ export const useGetCurrentApprovalByRoomId = (roomId: number) => {
           .data;
         return {
           approved: data.approved,
-          approvedTeacherUsername: data.approvedTeacher?.username,
+          approvedTeacherName: data.approvedTeacher?.name,
           approvedAt: data.approvedAt,
         };
       } catch {
         return {
           approved: false,
-          approvedTeacherUsername: null,
+          approvedTeacherName: null,
           approvedAt: null,
         };
       }

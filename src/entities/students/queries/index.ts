@@ -14,3 +14,14 @@ export const useGetStudentsByKeyword = (keyword: string) => {
     queryFn: async () => await StudentApi.getStudentByKeyword(keyword),
   });
 };
+
+export const useGetStudentsByClassOptional = (
+  grade?: number,
+  classNumber?: number,
+) => {
+  return useQuery({
+    queryKey: ["students", grade, classNumber],
+    queryFn: async () => await StudentApi.getStudentByClass(grade!, classNumber!),
+    enabled: grade !== undefined && classNumber !== undefined,
+  });
+};
