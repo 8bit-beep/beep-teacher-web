@@ -42,14 +42,16 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
         <div className="flex items-center gap-2 xl:gap-4">
           <div className="flex items-center gap-2 text-green-light">
             {isApproved ? (
-              <>
-                <p className="text-accent">승인됨</p>
-                <div
-                  className="text-red-light"
-                  onClick={(e) => e.stopPropagation()}>
-                  <CloseIcon onClose={toggleApproval} />
-                </div>
-              </>
+              <Button
+                buttonSize="small"
+                buttonType="danger"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleApproval();
+                }}
+              >
+                승인취소
+              </Button>
             ) : (
               <Button
                 buttonSize="small"

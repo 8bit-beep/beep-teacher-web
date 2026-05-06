@@ -63,12 +63,16 @@ const ManageAttendance = ({ room }: Props) => {
           <Refresh />
           <div className="flex items-center gap-2 text-green-light">
             {isApproved ? (
-              <>
-                <p className="text-accent">승인됨</p>
-                <div className="text-red-light">
-                  <CloseIcon onClose={toggleApproval} />
-                </div>
-              </>
+              <Button
+                buttonSize="small"
+                buttonType="danger"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleApproval();
+                }}
+              >
+                승인취소
+              </Button>
             ) : (
               <Button
                 buttonSize="small"
