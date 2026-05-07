@@ -30,7 +30,7 @@ const AttendanceItem = ({ data, roomId }: Props) => {
         {data.studentId}
       </p>
       <p
-        className={`text-h4 inline-block min-w-12 ${isAbsent || isOut ? "text-white" : "text-static-black"}`}>
+        className={`text-h4 ${isAbsent || isOut ? "text-white" : "text-static-black"}`}>
         {data.name}
       </p>
       <div className="flex-1" />

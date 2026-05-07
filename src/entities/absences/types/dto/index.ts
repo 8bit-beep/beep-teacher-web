@@ -10,7 +10,7 @@ export interface AbsenceRequestDto {
 }
 
 export interface AbsenceResponseDto {
-  absenceId: number;
+  absenceId: number | null;
   skippedUserIds: number[];
 }
 

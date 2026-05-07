@@ -14,7 +14,7 @@ const UserIndicator = () => {
       <div className="w-1 xl:flex-1" />
       <button
         onClick={logout}
-        className="w-[28px] p-2 rounded-medium bg-red-light text-static-white">
+        className="w-7 p-2 rounded-medium bg-red-light text-static-white">
         <OutIcon size={12} />
       </button>
     </div>

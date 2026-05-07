@@ -1,3 +1,5 @@
+"use client";
+
 import { DropdownItem } from "@bds-web/ui";
 import { useEffect, useState } from "react";
 import { CLASSROOM_OPTIONS } from "../constants/classroom";

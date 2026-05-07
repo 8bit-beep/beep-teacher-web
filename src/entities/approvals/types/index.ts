@@ -5,7 +5,7 @@ export interface Approval {
   approved: boolean;
   approvedTeacher: {
     id: number;
-    username: string;
+    name: string;
   } | null;
   approvedAt: string | null;
 }

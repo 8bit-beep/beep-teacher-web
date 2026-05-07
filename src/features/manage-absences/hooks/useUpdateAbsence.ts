@@ -1,14 +1,18 @@
 import { DropdownItem } from "@bds-web/ui";
 import { useState } from "react";
-import { useSelectStudents } from "./useSelectStudents";
-import { Absence, AbsenceCheckpoint } from "@/entities/absences/types";
+import { Absence } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
 import { toast } from "@cher1shrxd/toast";
 import { parseDate } from "@/shared/utils/pare-date";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 import { useGetAbsenceReason } from "./useGetAbsenceReason";
+import { useResolveAbsenceUserIds } from "./useResolveAbsenceUserIds";
 
 export const useUpdateAbsence = (data: Absence) => {
+  if (data.absenceId === null) {
+    throw new Error("absenceId is required to update an absence.");
+  }
+
   const { options } = useGetAbsenceReason();
   const initType =
     options.find((option) => option.value === `${data.typeId}`) || null;
@@ -18,28 +22,27 @@ export const useUpdateAbsence = (data: Absence) => {
   const [startAt, setStartAt] = useState<Date>(new Date(data.startDate));
   const [endAt, setEndAt] = useState<Date>(new Date(data.endDate));
 
-  const initStudents = data.targetStudents.map((student) => student.info.id);
-
-  const { selectedStudents, toggleSelected } = useSelectStudents(initStudents);
-  const [phase, setPhase] = useState<"info" | "selectStudents">("info");
-
-  const initExceptions = data.checkpoints.map((checkpoint) => ({
-    checkpointId: checkpoint.checkpointId,
-    date: checkpoint.date,
-  }));
-
-  const [exceptions, setExceptions] =
-    useState<Omit<AbsenceCheckpoint, "checkpointName">[]>(initExceptions);
+  const { resolvedUserIds, isResolving } = useResolveAbsenceUserIds(
+    data.targetStudents,
+  );
+  const selectedStudents = resolvedUserIds;
   const [reason, setReason] = useState(data.reason);
 
-  const deleteException = (id: number) => {
-    setExceptions((prev) =>
-      prev.filter((exception) => exception.checkpointId !== id),
-    );
+  const handleStartAtChange = (date: Date) => {
+    setStartAt(date);
+
+    if (date > endAt) {
+      setEndAt(date);
+    }
   };
 
-  const createException = (date: string, checkpointId: number) => {
-    setExceptions((prev) => [...prev, { checkpointId, date }]);
+  const handleEndAtChange = (date: Date) => {
+    if (date < startAt) {
+      setEndAt(startAt);
+      return;
+    }
+
+    setEndAt(date);
   };
 
   const { mutateAsync, isPending } = useUpdateAbsenceMutation(data.absenceId);
@@ -48,7 +51,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
-        "결석 사유를 선택해주세요.",
+        "외박 사유를 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -56,7 +59,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (selectedStudents.length === 0) {
       toast.warning(
         "조건 미충족",
-        "결석 학생을 선택해주세요.",
+        "외박 학생을 선택해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -64,7 +67,7 @@ export const useUpdateAbsence = (data: Absence) => {
     if (!reason.trim()) {
       toast.warning(
         "조건 미충족",
-        "상세 결석 사유를 작성해주세요.",
+        "상세 외박 사유를 작성해주세요.",
         TOAST_ISSUE_DURATION,
       );
       return;
@@ -75,7 +78,10 @@ export const useUpdateAbsence = (data: Absence) => {
       endDate: parseDate(endAt),
       reason,
       typeId: Number(selectedType.value),
-      checkpoints: exceptions,
+      checkpoints: data.checkpoints.map((checkpoint) => ({
+        checkpointId: checkpoint.checkpointId,
+        date: checkpoint.date,
+      })),
     });
   };
 
@@ -83,22 +89,16 @@ export const useUpdateAbsence = (data: Absence) => {
     selectedStudents.length === 0 ||
     !selectedType ||
     !reason.trim() ||
+    isResolving ||
     isPending;
 
   return {
-    phase,
-    setPhase,
-    selectedStudents,
-    toggleSelected,
     setSelectedType,
     selectedType,
     startAt,
-    setStartAt,
+    setStartAt: handleStartAtChange,
     endAt,
-    setEndAt,
-    exceptions,
-    deleteException,
-    createException,
+    setEndAt: handleEndAtChange,
     options,
     reason,
     setReason,
