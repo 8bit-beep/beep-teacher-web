@@ -7,4 +7,5 @@ export interface TableData {
 export interface TableRow {
   cells: ReactNode[];
   className?: string;
+  rowHeader?: ReactNode;
 }
