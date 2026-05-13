@@ -40,6 +40,7 @@ api.interceptors.response.use(
       return new Promise((resolve, reject) => {
         queue.push((token) => {
           if (token) {
+            original.headers = original.headers ?? {};
             original.headers.Authorization = `Bearer ${token}`;
             resolve(api(original));
           } else {
@@ -71,6 +72,7 @@ api.interceptors.response.use(
       queue.forEach((cb) => cb(accessToken));
       queue = [];
 
+      original.headers = original.headers ?? {};
       original.headers.Authorization = `Bearer ${accessToken}`;
       return api(original);
     } catch (e) {
