@@ -41,7 +41,7 @@ const Table = ({ header, rows }: Props) => {
               rows.map((row, rowIndex) => {
                 const cells = Array.isArray(row) ? row : row.cells;
                 const rowClassName = Array.isArray(row) ? "" : row.className || "";
-                const defaultBg = rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white";
+                const defaultBg = rowClassName ? "" : rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white";
 
                 return (
                   <tr
