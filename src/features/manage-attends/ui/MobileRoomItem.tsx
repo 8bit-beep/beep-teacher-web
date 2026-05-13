@@ -6,6 +6,7 @@ import { useApprove } from "../../manage-approvals/hooks/useApprove";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import ApprovalButton from "@/shared/ui/ApprovalButton";
+import {Button} from "@bds-web/ui";
 
 interface Props {
   data: Room;
@@ -42,24 +43,29 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
         <p className="w-full text-caption1 text-blue-light">{stats}</p>
       </div>
       <div className="w-full flex items-center">
-        {isApproved ? (
-          <>
-            <p className="text-accent">승인됨</p>
-            <div
-              className="text-red-light"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <CloseIcon onClose={toggleApproval} />
-            </div>
-          </>
-        ) : (
-          <ApprovalButton
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleApproval();
-            }}
-          />
-        )}
+            {isApproved ? (
+              <Button
+                buttonSize="small"
+                buttonType="danger"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleApproval();
+                }}
+              >
+                승인취소
+              </Button>
+            ) : (
+              <Button
+                buttonSize="small"
+                buttonType="primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleApproval();
+                }}
+              >
+                승인하기
+              </Button>
+            )}
       </div>
     </div>
   );
