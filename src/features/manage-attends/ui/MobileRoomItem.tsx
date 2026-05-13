@@ -26,7 +26,7 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
 
   return (
     <div
-      className="w-full flex flex-col items-center border-b border-greyscale-20 cursor-pointer text-h4 px-3 py-[15px] gap-[10px]"
+      className="w-full flex flex-col items-center border-b active:bg-zinc-200 border-greyscale-20 cursor-pointer text-h4 px-3 py-[15px] gap-[10px]"
       onClick={toggleOpen}
     >
       <div className="w-full">

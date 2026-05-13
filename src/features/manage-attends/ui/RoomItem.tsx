@@ -25,8 +25,9 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
 
   return (
     <div
-      className="w-full h-15 flex items-center border-b border-greyscale-20 cursor-pointer text-h4 pl-10 pr-10"
-      onClick={toggleOpen}>
+      className="w-full h-15 flex items-center border-b active:bg-zinc-200 border-greyscale-20 cursor-pointer text-h4 pl-10 pr-10"
+      onClick={toggleOpen}
+    >
       <div className="flex-1 flex items-center gap-2">
         <p className="text-accent">{label}</p>
         <span className="text-accent">·</span>
@@ -59,7 +60,8 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleApproval();
-                }}>
+                }}
+              >
                 승인하기
               </Button>
             )}

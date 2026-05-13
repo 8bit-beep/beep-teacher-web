@@ -1,6 +1,5 @@
 "use client";
 
-import PullToRefresh from "@/shared/ui/PullToRefresh";
 import { ReactNode } from "react";
 
 interface Props {
@@ -37,7 +36,7 @@ const Section = ({
       {mobileFilter && (
         <div className="w-full lg:hidden px-2">{mobileFilter}</div>
       )}
-      <PullToRefresh>{children}</PullToRefresh>
+      {children}
     </section>
   );
 };
