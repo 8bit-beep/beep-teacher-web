@@ -16,8 +16,9 @@ const MobileRoomTable = async ({ floor }: Props) => {
       <div className="flex lg:hidden w-full min-h-0 flex-col">
         <div className="w-full flex items-center pl-2 pr-2 lg:pl-10 lg:pr-10 py-3 bg-blue-light">
           <div className="flex-1 min-w-[164px] text-left text-static-white text-body xl:text-h4">실 정보</div>
-          <div style={{ width: "120px" }} className="text-left text-static-white text-body xl:text-h4">승인 시각</div>
-          <div style={{ width: "124px" }} className="text-left text-static-white text-body xl:text-h4">승인 책임자</div>
+          <div style={{ width: "120px" }} className="text-left text-static-white text-body xl:text-h4 hidden lg:flex">승인 시각</div>
+          <div style={{ width: "124px" }} className="text-left text-static-white text-body xl:text-h4 hidden lg:flex">승인 책임자</div>
+          <div className="flex-1 text-left text-static-white text-body xl:text-h4 lg:hidden flex">실 정보</div>
         </div>
           <div className="w-full flex-1 overflow-y-auto">
           {data.length === 0 ? (
@@ -31,8 +32,8 @@ const MobileRoomTable = async ({ floor }: Props) => {
                 <MobileRoomItem
                   data={room}
                   key={room.id}
-                  approvedAt={approval?.approvedAt ? parseDatetimeToTime(approval.approvedAt) : "-"}
-                  approvedTeacher={approval?.approvedTeacher?.name ?? "-"}
+                  approvedAt={approval?.approvedAt ? parseDatetimeToTime(approval.approvedAt) : null}
+                  approvedTeacher={approval?.approvedTeacher?.name ?? null}
                 />
               );
             })

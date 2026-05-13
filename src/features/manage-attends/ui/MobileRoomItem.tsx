@@ -9,8 +9,8 @@ import ApprovalButton from "@/shared/ui/ApprovalButton";
 
 interface Props {
   data: Room;
-  approvedAt?: string;
-  approvedTeacher?: string;
+  approvedAt?: string | null;
+  approvedTeacher?: string | null;
 }
 
 const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
@@ -28,18 +28,17 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
       className="w-full flex flex-col items-center border-b active:bg-zinc-200 border-greyscale-20 cursor-pointer text-h4 px-3 py-[15px] gap-[10px]"
       onClick={toggleOpen}
     >
-      <div className="w-full">
-        <div className="w-full flex items-center gap-2">
-          <p className="w-full text-body">{label}</p>
-          <div style={{ width: "140px" }}>
-            <p className="text-greyscale-70">{approvedAt}</p>
+      <div className="w-full flex items-center gap-2">
+        <p className="w-full text-body">{label}</p>
+        {isApproved ? (
+          <div className="flex w-full">
+            <p className="text-caption1 inline-block w-full">{approvedAt}</p>
+            <p className="text-caption1 inline-block w-full">{approvedTeacher}</p>
           </div>
-          <div style={{ width: "144px" }}>
-            <p className="text-greyscale-70">{approvedTeacher}</p>
-          </div>
-          <ChevronIcon size={16} className="text-static-black" rotate={-90} />
-        </div>
-        <p className="w-full text-caption1 text-blue-light">{stats}</p>
+        ): (
+          <p className="w-full text-caption1 text-blue-light">{stats}</p>
+        )}
+        <ChevronIcon size={16} className="text-static-black" rotate={-90} />
       </div>
       <div className="w-full flex items-center">
         {isApproved ? (
