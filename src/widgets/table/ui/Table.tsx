@@ -81,7 +81,38 @@ const Table = ({ header, rows, bodyScrollable = true }: Props) => {
       </table>
       <div className="w-full flex-1 overflow-y-auto">
         <table className="w-full border-collapse table-auto">
-          <tbody>{tbodyRows(header, rows)}</tbody>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={header.length}
+                  className="h-20 text-center text-h4 text-greyscale-40">
+                  내용이 없습니다.
+                </td>
+              </tr>
+            ) : (
+              rows.map((row, rowIndex) => {
+                const cells = Array.isArray(row) ? row : row.cells;
+                const rowClassName = Array.isArray(row) ? "" : row.className || "";
+                const defaultBg = rowClassName ? "" : rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white";
+
+                return (
+                  <tr
+                    key={rowIndex}
+                    className={`[&_td:first-child]:pl-2 xl:[&_td:first-child]:pl-10 [&_td:last-child]:pr-2 xl:[&_td:last-child]:pr-10 ${defaultBg} ${rowClassName}`}>
+                    {cells.map((cell, cellIndex) => (
+                      <td
+                        key={cellIndex}
+                        style={{ width: header[cellIndex]?.width }}
+                        className="h-15 text-h4">
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
         </table>
       </div>
     </div>
