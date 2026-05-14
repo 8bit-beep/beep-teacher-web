@@ -1,9 +1,7 @@
 import { AbsenceApi } from "@/entities/absences/api";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
-import MobileDateFilteredAbsences from "@/features/manage-absences/ui/MobileDateFilteredAbsences";
+import AbsencesSectionContent from "@/features/manage-absences/ui/AbsencesSectionContent";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
-import CalendarIcon from "@/shared/icons/CalendarIcon";
-import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
 
 const normalizeAbsences = (value: unknown) => {
@@ -45,22 +43,10 @@ export default async function AbsencesPage() {
         <CreateAbsence />
         <Suspense><ManageMemo /></Suspense>
       </div>
-      <Section
-        title="외박자 관리"
-        description="학생들의 외박 여부를 관리하세요!"
-        icon={<CalendarIcon size={24} />}
-        headerOptions={
-          <div className="lg:hidden">
-            <CreateAbsence />
-          </div>
-        }>
-        <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <MobileDateFilteredAbsences
-            todayData={normalizeAbsences(todayAbsences)}
-            allData={allAbsences}
-          />
-        </div>
-      </Section>
+      <AbsencesSectionContent
+        todayData={normalizeAbsences(todayAbsences)}
+        allData={allAbsences}
+      />
     </div>
   );
 }
