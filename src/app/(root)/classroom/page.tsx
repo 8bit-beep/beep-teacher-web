@@ -33,7 +33,7 @@ export default async function ClassroomPage({
   const mobileStatusHeaders = firstStatuses.map((s) => ({
     title: s.checkpoint.name,
     align: "center" as const,
-    width: "180px",
+    width: "33.33vw",
   }));
 
   return (
@@ -73,8 +73,9 @@ export default async function ClassroomPage({
             })}
           />
         </div>
-        <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-y-auto">
+        <div className="flex lg:hidden w-full flex-1 min-h-0 overflow-x-auto overflow-y-auto [&_table]:w-auto [&_table]:min-w-full">
           <Table
+            bodyScrollable={false}
             header={mobileStatusHeaders}
             rows={data.map((attendance) => {
               const isAbsent = attendance.statuses.some((s) =>
@@ -83,6 +84,16 @@ export default async function ClassroomPage({
 
               return {
                 className: isAbsent ? "bg-red-light" : undefined,
+                rowHeader: (
+                  <div className="flex gap-2">
+                    <p className={`text-accent ${isAbsent ? "text-greyscale-10" : "text-greyscale-40"}`}>
+                      {attendance.studentId}
+                    </p>
+                    <p className={`text-accent ${isAbsent ? "text-white" : "text-static-black"}`}>
+                      {attendance.name}
+                    </p>
+                  </div>
+                ),
                 cells: MobileClassroomItem({ data: attendance, isAbsent }),
               };
             })}
