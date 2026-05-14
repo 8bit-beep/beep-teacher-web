@@ -5,7 +5,6 @@ import { useToggleData } from "../hooks/useToggleData";
 import { useApprove } from "../../manage-approvals/hooks/useApprove";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
-import ApprovalButton from "@/shared/ui/ApprovalButton";
 import {Button} from "@bds-web/ui";
 
 interface Props {
