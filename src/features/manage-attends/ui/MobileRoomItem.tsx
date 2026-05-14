@@ -57,14 +57,27 @@ const MobileRoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
       </div>
       <div className="w-full flex items-center">
         {isApproved && approvedAt && approvedTeacher
-          ? <ApprovalStatus onRevoke={toggleApproval} />
-          : (
-            <ApprovalButton
+          ? <Button
+              style={{ width: "100%"}}
+              buttonType="danger"
               onClick={(e) => {
                 e.stopPropagation();
                 toggleApproval();
               }}
-            />
+            >
+              승인취소
+            </Button>
+          : (
+            <Button
+              style={{ width: "100%"}}
+              buttonType="primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleApproval();
+              }}
+            >
+              승인하기
+            </Button>
           )
         }
       </div>
