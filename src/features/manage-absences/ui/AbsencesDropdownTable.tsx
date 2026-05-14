@@ -26,6 +26,8 @@ interface AbsenceGroup {
   items: AbsenceRow[];
 }
 
+const GROUP_ORDER = ["외출", "외박"];
+
 const toAbsenceArray = (
   value: Props["data"],
 ): Absence[] => {
@@ -110,10 +112,29 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
       }
     });
 
-    return Array.from(grouped.entries()).map(([label, items]) => ({
-      label,
-      items,
-    }));
+    return Array.from(grouped.entries())
+      .map(([label, items]) => ({
+        label,
+        items,
+      }))
+      .sort((a, b) => {
+        const aIndex = GROUP_ORDER.indexOf(a.label);
+        const bIndex = GROUP_ORDER.indexOf(b.label);
+
+        if (aIndex === -1 && bIndex === -1) {
+          return 0;
+        }
+
+        if (aIndex === -1) {
+          return 1;
+        }
+
+        if (bIndex === -1) {
+          return -1;
+        }
+
+        return aIndex - bIndex;
+      });
   }, [nameById, safeAllData, safeData]);
 
   return (
