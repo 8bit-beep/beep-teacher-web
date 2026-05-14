@@ -1,6 +1,6 @@
 import { AbsenceApi } from "@/entities/absences/api";
-import AbsencesDropdownTable from "@/features/manage-absences/ui/AbsencesDropdownTable";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
+import MobileDateFilteredAbsences from "@/features/manage-absences/ui/MobileDateFilteredAbsences";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import CalendarIcon from "@/shared/icons/CalendarIcon";
 import Section from "@/widgets/section/ui/Section";
@@ -55,8 +55,8 @@ export default async function AbsencesPage() {
           </div>
         }>
         <div className="flex-1 min-h-0 overflow-y-auto px-2 xl:px-10">
-          <AbsencesDropdownTable
-            data={normalizeAbsences(todayAbsences)}
+          <MobileDateFilteredAbsences
+            todayData={normalizeAbsences(todayAbsences)}
             allData={allAbsences}
           />
         </div>
