@@ -2,7 +2,7 @@ import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { useUpdateAttendanceStatusWithCheckpoint } from "@/entities/attendances/mutations";
 import { Attendance } from "@/entities/attendances/types";
 import { DropdownItem } from "@bds-web/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useUpdatePreAttendance = (data: Attendance) => {
   const attendTypes = useGetAttendTypes().data.data;
@@ -26,16 +26,19 @@ export const useUpdatePreAttendance = (data: Attendance) => {
     },
   }));
 
-  const [selectedStatuses, setSelectedStatuses] = useState<
-    (DropdownItem | null)[]
-  >(currentStatuses.map((s) => s.status));
+  const [selectedStatuses, setSelectedStatuses] = useState<(DropdownItem | null)[]>(currentStatuses.map((s) => s.status));
+
+  useEffect(() => {
+    setSelectedStatuses(currentStatuses.map((s) => s.status));
+  }, [data.statuses]);
 
   const handleStatusChange = async (
     index: number,
     value: DropdownItem | null,
   ) => {
     const previousValue = selectedStatuses[index];
-    setSelectedStatuses((prev) => {
+
+    setSelectedStatuses((prev: (DropdownItem | null)[]) => {
       const newStatuses = [...prev];
       newStatuses[index] = value;
       return newStatuses;
@@ -53,7 +56,7 @@ export const useUpdatePreAttendance = (data: Attendance) => {
       });
     } catch {
       setTimeout(() => {
-        setSelectedStatuses((prev) => {
+        setSelectedStatuses((prev: (DropdownItem | null)[]) => {
           const newStatuses = [...prev];
           newStatuses[index] = previousValue;
           return newStatuses;
