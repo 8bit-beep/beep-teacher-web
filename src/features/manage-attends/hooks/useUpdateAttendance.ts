@@ -2,7 +2,7 @@ import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { useUpdateAttendanceStatus } from "@/entities/attendances/mutations";
 import { Attendance } from "@/entities/attendances/types";
 import { DropdownItem } from "@bds-web/ui";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useUpdateAttendance = (data: Attendance, roomId: number) => {
   const statuses = useGetAttendTypes().data.data;
@@ -10,22 +10,34 @@ export const useUpdateAttendance = (data: Attendance, roomId: number) => {
     name: status.name,
     value: `${status.id}`,
   }));
-  const [status, setStatus] = useState<DropdownItem | null>(
-    parseToOptions.find(
-      (option) =>
-        option.name ===
-        `${data.statuses[0].status ? data.statuses[0].status?.name : "미출석"}`,
-    ) || null,
-  );
+
+  const getStatusFromData = () => {
+    const name = data.statuses[0].status?.name ?? "미출석";
+    return parseToOptions.find((option) => option.name === name) || null;
+  };
+
+  const [status, setStatus] = useState<DropdownItem | null>(getStatusFromData);
+
+  const isUserAction = useRef(false);
+
+  useEffect(() => {
+    if (isUserAction.current) {
+      isUserAction.current = false;
+      return;
+    }
+    setStatus(getStatusFromData());
+  }, [data.statuses[0].status?.name]);
+
   const { mutateAsync } = useUpdateAttendanceStatus(roomId);
 
+  const handleSetStatus = (value: DropdownItem | null) => {
+    isUserAction.current = true;
+    setStatus(value);
+  };
+
   const updateStatus = async () => {
-    if (
-      !status ||
-      status.name ===
-        `${data.statuses[0].status ? data.statuses[0].status?.name : "미출석"}`
-    )
-      return;
+    const currentName = data.statuses[0].status?.name ?? "미출석";
+    if (!status || status.name === currentName) return;
     try {
       await mutateAsync({
         userId: data.userId,
@@ -33,13 +45,7 @@ export const useUpdateAttendance = (data: Attendance, roomId: number) => {
       });
     } catch {
       setTimeout(() => {
-        setStatus(
-          parseToOptions.find(
-            (option) =>
-              option.name ===
-              `${data.statuses[0].status ? data.statuses[0].status?.name : "미출석"}`,
-          ) || null,
-        );
+        setStatus(getStatusFromData());
       }, 100);
     }
   };
@@ -52,7 +58,7 @@ export const useUpdateAttendance = (data: Attendance, roomId: number) => {
 
   return {
     status,
-    setStatus,
+    setStatus: handleSetStatus,
     options: parseToOptions,
   };
 };
