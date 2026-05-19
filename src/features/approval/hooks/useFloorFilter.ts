@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import type { FilterOption } from "@/shared/ui/filter-bar";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const FLOOR_OPTIONS: FilterOption[] = [
   { label: "1층", value: "1" },
@@ -11,10 +11,13 @@ export const FLOOR_OPTIONS: FilterOption[] = [
 ];
 
 export const useFloorFilter = () => {
-  const [selectedFloor, setSelectedFloor] = useState(FLOOR_OPTIONS[0].value);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedFloor = searchParams.get("floor") ?? FLOOR_OPTIONS[1].value;
 
-  return {
-    selectedFloor,
-    setSelectedFloor,
+  const setSelectedFloor = (value: string) => {
+    router.push(`?floor=${value}`);
   };
+
+  return { selectedFloor, setSelectedFloor };
 };
