@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -7,21 +6,23 @@ export async function GET(request: Request) {
   const accessToken = searchParams.get("accessToken");
   const refreshToken = searchParams.get("refreshToken");
 
+  const webUrl = process.env.NEXT_PUBLIC_WEB_URL || "";
+
   if (!accessToken || !refreshToken) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_WEB_URL || ""}/login`);
+    return NextResponse.redirect(`${webUrl}/login`);
   }
 
-  const cookieStore = await cookies();
+  const response = NextResponse.redirect(`${webUrl}/`);
 
-  cookieStore.set("accessToken", accessToken, {
+  response.cookies.set("accessToken", accessToken, {
     path: "/",
     maxAge: 60 * 60 * 12,
   });
 
-  cookieStore.set("refreshToken", refreshToken, {
+  response.cookies.set("refreshToken", refreshToken, {
     path: "/",
     maxAge: 60 * 60 * 24,
   });
 
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_WEB_URL || ""}/`);
+  return response;
 }
