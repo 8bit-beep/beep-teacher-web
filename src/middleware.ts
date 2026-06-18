@@ -9,7 +9,7 @@ const STATIC_RESOURCE_PATTERNS = [
   /\.(.*)$/, 
 ] as const;
 
-export default function proxy(req: NextRequest) {
+export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname.startsWith("/api")) {

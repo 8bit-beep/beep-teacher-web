@@ -1,3 +1,4 @@
+import FloorFilterBar from "@/features/approval/ui/FloorFilterBar";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import MobileRoomTable from "@/features/manage-attends/ui/MobileRoomTable";
 import Refresh from "@/features/manage-attends/ui/Refresh";
@@ -8,6 +9,7 @@ import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
+
 
 export default async function HomePage({
   searchParams,
@@ -25,7 +27,7 @@ export default async function HomePage({
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
         headerOptions={<Refresh />}
-        mobileFilter={<FilterRoom param={floor ? Number(floor) : undefined} />}>
+        mobileFilter={<FloorFilterBar/>}>
         <Suspense
           fallback={
             <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
