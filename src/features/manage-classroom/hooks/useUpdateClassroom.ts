@@ -2,47 +2,54 @@ import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Attendance } from "@/entities/attendances/types";
 import { useUpdateAttendanceStatusWithCheckpoint } from "@/entities/attendances/mutations";
 import { DropdownItem } from "@bds-web/ui";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 export const useUpdateClassroom = (data: Attendance, statusIndex: number) => {
   const statuses = useGetAttendTypes().data.data;
-  const options: DropdownItem[] = statuses.map((status) => ({
-    name: status.name,
-    value: `${status.id}`,
-  }));
 
-  const currentStatus = data.statuses[statusIndex]?.status;
-  const checkpointId = data.statuses[statusIndex]?.checkpoint.id;
-
-  const [status, setStatus] = useState<DropdownItem | null>(
-    options.find(
-      (option) => option.name === (currentStatus ? currentStatus.name : "미출석"),
-    ) || null,
+  const options: DropdownItem[] = useMemo(
+    () => statuses.map((status) => ({ name: status.name, value: `${status.id}` })),
+    [statuses],
   );
 
+  const getStatusFromData = (opts: DropdownItem[] = options) => {
+    const name = data.statuses[statusIndex]?.status?.name ?? "미출석";
+    return opts.find((option) => option.name === name) || null;
+  };
+
+  const [status, setStatus] = useState<DropdownItem | null>(() => getStatusFromData());
+
+  const isUserAction = useRef(false);
+
+  useEffect(() => {
+    if (isUserAction.current) {
+      isUserAction.current = false;
+      return;
+    }
+    setStatus(getStatusFromData());
+  }, [data.statuses[statusIndex]?.status?.name, options]);
+
   const { mutateAsync } = useUpdateAttendanceStatusWithCheckpoint();
+  const checkpointId = data.statuses[statusIndex]?.checkpoint.id;
 
   const updateStatus = async () => {
-    if (!status || status.name === (currentStatus ? currentStatus.name : "미출석")) return;
+    const currentName = data.statuses[statusIndex]?.status?.name ?? "미출석";
+    if (!status || status.name === currentName) return;
     try {
       await mutateAsync({ userId: data.userId, statusId: Number(status.value), checkpointId });
     } catch {
-      setTimeout(() => {
-        const latestStatus = data.statuses[statusIndex]?.status;
-        setStatus(
-          options.find(
-            (option) => option.name === (latestStatus ? latestStatus.name : "미출석"),
-          ) || null,
-        );
-      }, 100);
+      setTimeout(() => setStatus(getStatusFromData()), 100);
     }
   };
 
   useEffect(() => {
-    if (status) {
-      updateStatus();
-    }
+    if (status) updateStatus();
   }, [status]);
 
-  return { status, setStatus, options };
+  const handleSetStatus = (value: DropdownItem | null) => {
+    isUserAction.current = true;
+    setStatus(value);
+  };
+
+  return { status, setStatus: handleSetStatus, options };
 };
