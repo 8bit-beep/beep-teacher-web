@@ -1,5 +1,9 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/constants/auth";
 
 export async function POST() {
   const cookieStore = await cookies();
@@ -23,12 +27,12 @@ export async function POST() {
 
   cookieStore.set("accessToken", accessToken, {
     path: "/",
-    maxAge: 60 * 60 * 12,
+    maxAge: ACCESS_TOKEN_MAX_AGE,
   });
 
   cookieStore.set("refreshToken", newRefresh, {
     path: "/",
-    maxAge: 60 * 60 * 24,
+    maxAge: REFRESH_TOKEN_MAX_AGE,
   });
 
   return NextResponse.json({ accessToken });

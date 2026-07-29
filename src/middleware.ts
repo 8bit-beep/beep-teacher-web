@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/constants/auth";
 
 const PUBLIC_PATHS = [
   "/login",
@@ -8,9 +12,6 @@ const PUBLIC_PATHS = [
 const STATIC_RESOURCE_PATTERNS = [
   /\.(.*)$/, 
 ] as const;
-
-const ACCESS_TOKEN_MAX_AGE = 60 * 60 * 12;
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24;
 
 // JWT payload의 exp를 확인한다 (만료 30초 전부터 만료로 취급)
 const isExpired = (token: string): boolean => {
