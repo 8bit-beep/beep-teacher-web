@@ -4,6 +4,7 @@ import MobileRoomTable from "@/features/manage-attends/ui/MobileRoomTable";
 import Refresh from "@/features/manage-attends/ui/Refresh";
 import RenderManageAttendance from "@/features/manage-attends/ui/RenderManageAttendance";
 import RoomTable from "@/features/manage-attends/ui/RoomTable";
+import ScheduleButton from "@/features/manage-schedule/ui/ScheduleButton";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -26,7 +27,12 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}
+        headerOptions={
+          <>
+            <ScheduleButton />
+            <Refresh />
+          </>
+        }
         mobileFilter={<FloorFilterBar/>}>
         <Suspense
           fallback={
