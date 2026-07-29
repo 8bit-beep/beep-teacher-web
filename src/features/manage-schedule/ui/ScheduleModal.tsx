@@ -1,27 +1,13 @@
 "use client";
 
-import { Button, Dropdown, DropdownItem, modal } from "@bds-web/ui";
-import { Fragment, useState } from "react";
-import { useScheduleStore } from "@/shared/stores/schedule";
-import { GRADES, SCHEDULE_OPTIONS } from "../constants/schedule";
+import { Button, Dropdown } from "@bds-web/ui";
+import { Fragment } from "react";
+import { GRADES } from "@/shared/constants/grade";
+import { useScheduleSelection } from "../hooks/useScheduleSelection";
+import { SCHEDULE_OPTIONS } from "../constants/schedule";
 
 const ScheduleModal = () => {
-  const { schedules, setSchedules } = useScheduleStore();
-  const [selected, setSelected] = useState<Record<number, string>>(schedules);
-
-  const isChanged = GRADES.some(
-    (grade) => selected[grade] !== schedules[grade],
-  );
-
-  const handleSelect = (grade: number, item: DropdownItem | null) => {
-    if (!item) return;
-    setSelected((prev) => ({ ...prev, [grade]: item.value }));
-  };
-
-  const handleSave = () => {
-    setSchedules(selected);
-    modal.close();
-  };
+  const { selected, isChanged, select, save } = useScheduleSelection();
 
   return (
     <div className="w-60 max-w-full flex flex-col gap-4">
@@ -43,7 +29,7 @@ const ScheduleModal = () => {
                       (option) => option.value === selected[grade],
                     ) ?? null
                   }
-                  onSelect={(item) => handleSelect(grade, item)}
+                  onSelect={(item) => select(grade, item)}
                   dropdownSize="medium"
                   width="100%"
                 />
@@ -56,7 +42,7 @@ const ScheduleModal = () => {
         buttonType="primary"
         buttonSize="medium"
         disabled={!isChanged}
-        onClick={handleSave}
+        onClick={save}
         style={{ width: "100%" }}>
         저장
       </Button>

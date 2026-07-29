@@ -1,8 +1,9 @@
 "use client";
 
 import { Button, modal } from "@bds-web/ui";
+import { GRADES } from "@/shared/constants/grade";
 import { useScheduleStore } from "@/shared/stores/schedule";
-import { GRADES, getScheduleName } from "../constants/schedule";
+import { getScheduleName } from "../constants/schedule";
 import ScheduleModal from "./ScheduleModal";
 
 const ScheduleButton = () => {

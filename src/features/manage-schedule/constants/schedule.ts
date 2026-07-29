@@ -1,8 +1,5 @@
 import { DropdownItem } from "@bds-web/ui";
-
-export const GRADES = [1, 2, 3] as const;
-
-export const DEFAULT_SCHEDULE_VALUE = "none";
+import { DEFAULT_SCHEDULE_VALUE } from "@/shared/stores/schedule";
 
 export const SCHEDULE_OPTIONS: DropdownItem[] = [
   { name: "변경없음", value: DEFAULT_SCHEDULE_VALUE },
