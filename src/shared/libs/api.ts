@@ -35,6 +35,14 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // 서버 사이드에서는 refresh를 시도하지 않는다.
+    // refreshToken이 1회용(회전)이라 SSR 중 갱신하면 새 토큰을 브라우저에
+    // 전달할 방법이 없어 세션이 어긋난다. 만료 토큰 갱신은 미들웨어가 담당한다.
+    if (typeof window === "undefined") {
+      const { redirect } = await import("next/navigation");
+      redirect("/login");
+    }
+
     // 토큰 갱신 중이면 큐에 추가
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
@@ -79,14 +87,9 @@ api.interceptors.response.use(
       // 큐에 있는 요청들 실패 처리
       queue.forEach((cb) => cb());
       queue = [];
-      
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      } else {
-        const { redirect } = await import("next/navigation");
-        redirect("/login");
-      }
-      
+
+      window.location.href = "/login";
+
       return Promise.reject(e);
     } finally {
       isRefreshing = false;

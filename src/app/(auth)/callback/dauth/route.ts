@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_MAX_AGE,
+  REFRESH_TOKEN_MAX_AGE,
+} from "@/shared/constants/auth";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -16,12 +20,12 @@ export async function GET(request: Request) {
 
   response.cookies.set("accessToken", accessToken, {
     path: "/",
-    maxAge: 60 * 60 * 12,
+    maxAge: ACCESS_TOKEN_MAX_AGE,
   });
 
   response.cookies.set("refreshToken", refreshToken, {
     path: "/",
-    maxAge: 60 * 60 * 24,
+    maxAge: REFRESH_TOKEN_MAX_AGE,
   });
 
   return response;
