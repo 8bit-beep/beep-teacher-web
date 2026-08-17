@@ -1,13 +1,21 @@
 "use client";
 
-import { Button, Dropdown } from "@bds-web/ui";
+import { Button, Dropdown, DropdownItem } from "@bds-web/ui";
 import { Fragment } from "react";
+import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { GRADES } from "@/shared/constants/grade";
 import { useScheduleSelection } from "../hooks/useScheduleSelection";
-import { SCHEDULE_OPTIONS } from "../constants/schedule";
+import { NO_CHANGE_LABEL, NO_CHANGE_VALUE } from "../constants/schedule";
 
 const ScheduleModal = () => {
-  const { selected, isChanged, select, save } = useScheduleSelection();
+  const types = useGetAttendTypes().data.data;
+  const { selected, isChanged, isPending, select, save } =
+    useScheduleSelection();
+
+  const options: DropdownItem[] = [
+    { name: NO_CHANGE_LABEL, value: NO_CHANGE_VALUE },
+    ...types.map((type) => ({ name: type.name, value: type.id.toString() })),
+  ];
 
   return (
     <div className="w-60 max-w-full flex flex-col gap-4">
@@ -23,9 +31,9 @@ const ScheduleModal = () => {
               </span>
               <div className="flex-1 min-w-0">
                 <Dropdown
-                  options={SCHEDULE_OPTIONS}
+                  options={options}
                   selected={
-                    SCHEDULE_OPTIONS.find(
+                    options.find(
                       (option) => option.value === selected[grade],
                     ) ?? null
                   }
@@ -41,10 +49,10 @@ const ScheduleModal = () => {
       <Button
         buttonType="primary"
         buttonSize="medium"
-        disabled={!isChanged}
+        disabled={!isChanged || isPending}
         onClick={save}
         style={{ width: "100%" }}>
-        저장
+        {isPending ? "저장 중..." : "저장"}
       </Button>
     </div>
   );

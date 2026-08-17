@@ -1,16 +1,24 @@
 "use client";
 
 import { Button, modal } from "@bds-web/ui";
+import { useGetSortModesQuery } from "@/entities/sort-modes/queries";
 import { GRADES } from "@/shared/constants/grade";
-import { useScheduleStore } from "@/shared/stores/schedule";
-import { getScheduleName } from "../constants/schedule";
+import { NO_CHANGE_LABEL } from "../constants/schedule";
 import ScheduleModal from "./ScheduleModal";
 
 const ScheduleButton = () => {
-  const schedules = useScheduleStore((state) => state.schedules);
+  const { data } = useGetSortModesQuery();
+
+  if (!data) return null;
+
+  const modes = data.data.modes;
 
   const summary = GRADES.map(
-    (grade) => `${grade} - ${getScheduleName(schedules[grade])}`,
+    (grade) =>
+      `${grade} - ${
+        modes.find((mode) => mode.grade === grade)?.type?.name ??
+        NO_CHANGE_LABEL
+      }`,
   ).join(" · ");
 
   const handleOpen = () => {
