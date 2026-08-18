@@ -3,6 +3,7 @@
 import SearchBar from "./SearchBar";
 import GradeAccordion from "./GradeAccordion";
 import { Button } from "@bds-web/ui";
+import { GRADES } from "@/shared/constants/grade";
 import { useSearch } from "../hooks/useSearch";
 import StudentItem from "./StudentItem";
 
@@ -32,7 +33,7 @@ const SelectStudents = ({
                 key={student.id}
               />
             ))
-          : [1, 2, 3].map((grade) => (
+          : GRADES.map((grade) => (
               <GradeAccordion
                 grade={grade}
                 selectedStudents={selectedStudents}
