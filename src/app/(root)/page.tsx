@@ -10,7 +10,6 @@ import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
 
-
 export default async function HomePage({
   searchParams,
 }: SearchParams<{ floor?: string }>) {
@@ -18,16 +17,25 @@ export default async function HomePage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-between xl:flex">
-        <FilterRoom param={floor ? Number(floor) : undefined} />
+      <div className="w-full hidden items-center justify-between gap-4 xl:flex">
+        <div className="flex flex-1 items-center justify-between">
+          <FilterRoom param={floor ? Number(floor) : undefined} />
+          <Refresh size="medium" />
+        </div>
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<Refresh />}
-        mobileFilter={<FloorFilterBar/>}>
+        mobileFilter={
+          <div className="flex w-full items-center justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <FloorFilterBar />
+            </div>
+            <Refresh size="medium" />
+          </div>
+        }>
         <Suspense
           fallback={
             <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
@@ -35,9 +43,8 @@ export default async function HomePage({
             </div>
           }>
           <RoomTable floor={floor} />
-          <MobileRoomTable floor={floor}/>
+          <MobileRoomTable floor={floor} />
         </Suspense>
-
       </Section>
       <RenderManageAttendance />
     </div>

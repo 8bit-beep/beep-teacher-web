@@ -3,6 +3,7 @@ import FilterClassroom from "@/features/filter/ui/FilterClassroom";
 import { getClassroomTableWidths } from "@/shared/constants/tableWidths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -38,7 +39,8 @@ export default async function ClassroomPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-end xl:flex">
+      <div className="w-full hidden items-center justify-end gap-3 xl:flex">
+        <Refresh size="medium" />
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
