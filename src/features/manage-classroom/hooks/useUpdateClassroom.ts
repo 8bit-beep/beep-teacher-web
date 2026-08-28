@@ -1,7 +1,7 @@
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Attendance } from "@/entities/attendances/types";
 import { useUpdateAttendanceStatusWithCheckpoint } from "@/entities/attendances/mutations";
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useRef, useState, useMemo } from "react";
 
 export const useUpdateClassroom = (data: Attendance, statusIndex: number) => {

@@ -4,7 +4,7 @@ import { Suspense, useCallback } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";

@@ -5,7 +5,7 @@ import { useToggleData } from "../hooks/useToggleData";
 import { useApprove } from "../../manage-approvals/hooks/useApprove";
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
-import {Button} from "@bds-web/ui";
+import {Button} from "@beep-ds/ui";
 
 interface Props {
   data: Room;

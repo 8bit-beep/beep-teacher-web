@@ -2,7 +2,7 @@
 
 import { parseDatetimeToTime } from "@/shared/utils/parse-datetime-to-time";
 import { useApprove } from "../hooks/useApprove";
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 
 interface Props {
   approvalId: number;

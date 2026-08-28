@@ -1,5 +1,5 @@
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useMemo } from "react";
 
 const ALLOWED_ATTEND_NAMES = new Set(["외박", "외출"]);

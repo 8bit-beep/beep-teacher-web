@@ -1,7 +1,7 @@
 "use client";
 
 import { Absence } from "@/entities/absences/types";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import UpdateAbsenceModal from "./UpdateAbsenceModal";
 
 interface Props {

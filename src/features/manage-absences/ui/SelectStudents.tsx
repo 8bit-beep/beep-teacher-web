@@ -2,7 +2,7 @@
 
 import SearchBar from "./SearchBar";
 import GradeAccordion from "./GradeAccordion";
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 import { GRADES } from "@/shared/constants/grade";
 import { useSearch } from "../hooks/useSearch";
 import StudentItem from "./StudentItem";

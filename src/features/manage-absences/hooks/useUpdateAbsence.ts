@@ -1,4 +1,4 @@
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useState } from "react";
 import { Absence } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";

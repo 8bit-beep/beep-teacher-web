@@ -1,6 +1,6 @@
 "use client";
 
-import { DatePicker, Dropdown } from "@bds-web/ui";
+import { DatePicker, Dropdown } from "@beep-ds/ui";
 import { useFilterHistoryDateTime } from "../hooks/useFilterHistoryDateTime";
 import { parseDate } from "@/shared/utils/pare-date";
 

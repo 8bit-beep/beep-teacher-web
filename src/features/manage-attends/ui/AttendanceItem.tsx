@@ -5,7 +5,7 @@ import {
   isAbsenceStatusName,
   isOutStatusName,
 } from "@/shared/utils/attendance-status";
-import { Dropdown } from "@bds-web/ui";
+import { Dropdown } from "@beep-ds/ui";
 import { useUpdateAttendance } from "../hooks/useUpdateAttendance";
 
 interface Props {

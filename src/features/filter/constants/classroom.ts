@@ -1,4 +1,4 @@
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 
 export const CLASSROOM_OPTIONS: DropdownItem[] = [
   { name: "1-1", value: "1-1" },

@@ -8,7 +8,7 @@ import {
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import { useRouter } from "@cher1shrxd/loading";
-import { Button, DatePicker, Dropdown, DropdownItem, modal } from "@bds-web/ui";
+import { Button, DatePicker, Dropdown, DropdownItem, modal } from "@beep-ds/ui";
 import { useState } from "react";
 import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";
 import {

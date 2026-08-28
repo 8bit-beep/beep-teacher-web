@@ -7,7 +7,7 @@ import {
 } from "@/shared/constants/toast";
 import { Error } from "@/shared/types/error";
 import { toast } from "@cher1shrxd/toast";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import { useRouter } from "@cher1shrxd/loading";
 import { AxiosError } from "axios";
 import { useState } from "react";

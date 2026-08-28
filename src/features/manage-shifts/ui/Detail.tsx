@@ -1,7 +1,7 @@
 "use client";
 
 import { Shift } from "@/entities/shifts/types";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import DetailModal from "./DetailModal";
 
 interface Props {
