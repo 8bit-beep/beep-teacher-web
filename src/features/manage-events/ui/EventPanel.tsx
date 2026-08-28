@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { formatEventDate } from "../utils/format-event-date";
 import EventList from "./EventList";
@@ -24,9 +25,13 @@ const EventPanel = ({ today, date, onClose }: Props) => {
       <div className="w-full flex items-center justify-between">
         <button
           type="button"
-          onClick={onClose}
+          onClick={phase.type === "list" ? onClose : backToList}
           className="size-11 rounded-full bg-static-white shadow-modal flex items-center justify-center text-static-black cursor-pointer">
-          <CloseIcon />
+          {phase.type === "list" ? (
+            <CloseIcon />
+          ) : (
+            <ChevronIcon size={16} rotate={90} />
+          )}
         </button>
         <h2 className="text-h3 text-static-black">
           {formatEventDate(today)} 행사 관리
