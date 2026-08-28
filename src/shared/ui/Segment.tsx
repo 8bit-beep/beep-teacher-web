@@ -10,7 +10,7 @@ interface Props {
 
 const Segment = ({ segment, selected, onSelect }: Props) => {
   return (
-    <div className="w-full p-2 rounded-small flex items-center shadow-modal bg-grayscale-10 lg:bg-static-white">
+    <div className="w-full p-2 rounded-small flex items-center shadow-modal bg-greyscale-10 lg:bg-static-white">
       {segment.map((item) => (
         <span
           key={item.value}
