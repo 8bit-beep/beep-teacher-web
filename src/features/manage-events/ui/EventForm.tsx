@@ -96,23 +96,29 @@ const EventForm = ({ date, detail, onDone, onCancel }: Props) => {
         )}
 
         <div className="w-full pt-1">
-          {result.length > 0
-            ? result.map((student) => (
-                <StudentItem
-                  data={student}
-                  selectedStudents={selectedStudents}
-                  toggleSelected={toggleSelected}
-                  key={student.id}
-                />
-              ))
-            : GRADES.map((grade) => (
-                <GradeAccordion
-                  grade={grade}
-                  selectedStudents={selectedStudents}
-                  toggleSelected={toggleSelected}
-                  key={grade}
-                />
-              ))}
+          {!query.trim() &&
+            GRADES.map((grade) => (
+              <GradeAccordion
+                grade={grade}
+                selectedStudents={selectedStudents}
+                toggleSelected={toggleSelected}
+                key={grade}
+              />
+            ))}
+          {query.trim() &&
+            result.map((student) => (
+              <StudentItem
+                data={student}
+                selectedStudents={selectedStudents}
+                toggleSelected={toggleSelected}
+                key={student.id}
+              />
+            ))}
+          {query.trim() && result.length === 0 && (
+            <div className="w-full flex items-center justify-center py-10 text-body text-greyscale-40">
+              검색 결과가 없습니다.
+            </div>
+          )}
         </div>
       </div>
 
