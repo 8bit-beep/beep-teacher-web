@@ -1,7 +1,7 @@
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { Attendance } from "@/entities/attendances/types";
 import { useUpdateHistoryMutation } from "@/entities/histories/mutations";
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useState } from "react";
 
 export const useUpdateHistory = (data: Attendance, roomId: number, index: number) => {

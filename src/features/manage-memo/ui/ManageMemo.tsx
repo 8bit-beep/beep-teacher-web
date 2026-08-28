@@ -2,7 +2,7 @@
 
 import MemoIcon from "@/shared/icons/MemoIcon";
 import AlertIcon from "@/shared/icons/AlertIcon";
-import { modal } from "@bds-web/ui";
+import { modal } from "@beep-ds/ui";
 import MemoModal from "./MemoModal";
 import { useGetMemo } from "@/entities/memo/queries";
 import { useMarkAsReadMutation } from "@/entities/memo/mutations";

@@ -2,7 +2,7 @@
 
 import { Student } from "@/entities/students/types";
 import { pad } from "@/shared/utils/pad";
-import { Checkbox } from "@bds-web/ui";
+import { Checkbox } from "@beep-ds/ui";
 
 interface Props {
   data: Student;

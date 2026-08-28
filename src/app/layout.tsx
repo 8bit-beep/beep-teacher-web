@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { BdsRegistry, ModalProvider } from "@bds-web/ui";
+import { BdsRegistry, ModalProvider } from "@beep-ds/ui";
 import { LoadingBar } from "@cher1shrxd/loading";
-import { colors } from "@bds-web/colors";
+import { colors } from "@beep-ds/colors";
 import QueryProvider from "@/shared/provider/QueryProvider";
 import { ToastContainer } from "@cher1shrxd/toast";
 

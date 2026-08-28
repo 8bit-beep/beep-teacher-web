@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Dropdown, DropdownItem } from "@bds-web/ui";
+import { Button, Dropdown, DropdownItem } from "@beep-ds/ui";
 import { Fragment } from "react";
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { GRADES } from "@/shared/constants/grade";

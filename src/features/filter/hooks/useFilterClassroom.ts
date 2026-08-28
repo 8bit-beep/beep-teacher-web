@@ -1,6 +1,6 @@
 "use client";
 
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useState } from "react";
 import { CLASSROOM_OPTIONS } from "../constants/classroom";
 import { useRouter } from "@cher1shrxd/loading";

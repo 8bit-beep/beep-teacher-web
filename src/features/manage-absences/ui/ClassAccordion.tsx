@@ -1,7 +1,7 @@
 "use client";
 
 import ChevronIcon from "@/shared/icons/ChevronIcon";
-import { Checkbox } from "@bds-web/ui";
+import { Checkbox } from "@beep-ds/ui";
 import StudentItem from "./StudentItem";
 import { useAllInClass } from "../hooks/useAllInClass";
 

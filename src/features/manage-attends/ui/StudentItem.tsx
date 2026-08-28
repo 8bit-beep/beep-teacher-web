@@ -1,7 +1,7 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import ManageOneDayAbsenceModal from "./ManageOneDayAbsenceModal";
 
 interface Props {
