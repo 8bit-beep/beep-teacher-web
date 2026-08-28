@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import { useGetSortModesQuery } from "@/entities/sort-modes/queries";
 import { GRADES } from "@/shared/constants/grade";
 import { NO_CHANGE_LABEL } from "../constants/schedule";

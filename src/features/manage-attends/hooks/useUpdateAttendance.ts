@@ -1,7 +1,7 @@
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { useUpdateAttendanceStatus } from "@/entities/attendances/mutations";
 import { Attendance } from "@/entities/attendances/types";
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useRef, useState } from "react";
 
 export const useUpdateAttendance = (data: Attendance, roomId: number) => {

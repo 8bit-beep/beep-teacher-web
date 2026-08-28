@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 import { useDownload } from "../hooks/useDownload";
 
 const Download = () => {

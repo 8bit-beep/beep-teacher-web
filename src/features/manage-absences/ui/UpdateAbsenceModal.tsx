@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import { Absence } from "@/entities/absences/types";
 import UpdateAbsenceDetailModal from "./UpdateAbsenceDetailModal";
 import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";

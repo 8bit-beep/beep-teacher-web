@@ -1,7 +1,7 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
-import { Dropdown } from "@bds-web/ui";
+import { Dropdown } from "@beep-ds/ui";
 import { useUpdateClassroom } from "../hooks/useUpdateClassroom";
 
 interface Props {

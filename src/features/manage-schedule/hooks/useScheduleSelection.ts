@@ -1,4 +1,4 @@
-import { DropdownItem, modal } from "@bds-web/ui";
+import { DropdownItem, modal } from "@beep-ds/ui";
 import { useRouter } from "@cher1shrxd/loading";
 import { toast } from "@cher1shrxd/toast";
 import { useQueryClient } from "@tanstack/react-query";

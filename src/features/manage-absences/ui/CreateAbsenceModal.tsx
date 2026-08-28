@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
+import { Button, DatePicker, Dropdown, modal } from "@beep-ds/ui";
 import { useCreateAbsence } from "../hooks/useCreateAbsence";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import SelectStudentsModal from "./SelectStudentsModal";
