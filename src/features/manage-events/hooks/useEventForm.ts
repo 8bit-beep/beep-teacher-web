@@ -45,7 +45,6 @@ export const useEventForm = ({ date, detail, onDone }: Params) => {
         return next;
       }
 
-      // 최근에 선택한 학생이 앞에 오도록 한다
       return new Map([
         [studentId, student ? toLabel(student) : `${studentId}`],
         ...prev,
@@ -71,7 +70,7 @@ export const useEventForm = ({ date, detail, onDone }: Params) => {
     selectedStudents.length === 0 ||
     isPending;
 
-  const submit = async () => {
+  const submit = () => {
     if (disabled) return;
 
     const request = {
@@ -81,15 +80,10 @@ export const useEventForm = ({ date, detail, onDone }: Params) => {
       userIds: selectedStudents,
     };
 
-    try {
-      if (detail) {
-        await updateEvent.mutateAsync(request);
-      } else {
-        await createEvent.mutateAsync(request);
-      }
-      onDone();
-    } catch {
-      // 실패 토스트는 뮤테이션에서 처리한다
+    if (detail) {
+      updateEvent.mutate(request, { onSuccess: onDone });
+    } else {
+      createEvent.mutate(request, { onSuccess: onDone });
     }
   };
 
