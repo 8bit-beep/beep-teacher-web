@@ -39,15 +39,17 @@ export const useEventForm = ({ date, detail, onDone }: Params) => {
 
   const toggleSelected = (studentId: number, student?: Student) => {
     setStudents((prev) => {
-      const next = new Map(prev);
-
-      if (next.has(studentId)) {
+      if (prev.has(studentId)) {
+        const next = new Map(prev);
         next.delete(studentId);
-      } else {
-        next.set(studentId, student ? toLabel(student) : `${studentId}`);
+        return next;
       }
 
-      return next;
+      // 최근에 선택한 학생이 앞에 오도록 한다
+      return new Map([
+        [studentId, student ? toLabel(student) : `${studentId}`],
+        ...prev,
+      ]);
     });
   };
 
