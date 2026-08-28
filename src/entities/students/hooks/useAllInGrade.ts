@@ -35,7 +35,10 @@ export const useAllInGrade = (
         }),
       ),
     );
-    const students = results.flatMap((result) => result.data);
+    // 외박·외출 등 상태가 있는 학생은 선택 대상에서 제외한다
+    const students = results
+      .flatMap((result) => result.data)
+      .filter((student) => !student.typeId);
 
     const hasSelected = students.some((student) =>
       selectedStudents.includes(student.id),

@@ -11,18 +11,21 @@ export const useAllInClass = (
   const students = useGetStudentsByClass(grade, classNumber).data.data;
   const [isOpened, setIsOpened] = useState(false);
 
+  // 외박·외출 등 상태가 있는 학생은 선택 대상에서 제외한다
+  const selectableStudents = students.filter((student) => !student.typeId);
+
   const selectAllInClass = () => {
     const allSelected = selectedStudents.some((studentId) =>
-      students.find((student) => student.id === studentId),
+      selectableStudents.find((student) => student.id === studentId),
     );
     if (allSelected) {
-      students.forEach((student) => {
+      selectableStudents.forEach((student) => {
         if (selectedStudents.includes(student.id)) {
           toggleSelected(student.id, student);
         }
       });
     } else {
-      students.forEach((student) => {
+      selectableStudents.forEach((student) => {
         if (!selectedStudents.includes(student.id)) {
           toggleSelected(student.id, student);
         }
