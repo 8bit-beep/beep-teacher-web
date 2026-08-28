@@ -52,7 +52,7 @@ const EventForm = ({ date, detail, onDone, onCancel }: Props) => {
 
       <div className="w-full flex flex-col gap-1">
         <span className="text-caption1 text-static-black">해당 교시</span>
-        <div className="w-full flex items-start justify-between">
+        <div className="w-full flex items-center flex-wrap gap-x-4 gap-y-2">
           <div className="flex items-center gap-2.5">
             <Checkbox
               checked={isAllChecked}
