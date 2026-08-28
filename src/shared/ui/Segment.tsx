@@ -14,7 +14,7 @@ const Segment = ({ segment, selected, onSelect }: Props) => {
       {segment.map((item) => (
         <span
           key={item.value}
-          className={`flex-1 text-body cursor-pointer rounded-small px-2 py-1.5 flex items-center justify-center  ${
+          className={`flex-1 min-w-fit whitespace-nowrap text-body cursor-pointer rounded-small px-2 py-1.5 flex items-center justify-center ${
             item.value === selected.value
               ? "bg-blue-light text-white"
               : "bg-white text-blue-light"
