@@ -1,4 +1,5 @@
 "use client";
+import { Student } from "@/entities/students/types";
 
 import ChevronIcon from "@/shared/icons/ChevronIcon";
 import { useState } from "react";
@@ -7,7 +8,7 @@ import ClassAccordion from "./ClassAccordion";
 interface Props {
   grade: number;
   selectedStudents: number[];
-  toggleSelected: (studentId: number) => void;
+  toggleSelected: (studentId: number, student?: Student) => void;
 }
 
 const GradeAccordion = ({ grade, selectedStudents, toggleSelected }: Props) => {

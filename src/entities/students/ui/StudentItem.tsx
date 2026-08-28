@@ -7,7 +7,7 @@ import { Checkbox } from "@beep-ds/ui";
 interface Props {
   data: Student;
   selectedStudents: number[];
-  toggleSelected: (studentId: number) => void;
+  toggleSelected: (studentId: number, student?: Student) => void;
 }
 
 const StudentItem = ({ data, selectedStudents, toggleSelected }: Props) => {
@@ -20,7 +20,7 @@ const StudentItem = ({ data, selectedStudents, toggleSelected }: Props) => {
       </p>
       <p className="text-body text-static-black">{data.name}</p>
       <div className="flex-1" />
-      <Checkbox checked={selectedStudents.includes(data.id)} onChange={() => toggleSelected(data.id)} size={20} />
+      <Checkbox checked={selectedStudents.includes(data.id)} onChange={() => toggleSelected(data.id, data)} size={20} />
     </div>
   );
 };
