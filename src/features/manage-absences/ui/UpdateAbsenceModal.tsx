@@ -7,7 +7,7 @@ import UpdateAbsenceDetailModal from "./UpdateAbsenceDetailModal";
 import { useGetAbsenceReason } from "../hooks/useGetAbsenceReason";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import DeleteAbsenceModal from "./DeleteAbsenceModal";
-import { useSelectStudents } from "../hooks/useSelectStudents";
+import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { useResolveAbsenceUserIds } from "../hooks/useResolveAbsenceUserIds";
 import { AbsenceApi } from "@/entities/absences/api";
 import { parseDate } from "@/shared/utils/pare-date";
@@ -21,7 +21,7 @@ import { Error } from "@/shared/types/error";
 import { useRouter } from "@cher1shrxd/loading";
 import DeleteAbsencesModal from "./DeleteAbsencesModal";
 import AddAbsenceReasonModal from "./AddAbsenceReasonModal";
-import SelectStudentsModal from "./SelectStudentsModal";
+import SelectStudentsModal from "@/entities/students/ui/SelectStudentsModal";
 
 interface Props {
   data: Absence[];

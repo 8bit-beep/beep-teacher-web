@@ -5,6 +5,7 @@ import Refresh from "@/features/manage-attends/ui/Refresh";
 import RenderManageAttendance from "@/features/manage-attends/ui/RenderManageAttendance";
 import RoomTable from "@/features/manage-attends/ui/RoomTable";
 import ScheduleButton from "@/features/manage-schedule/ui/ScheduleButton";
+import ManageEvents from "@/features/manage-events/ui/ManageEvents";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -30,6 +31,7 @@ export default async function HomePage({
         headerOptions={
           <>
             <ScheduleButton />
+            <ManageEvents />
             <Refresh />
           </>
         }

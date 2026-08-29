@@ -4,6 +4,7 @@ export interface Student {
   email: string;
   profileImage: string;
   studentInfo: StudentInfo;
+  typeId?: number | null;
 }
 
 export interface StudentInfo {
