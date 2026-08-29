@@ -13,9 +13,16 @@ interface Props {
 const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px" }: Props) => {
   const { status, setStatus, options } = useUpdateClassroom(data, statusIndex);
 
+  const borderClass =
+    status?.name === "미출석"
+      ? "border-2 border-red-light rounded-large"
+      : status?.name === "외출"
+        ? "border-2 border-green-light rounded-large"
+        : "";
+
   return (
     <>
-      <div className={`hidden lg:block ${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
+      <div className={`hidden lg:block ${borderClass}`}>
         <Dropdown
           selected={status}
           onSelect={setStatus}
@@ -24,7 +31,7 @@ const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px" }: Props)
           width={desktopWidth}
         />
       </div>
-      <div className={`lg:hidden ${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
+      <div className={`lg:hidden ${borderClass}`}>
         <Dropdown
           selected={status}
           onSelect={setStatus}
