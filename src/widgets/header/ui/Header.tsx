@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
+import RefreshButton from "@/features/manage-attends/ui/RefreshButton";
 import FilterRoom from "@/features/filter/ui/FilterRoom";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
@@ -41,9 +42,10 @@ const Header = () => {
           style={{ width: "auto", height: "auto" }}
         />
       </Link>
-      <div className="w-full min-w-0 flex justify-between">
+      <div className="w-full min-w-0 flex items-center gap-5">
         <div className="hidden lg:flex">{headerContent}</div>
         <ManageMemo />
+        <RefreshButton />
       </div>
       <Suspense fallback={<SkeletonUser />}>
         <UserIndicator />

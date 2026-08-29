@@ -1,4 +1,5 @@
 import { ShiftApi } from "@/entities/shifts/api";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import Detail from "@/features/manage-shifts/ui/Detail";
 import PersonIcon from "@/shared/icons/PersonIcon";
@@ -13,7 +14,8 @@ export default async function ShiftsPage() {
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-end xl:flex">
+      <div className="w-full hidden items-center justify-end gap-3 xl:flex">
+        <Refresh size="medium" />
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section

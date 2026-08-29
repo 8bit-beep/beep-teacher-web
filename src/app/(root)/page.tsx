@@ -12,7 +12,6 @@ import { SearchParams } from "@/shared/types/search-params";
 import Section from "@/widgets/section/ui/Section";
 import { Suspense } from "react";
 
-
 export default async function HomePage({
   searchParams,
 }: SearchParams<{ floor?: string }>) {
@@ -20,8 +19,11 @@ export default async function HomePage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-between xl:flex">
-        <FilterRoom param={floor ? Number(floor) : undefined} />
+      <div className="w-full hidden items-center justify-between gap-4 xl:flex">
+        <div className="flex flex-1 items-center justify-between">
+          <FilterRoom param={floor ? Number(floor) : undefined} />
+          <Refresh size="medium" />
+        </div>
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
@@ -43,9 +45,8 @@ export default async function HomePage({
             </div>
           }>
           <RoomTable floor={floor} />
-          <MobileRoomTable floor={floor}/>
+          <MobileRoomTable floor={floor} />
         </Suspense>
-
       </Section>
       <RenderManageAttendance />
     </div>

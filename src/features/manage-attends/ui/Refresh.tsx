@@ -3,11 +3,15 @@
 import { Button } from "@beep-ds/ui";
 import { useRefresh } from "../../../shared/hooks/useRefresh";
 
-const Refresh = () => {
+interface Props {
+  size?: "small" | "medium";
+}
+
+const Refresh = ({ size = "small" }: Props) => {
   const handleRefresh = useRefresh();
 
   return (
-    <Button buttonSize="small" buttonType="ghost" onClick={handleRefresh}>
+    <Button buttonSize={size} buttonType="ghost" onClick={handleRefresh}>
       새로고침
     </Button>
   );

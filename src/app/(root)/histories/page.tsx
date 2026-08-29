@@ -2,8 +2,8 @@ import { RoomApi } from "@/entities/rooms/api";
 import Download from "@/features/download/ui/Download";
 import FilterHistory from "@/features/filter/ui/FilterHistory";
 import FilterHistoryDateTime from "@/features/filter/ui/FilterHistoryDateTime";
-import FilterRoom from "@/features/filter/ui/FilterRoom";
 import HistoriesDropdownTable from "@/features/manage-histories/ui/HistoriesDropdownTable";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import HistoryIcon from "@/shared/icons/HistoryIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -20,8 +20,14 @@ export default async function HistoriesPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-between xl:flex">
-        <FilterHistory param={floor ? Number(floor) : undefined} />
+      <div className="w-full hidden items-center justify-between gap-4 xl:flex">
+        <div className="flex flex-1 items-center justify-between">
+          <div className="flex items-center gap-4">
+            <FilterHistory param={floor ? Number(floor) : undefined} />
+            <FilterHistoryDateTime />
+          </div>
+          <Refresh size="medium" />
+        </div>
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
@@ -29,16 +35,11 @@ export default async function HistoriesPage({
         description="출석 기록을 조회하고 다운로드하세요!"
         icon={<HistoryIcon size={24} />}
         headerOptions={
-          <>
-            <div className="hidden items-center gap-4 xl:flex">
-              <FilterHistoryDateTime />
-            </div>
-            <Download />
-          </>
+          <Download />
         }
         mobileFilter={
           <div className="w-full flex flex-col gap-2">
-            <FilterHistory/>
+            <FilterHistory />
             <FilterHistoryDateTime />
           </div>
         }
