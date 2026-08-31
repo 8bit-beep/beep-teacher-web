@@ -14,8 +14,11 @@ interface Props {
 }
 
 const AttendanceItem = ({ data, roomId }: Props) => {
-  const { status, setStatus, options } = useUpdateAttendance(data, roomId);
-  const currentStatus = data.statuses[0].status?.name;
+  const { status, statusName, setStatus, options } = useUpdateAttendance(
+    data,
+    roomId,
+  );
+  const currentStatus = statusName;
   const isAbsent = isAbsenceStatusName(currentStatus);
   const isOut = isOutStatusName(currentStatus);
 

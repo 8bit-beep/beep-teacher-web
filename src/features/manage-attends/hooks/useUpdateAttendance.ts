@@ -56,8 +56,15 @@ export const useUpdateAttendance = (data: Attendance, roomId: number) => {
     }
   }, [status]);
 
+  const serverStatusName = data.statuses[0].status?.name;
+  const statusName =
+    status && status.name !== (serverStatusName ?? "미출석")
+      ? status.name
+      : serverStatusName;
+
   return {
     status,
+    statusName,
     setStatus: handleSetStatus,
     options: parseToOptions,
   };
