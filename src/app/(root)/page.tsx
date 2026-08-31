@@ -34,7 +34,6 @@ export default async function HomePage({
           <>
             <ScheduleButton />
             <ManageEvents />
-            <Refresh />
           </>
         }
         mobileFilter={<FloorFilterBar/>}>
