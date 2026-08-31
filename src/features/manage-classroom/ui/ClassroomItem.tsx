@@ -3,16 +3,16 @@ import ClassroomDropdown from "./ClassroomDropdown";
 
 interface Props {
   data: Attendance;
-  isAbsent?: boolean;
+  isHighlighted?: boolean;
   desktopWidth?: string;
 }
 
-const ClassroomItem = ({ data, isAbsent, desktopWidth }: Props): React.ReactNode[] => [
+const ClassroomItem = ({ data, isHighlighted, desktopWidth }: Props): React.ReactNode[] => [
   <div key="student" className="flex gap-4">
-    <p className={`text-body ${isAbsent ? "text-greyscale-10" : "text-greyscale-40"}`}>
+    <p className={`text-body ${isHighlighted ? "text-greyscale-10" : "text-greyscale-40"}`}>
       {data.studentId}
     </p>
-    <p className={`text-accent ${isAbsent ? "text-white" : "text-static-black"}`}>
+    <p className={`text-accent ${isHighlighted ? "text-white" : "text-static-black"}`}>
       {data.name}
     </p>
   </div>,
