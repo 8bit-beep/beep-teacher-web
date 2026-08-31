@@ -26,7 +26,12 @@ const ScheduleButton = () => {
   };
 
   return (
-    <Button buttonType="ghost" buttonSize="small" showIcon onClick={handleOpen}>
+    <Button
+      buttonType="ghost"
+      buttonSize="small"
+      showIcon
+      onClick={handleOpen}
+      className="whitespace-nowrap">
       {summary}
     </Button>
   );

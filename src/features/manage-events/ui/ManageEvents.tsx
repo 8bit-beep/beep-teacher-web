@@ -16,7 +16,8 @@ const ManageEvents = () => {
         buttonSize="small"
         buttonType="primary"
         showIcon
-        onClick={() => setIsOpened(true)}>
+        onClick={() => setIsOpened(true)}
+        className="whitespace-nowrap">
         교내 행사
       </Button>
       {isOpened && (
