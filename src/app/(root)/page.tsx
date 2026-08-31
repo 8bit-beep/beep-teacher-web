@@ -31,12 +31,21 @@ export default async function HomePage({
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
         headerOptions={
-          <>
+          <div className="hidden lg:flex items-center gap-3">
             <ScheduleButton />
             <ManageEvents />
-          </>
+          </div>
         }
-        mobileFilter={<FloorFilterBar/>}>
+        mobileFilter={
+          <div className="w-full flex flex-col gap-3">
+            <div className="w-full flex flex-col sm:flex-row gap-3">
+              <ScheduleButton />
+              <ManageEvents />            
+            </div>
+            <FloorFilterBar />
+          </div>
+        }
+      >
         <Suspense
           fallback={
             <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
