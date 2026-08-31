@@ -1,6 +1,7 @@
 import { AbsenceApi } from "@/entities/absences/api";
 import CreateAbsence from "@/features/manage-absences/ui/CreateAbsence";
 import AbsencesSectionContent from "@/features/manage-absences/ui/AbsencesSectionContent";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import { Suspense } from "react";
 
@@ -41,7 +42,10 @@ export default async function AbsencesPage() {
     <div className="w-full h-full flex flex-col gap-4.5">
       <div className="w-full hidden items-center justify-between xl:flex">
         <CreateAbsence />
-        <Suspense><ManageMemo /></Suspense>
+        <div className="flex items-center gap-3">
+          <Refresh size="medium" />
+          <Suspense><ManageMemo /></Suspense>
+        </div>
       </div>
       <AbsencesSectionContent
         todayData={normalizeAbsences(todayAbsences)}

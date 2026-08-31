@@ -1,7 +1,8 @@
 "use client";
+import { Student } from "@/entities/students/types";
 
 import ChevronIcon from "@/shared/icons/ChevronIcon";
-import { Checkbox } from "@bds-web/ui";
+import { Checkbox } from "@beep-ds/ui";
 import StudentItem from "./StudentItem";
 import { useAllInClass } from "../hooks/useAllInClass";
 
@@ -9,7 +10,7 @@ interface Props {
   grade: number;
   classNumber: number;
   selectedStudents: number[];
-  toggleSelected: (studentId: number) => void;
+  toggleSelected: (studentId: number, student?: Student) => void;
 }
 
 const ClassAccordion = ({

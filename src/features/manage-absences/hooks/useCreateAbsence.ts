@@ -1,6 +1,6 @@
-import { DropdownItem, modal } from "@bds-web/ui";
+import { DropdownItem, modal } from "@beep-ds/ui";
 import { useState } from "react";
-import { useSelectStudents } from "./useSelectStudents";
+import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import {

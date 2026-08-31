@@ -3,10 +3,14 @@ import FilterClassroom from "@/features/filter/ui/FilterClassroom";
 import { getClassroomTableWidths } from "@/shared/constants/tableWidths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
+import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import DashboardIcon from "@/shared/icons/DashboardIcon";
 import { SearchParams } from "@/shared/types/search-params";
-import { isAbsenceStatusName } from "@/shared/utils/attendance-status";
+import {
+  isAbsenceStatusName,
+  isOutStatusName,
+} from "@/shared/utils/attendance-status";
 import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
@@ -38,7 +42,8 @@ export default async function ClassroomPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5">
-      <div className="w-full hidden items-center justify-end xl:flex">
+      <div className="w-full hidden items-center justify-end gap-3 xl:flex">
+        <Refresh size="medium" />
         <Suspense><ManageMemo /></Suspense>
       </div>
       <Section
@@ -65,10 +70,21 @@ export default async function ClassroomPage({
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
               );
+              const isOut = attendance.statuses.some((s) =>
+                isOutStatusName(s.status?.name),
+              );
 
               return {
-                className: isAbsent ? "bg-red-light" : undefined,
-                cells: ClassroomItem({ data: attendance, isAbsent, desktopWidth: dropdownWidth }),
+                className: isAbsent
+                  ? "bg-red-light"
+                  : isOut
+                    ? "bg-green-light"
+                    : undefined,
+                cells: ClassroomItem({
+                  data: attendance,
+                  isHighlighted: isAbsent || isOut,
+                  desktopWidth: dropdownWidth,
+                }),
               };
             })}
           />
@@ -81,20 +97,28 @@ export default async function ClassroomPage({
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
               );
+              const isOut = attendance.statuses.some((s) =>
+                isOutStatusName(s.status?.name),
+              );
+              const isHighlighted = isAbsent || isOut;
 
               return {
-                className: isAbsent ? "bg-red-light" : undefined,
+                className: isAbsent
+                  ? "bg-red-light"
+                  : isOut
+                    ? "bg-green-light"
+                    : undefined,
                 rowHeader: (
                   <div className="flex gap-2">
-                    <p className={`text-accent ${isAbsent ? "text-greyscale-10" : "text-greyscale-40"}`}>
+                    <p className={`text-accent ${isHighlighted ? "text-greyscale-10" : "text-greyscale-40"}`}>
                       {attendance.studentId}
                     </p>
-                    <p className={`text-accent ${isAbsent ? "text-white" : "text-static-black"}`}>
+                    <p className={`text-accent ${isHighlighted ? "text-white" : "text-static-black"}`}>
                       {attendance.name}
                     </p>
                   </div>
                 ),
-                cells: MobileClassroomItem({ data: attendance, isAbsent }),
+                cells: MobileClassroomItem({ data: attendance }),
               };
             })}
           />

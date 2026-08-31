@@ -3,10 +3,9 @@ import ClassroomDropdown from "./ClassroomDropdown";
 
 interface Props {
   data: Attendance;
-  isAbsent?: boolean;
 }
 
-const MobileClassroomItem = ({ data, isAbsent }: Props): React.ReactNode[] =>
+const MobileClassroomItem = ({ data }: Props): React.ReactNode[] =>
   data.statuses.map((statusItem, statusIndex) => (
     <div key={statusItem.checkpoint.id} className="py-2 px-1">
       <ClassroomDropdown data={data} statusIndex={statusIndex} />

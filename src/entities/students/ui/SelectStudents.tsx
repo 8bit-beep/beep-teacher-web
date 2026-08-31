@@ -1,15 +1,16 @@
 "use client";
+import { Student } from "@/entities/students/types";
 
 import SearchBar from "./SearchBar";
 import GradeAccordion from "./GradeAccordion";
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 import { GRADES } from "@/shared/constants/grade";
 import { useSearch } from "../hooks/useSearch";
 import StudentItem from "./StudentItem";
 
 interface Props {
   selectedStudents: number[];
-  toggleSelected: (studentId: number) => void;
+  toggleSelected: (studentId: number, student?: Student) => void;
   onDone: () => void;
 }
 

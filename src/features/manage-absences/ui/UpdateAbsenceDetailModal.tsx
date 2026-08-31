@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
+import { Button, DatePicker, Dropdown, modal } from "@beep-ds/ui";
 import { useUpdateAbsence } from "../hooks/useUpdateAbsence";
 import { Absence } from "@/entities/absences/types";
 

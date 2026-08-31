@@ -1,7 +1,7 @@
 "use client";
 
 import { Shift } from "@/entities/shifts/types";
-import { Button, modal } from "@bds-web/ui";
+import { Button, modal } from "@beep-ds/ui";
 import DetailModal from "./DetailModal";
 
 interface Props {
@@ -21,7 +21,7 @@ const Detail = ({ data }: Props) => {
             신청 내용 보기
         </Button>
       </div>
-      <p className="lg:hidden w-full text-right text-grayscale-70 text-body cursor-pointer"
+      <p className="lg:hidden w-full text-right text-greyscale-70 text-body cursor-pointer"
         onClick={() =>
           modal.open({ title: "신청 내용", content: <DetailModal data={data} /> })
         }>

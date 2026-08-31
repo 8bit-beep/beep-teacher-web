@@ -1,7 +1,7 @@
 "use client";
 
 import { Attendance } from "@/entities/attendances/types";
-import { Dropdown } from "@bds-web/ui";
+import { Dropdown } from "@beep-ds/ui";
 import { useUpdateClassroom } from "../hooks/useUpdateClassroom";
 
 interface Props {
@@ -15,7 +15,7 @@ const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px" }: Props)
 
   return (
     <>
-      <div className={`hidden lg:block ${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
+      <div className={`hidden lg:block ${status?.name === "미출석" ? "rounded-large outline-2 outline-red-light" : ""}`}>
         <Dropdown
           selected={status}
           onSelect={setStatus}
@@ -24,7 +24,7 @@ const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px" }: Props)
           width={desktopWidth}
         />
       </div>
-      <div className={`lg:hidden ${status?.name === "미출석" ? "border-2 border-red-light rounded-large" : ""}`}>
+      <div className={`lg:hidden ${status?.name === "미출석" ? "rounded-large outline-2 outline-red-light" : ""}`}>
         <Dropdown
           selected={status}
           onSelect={setStatus}
