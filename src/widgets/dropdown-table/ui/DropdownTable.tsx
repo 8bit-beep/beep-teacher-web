@@ -1,4 +1,5 @@
 import { Key, ReactNode } from "react";
+import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import DropdownTableItem from "./DropdownTableItem";
 
 export interface DropdownTableItemRenderProps {
@@ -30,7 +31,7 @@ const DropdownTable = <T,>(props: Props<T>) => {
         내용이 없습니다.
       </div>
     ),
-    className = "w-full pb-30",
+    className = `w-full ${DROPDOWN_CLEARANCE}`,
   } = props;
 
   if (data.length === 0) {
