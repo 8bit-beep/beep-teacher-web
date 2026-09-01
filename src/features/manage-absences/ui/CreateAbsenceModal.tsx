@@ -150,7 +150,7 @@ const CreateAbsenceModal = ({
           buttonSize="medium"
           buttonType="ghost"
           showIcon
-          style={{ width: "160px" }}
+          className="whitespace-nowrap"
           onClick={() =>
             modal.open({
               title: "대상 선택하기",
