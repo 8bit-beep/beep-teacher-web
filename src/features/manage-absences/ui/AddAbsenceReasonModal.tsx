@@ -15,8 +15,6 @@ import {
   getCreateAbsenceToastState,
   useCreateAbsenceMutation,
 } from "@/entities/absences/mutations";
-import { useGetCheckpoints } from "@/entities/checkpoints/queries";
-import { buildAbsenceCheckpoints } from "../utils/buildAbsenceCheckpoints";
 
 interface Props {
   selectedStudents: number[];
@@ -31,7 +29,6 @@ const AddAbsenceReasonModal = ({
 }: Props) => {
   const router = useRouter();
   const { options } = useGetAbsenceReason();
-  const checkpoints = useGetCheckpoints().data.data;
   const { mutateAsync } = useCreateAbsenceMutation();
   const [selectedType, setSelectedType] = useState<DropdownItem | null>(null);
   const [reason, setReason] = useState("");
@@ -87,7 +84,7 @@ const AddAbsenceReasonModal = ({
         endDate,
         reason: reason.trim(),
         typeId: Number(selectedType.value),
-        checkpoints: buildAbsenceCheckpoints(startAt, endAt, checkpoints),
+        checkpoints: [],
       });
 
       if (response.data.absenceId !== null) {
