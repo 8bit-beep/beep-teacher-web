@@ -65,10 +65,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
             endDate: parseDate(new Date(absence.endDate)),
             reason: absence.reason,
             typeId: absence.typeId,
-            checkpoints: absence.checkpoints.map((checkpoint) => ({
-              checkpointId: checkpoint.checkpointId,
-              date: checkpoint.date,
-            })),
+            checkpoints: [],
           }),
         ),
       );

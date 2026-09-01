@@ -78,10 +78,7 @@ export const useUpdateAbsence = (data: Absence) => {
       endDate: parseDate(endAt),
       reason,
       typeId: Number(selectedType.value),
-      checkpoints: data.checkpoints.map((checkpoint) => ({
-        checkpointId: checkpoint.checkpointId,
-        date: checkpoint.date,
-      })),
+      checkpoints: [],
     });
   };
 
