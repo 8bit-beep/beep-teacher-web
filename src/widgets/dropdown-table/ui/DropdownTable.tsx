@@ -11,6 +11,7 @@ interface BaseProps<T> {
   getKey?: (item: T, index: number) => Key;
   emptyContent?: ReactNode;
   className?: string;
+  defaultOpen?: boolean;
 }
 
 interface Props<T> extends BaseProps<T> {
@@ -31,6 +32,7 @@ const DropdownTable = <T,>(props: Props<T>) => {
       </div>
     ),
     className = "w-full pb-30",
+    defaultOpen = false,
   } = props;
 
   if (data.length === 0) {
@@ -44,6 +46,7 @@ const DropdownTable = <T,>(props: Props<T>) => {
       {data.map((item, index) => (
         <DropdownTableItem
           key={getKey ? getKey(item, index) : index}
+          defaultOpen={defaultOpen}
           renderTrigger={(itemProps) => renderTrigger(item, index, itemProps)}
           renderContent={() => renderContent(item, index)}
         />
