@@ -41,7 +41,8 @@ const UpdateAbsenceModal = ({ data }: Props) => {
     useSelectStudents(initialSelectedStudents);
   const [isPending, setIsPending] = useState(false);
   const persistedAbsences = absences.filter(
-    (absence) => absence.absenceId !== null,
+    (absence) =>
+      absence.absenceId !== null && absence.source !== "ATTENDANCE",
   );
 
   const submit = async () => {
@@ -107,12 +108,18 @@ const UpdateAbsenceModal = ({ data }: Props) => {
   return (
     <div className="w-full flex flex-col gap-5">
       <div className="w-full flex flex-col gap-2">
-        {absences.map((absence) => {
+        {absences.map((absence, index) => {
           const typeName = nameById.get(absence.typeId) ?? "기타";
+          const isReadOnly =
+            absence.absenceId === null || absence.source === "ATTENDANCE";
+          const absenceKey =
+            absence.absenceId === null
+              ? `${absence.source}-${absence.targetStudents.map((student) => student.name).join("-")}-${absence.startDate}-${index}`
+              : `${absence.source}-${absence.absenceId}`;
 
           return (
             <div
-              key={absence.absenceId}
+              key={absenceKey}
               className="w-full flex items-center gap-4 rounded-medium border border-greyscale-20 px-4 py-3"
             >
               <Button
@@ -122,12 +129,12 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                   modal.open({
                     title: "외박 상세 수정",
                     content:
-                      absence.absenceId === null ? null : (
+                      isReadOnly ? null : (
                         <UpdateAbsenceDetailModal data={absence} />
                       ),
                   })
                 }
-                disabled={absence.absenceId === null}
+                disabled={isReadOnly}
                 style={{
                   flex: 1,
                   justifyContent: "flex-start",
@@ -149,15 +156,15 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                 buttonSize="small"
                 buttonType="text"
                 onClick={() =>
-                  absence.absenceId !== null &&
+                  !isReadOnly &&
                   modal.open({
                     title: "외박 정보를 삭제하시겠습니까?",
                     content: (
-                      <DeleteAbsenceModal absenceId={absence.absenceId} />
+                      <DeleteAbsenceModal absenceId={absence.absenceId!} />
                     ),
                   })
                 }
-                disabled={absence.absenceId === null}
+                disabled={isReadOnly}
                 style={{ padding: 0, minWidth: "auto", height: "auto" }}
               >
                 <CloseIcon />
@@ -222,7 +229,12 @@ const UpdateAbsenceModal = ({ data }: Props) => {
           buttonSize="large"
           buttonType="primary"
           onClick={submit}
-          disabled={isResolving || isPending || selectedStudents.length === 0}
+          disabled={
+            isResolving ||
+            isPending ||
+            selectedStudents.length === 0 ||
+            persistedAbsences.length === 0
+          }
           style={{ flex: 1 }}
         >
           완료
