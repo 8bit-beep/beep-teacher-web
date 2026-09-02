@@ -5,23 +5,6 @@ import Refresh from "@/features/manage-attends/ui/Refresh";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import { Suspense } from "react";
 
-const normalizeAbsences = (value: unknown) => {
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  if (
-    value &&
-    typeof value === "object" &&
-    "content" in value &&
-    Array.isArray(value.content)
-  ) {
-    return value.content;
-  }
-
-  return [];
-};
-
 export default async function AbsencesPage() {
   const firstPage = await AbsenceApi.getAbsences(0, 100);
   const additionalPages =
@@ -48,7 +31,7 @@ export default async function AbsencesPage() {
         </div>
       </div>
       <AbsencesSectionContent
-        todayData={normalizeAbsences(todayAbsences)}
+        todayData={todayAbsences.content}
         allData={allAbsences}
       />
     </div>
