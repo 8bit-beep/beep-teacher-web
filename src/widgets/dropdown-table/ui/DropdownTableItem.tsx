@@ -6,10 +6,15 @@ import { DropdownTableItemRenderProps } from "./DropdownTable";
 interface Props {
   renderTrigger: (props: DropdownTableItemRenderProps) => ReactNode;
   renderContent: () => ReactNode;
+  defaultOpen?: boolean;
 }
 
-const DropdownTableItem = ({ renderTrigger, renderContent }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const DropdownTableItem = ({
+  renderTrigger,
+  renderContent,
+  defaultOpen = false,
+}: Props) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const toggle = () => setIsOpen((prev) => !prev);
 
   return (

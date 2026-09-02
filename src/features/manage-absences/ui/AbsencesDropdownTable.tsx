@@ -141,6 +141,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
     <DropdownTable
       data={groups}
       className="w-full"
+      defaultOpen
       getKey={(group) => group.label}
       emptyContent={
         <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
