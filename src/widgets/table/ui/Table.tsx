@@ -1,4 +1,5 @@
 import { Fragment, ReactNode } from "react";
+import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import { TableRow } from "../types/table-data";
 import { TableHeader } from "../types/table-header";
 
@@ -66,7 +67,7 @@ const tbodyRows = (header: TableHeader[], rows: (ReactNode[] | TableRow)[]) =>
 const Table = ({ header, rows, bodyScrollable = true }: Props) => {
   if (!bodyScrollable) {
     return (
-      <div className="w-full flex-1 min-h-0 flex flex-col">
+      <div className={`w-full flex-1 min-h-0 flex flex-col ${DROPDOWN_CLEARANCE}`}>
         <table className="w-full border-collapse table-auto">
           <thead>{theadRow(header)}</thead>
           <tbody>{tbodyRows(header, rows)}</tbody>
@@ -80,7 +81,7 @@ const Table = ({ header, rows, bodyScrollable = true }: Props) => {
       <table className="w-full border-collapse table-auto">
         <thead>{theadRow(header)}</thead>
       </table>
-      <div className="w-full flex-1 overflow-y-auto">
+      <div className={`w-full flex-1 overflow-y-auto ${DROPDOWN_CLEARANCE}`}>
         <table className="w-full border-collapse table-auto">
           <tbody>
             {rows.length === 0 ? (
