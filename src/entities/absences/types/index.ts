@@ -2,6 +2,7 @@ import { StudentInfo } from "@/entities/students/types";
 
 export interface Absence {
   absenceId: number | null;
+  source: "ABSENCE" | "ATTENDANCE";
   isGrouped: boolean;
   targetStudents: AbsenceTargetStudent[];
   startDate: string;

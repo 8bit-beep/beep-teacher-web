@@ -1,4 +1,5 @@
 import { Key, ReactNode } from "react";
+import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import DropdownTableItem from "./DropdownTableItem";
 
 export interface DropdownTableItemRenderProps {
@@ -11,6 +12,7 @@ interface BaseProps<T> {
   getKey?: (item: T, index: number) => Key;
   emptyContent?: ReactNode;
   className?: string;
+  defaultOpen?: boolean;
 }
 
 interface Props<T> extends BaseProps<T> {
@@ -30,7 +32,8 @@ const DropdownTable = <T,>(props: Props<T>) => {
         내용이 없습니다.
       </div>
     ),
-    className = "w-full pb-30",
+    className = `w-full ${DROPDOWN_CLEARANCE}`,
+    defaultOpen = false,
   } = props;
 
   if (data.length === 0) {
@@ -44,6 +47,7 @@ const DropdownTable = <T,>(props: Props<T>) => {
       {data.map((item, index) => (
         <DropdownTableItem
           key={getKey ? getKey(item, index) : index}
+          defaultOpen={defaultOpen}
           renderTrigger={(itemProps) => renderTrigger(item, index, itemProps)}
           renderContent={() => renderContent(item, index)}
         />

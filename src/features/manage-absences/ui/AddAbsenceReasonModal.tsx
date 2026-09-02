@@ -90,6 +90,7 @@ const AddAbsenceReasonModal = ({
       if (response.data.absenceId !== null) {
         onAdded({
           absenceId: response.data.absenceId,
+          source: "ABSENCE",
           isGrouped: selectedStudents.length > 1,
           targetStudents,
           startDate,

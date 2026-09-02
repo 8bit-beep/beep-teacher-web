@@ -21,6 +21,11 @@ interface AbsenceRow {
   studentName: string;
 }
 
+type StudentAbsenceRow = Pick<
+  AbsenceRow,
+  "absences" | "studentNum" | "studentName"
+>;
+
 interface AbsenceGroup {
   label: string;
   items: AbsenceRow[];
@@ -49,10 +54,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
 
   const groups = useMemo<AbsenceGroup[]>(() => {
     const grouped = new Map<string, AbsenceRow[]>();
-    const rowsByStudentId = new Map<
-      number,
-      Omit<AbsenceRow, "rowKey" | "attendTypeName">
-    >();
+    const rowsByStudentId = new Map<number, StudentAbsenceRow>();
 
     safeAllData.forEach((absence) => {
       absence.targetStudents.forEach((student) => {
@@ -99,7 +101,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
         }
 
         current.push({
-          rowKey: `${absence.absenceId}-${index}`,
+          rowKey: `${absence.source}-${student.info.id}-${absence.startDate}-${index}`,
           absences: studentRow.absences,
           attendTypeName,
           studentNum: studentRow.studentNum,
@@ -141,6 +143,7 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
     <DropdownTable
       data={groups}
       className="w-full"
+      defaultOpen
       getKey={(group) => group.label}
       emptyContent={
         <div className="w-full flex items-center justify-center py-20 text-greyscale-50">
