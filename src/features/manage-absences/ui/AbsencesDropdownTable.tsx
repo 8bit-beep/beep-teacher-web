@@ -94,11 +94,15 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
           return;
         }
 
-        const studentRow = rowsByStudentId.get(studentId);
-
-        if (!studentRow) {
-          return;
-        }
+        const studentRow = rowsByStudentId.get(studentId) ?? {
+          absences: [absence],
+          studentNum: studentCode(
+            student.info.grade,
+            student.info.classNumber,
+            student.info.num,
+          ),
+          studentName: student.name,
+        };
 
         current.push({
           rowKey: `${absence.source}-${student.info.id}-${absence.startDate}-${index}`,
