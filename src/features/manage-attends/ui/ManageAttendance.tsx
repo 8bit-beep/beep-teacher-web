@@ -10,6 +10,7 @@ import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
+import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import Refresh from "@/features/manage-attends/ui/Refresh";
 
 interface Props {
@@ -87,7 +88,8 @@ const ManageAttendance = ({ room }: Props) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex-1 rounded-medium shadow-modal overflow-scroll pb-20">
+      <div
+        className={`w-full flex-1 rounded-medium shadow-modal overflow-scroll ${DROPDOWN_CLEARANCE}`}>
         <Suspense
           fallback={
             <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
