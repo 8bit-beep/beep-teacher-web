@@ -5,6 +5,7 @@ import Refresh from "@/features/manage-attends/ui/Refresh";
 import RenderManageAttendance from "@/features/manage-attends/ui/RenderManageAttendance";
 import RoomTable from "@/features/manage-attends/ui/RoomTable";
 import ScheduleButton from "@/features/manage-schedule/ui/ScheduleButton";
+import ManageEvents from "@/features/manage-events/ui/ManageEvents";
 import ManageMemo from "@/features/manage-memo/ui/ManageMemo";
 import LabIcon from "@/shared/icons/LabIcon";
 import { SearchParams } from "@/shared/types/search-params";
@@ -29,15 +30,22 @@ export default async function HomePage({
         title="출석 조회"
         description="학생들의 실 별 출석여부를 조회하세요!"
         icon={<LabIcon size={24} />}
-        headerOptions={<ScheduleButton />}
-        mobileFilter={
-          <div className="flex w-full items-center justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <FloorFilterBar />
-            </div>
-            <Refresh size="medium" />
+        headerOptions={
+          <div className="hidden lg:flex items-center gap-3">
+            <ScheduleButton />
+            <ManageEvents />
           </div>
-        }>
+        }
+        mobileFilter={
+          <div className="w-full flex flex-col gap-3">
+            <div className="w-full flex flex-col sm:flex-row gap-3">
+              <ScheduleButton />
+              <ManageEvents />            
+            </div>
+            <FloorFilterBar />
+          </div>
+        }
+      >
         <Suspense
           fallback={
             <div className="w-full flex items-center justify-center py-20 text-greyscale-50">

@@ -1,6 +1,6 @@
-import { DropdownItem, modal } from "@bds-web/ui";
+import { DropdownItem, modal } from "@beep-ds/ui";
 import { useState } from "react";
-import { useSelectStudents } from "./useSelectStudents";
+import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import {
@@ -13,8 +13,6 @@ import {
   getCreateAbsenceToastState,
   useCreateAbsenceMutation,
 } from "@/entities/absences/mutations";
-import { useGetCheckpoints } from "@/entities/checkpoints/queries";
-import { buildAbsenceCheckpoints } from "../utils/buildAbsenceCheckpoints";
 
 interface DraftAbsence {
   id: number;
@@ -42,7 +40,6 @@ export const useCreateAbsence = ({
 }: Props = {}) => {
   const router = useRouter();
   const { options } = useGetAbsenceReason();
-  const checkpoints = useGetCheckpoints().data.data;
   const { mutateAsync } = useCreateAbsenceMutation();
   const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
@@ -163,11 +160,7 @@ export const useCreateAbsence = ({
             endDate: draft.endDate,
             reason: draft.reason,
             typeId: Number(draft.type.value),
-            checkpoints: buildAbsenceCheckpoints(
-              new Date(draft.startDate),
-              new Date(draft.endDate),
-              checkpoints,
-            ),
+            checkpoints: [],
           }),
         ),
       );

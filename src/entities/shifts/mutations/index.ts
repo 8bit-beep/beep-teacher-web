@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { Error } from "@/shared/types/error";
 import { toast } from "@cher1shrxd/toast";
 import { ShiftStatus } from "../types";
-import { modal } from "@bds-web/ui";
+import { modal } from "@beep-ds/ui";
 import {
   TOAST_ISSUE_DURATION,
   TOAST_SUCCESS_DURATION,

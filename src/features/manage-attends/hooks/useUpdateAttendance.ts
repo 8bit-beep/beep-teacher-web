@@ -1,7 +1,7 @@
 import { useGetAttendTypes } from "@/entities/attend-types/queries";
 import { useUpdateAttendanceStatus } from "@/entities/attendances/mutations";
 import { Attendance } from "@/entities/attendances/types";
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useRef, useState } from "react";
 
 export const useUpdateAttendance = (data: Attendance, roomId: number) => {
@@ -56,8 +56,15 @@ export const useUpdateAttendance = (data: Attendance, roomId: number) => {
     }
   }, [status]);
 
+  const serverStatusName = data.statuses[0].status?.name;
+  const statusName =
+    status && status.name !== (serverStatusName ?? "미출석")
+      ? status.name
+      : serverStatusName;
+
   return {
     status,
+    statusName,
     setStatus: handleSetStatus,
     options: parseToOptions,
   };

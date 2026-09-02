@@ -2,7 +2,7 @@
 
 import { Shift } from "@/entities/shifts/types";
 import { pad } from "@/shared/utils/pad";
-import { Button } from "@bds-web/ui";
+import { Button } from "@beep-ds/ui";
 import { useManageStatus } from "../hooks/useManageStatus";
 
 interface Props {

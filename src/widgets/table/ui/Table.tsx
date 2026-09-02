@@ -36,7 +36,8 @@ const tbodyRows = (header: TableHeader[], rows: (ReactNode[] | TableRow)[]) =>
       const rowClassName = Array.isArray(row) ? "" : row.className || "";
       const rowHeader = Array.isArray(row) ? undefined : row.rowHeader;
       const defaultBg = rowIndex % 2 === 0 ? "bg-[#EFF8FF]" : "bg-white";
-      const baseClassName = `${defaultBg} ${rowClassName}`;
+      const hasCustomBg = rowClassName.includes("bg-");
+      const baseClassName = `${hasCustomBg ? "" : defaultBg} ${rowClassName}`;
 
       return (
         <Fragment key={rowIndex}>

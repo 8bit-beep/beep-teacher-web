@@ -1,4 +1,4 @@
-import { DropdownItem } from "@bds-web/ui";
+import { DropdownItem } from "@beep-ds/ui";
 import { useState } from "react";
 import { Absence } from "@/entities/absences/types";
 import { useUpdateAbsenceMutation } from "@/entities/absences/mutations";
@@ -78,10 +78,7 @@ export const useUpdateAbsence = (data: Absence) => {
       endDate: parseDate(endAt),
       reason,
       typeId: Number(selectedType.value),
-      checkpoints: data.checkpoints.map((checkpoint) => ({
-        checkpointId: checkpoint.checkpointId,
-        date: checkpoint.date,
-      })),
+      checkpoints: [],
     });
   };
 

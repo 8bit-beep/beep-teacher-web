@@ -1,6 +1,6 @@
 "use client";
 
-import { modal } from "@bds-web/ui";
+import { modal } from "@beep-ds/ui";
 import { useSelectStudents } from "../hooks/useSelectStudents";
 import SelectStudents from "./SelectStudents";
 

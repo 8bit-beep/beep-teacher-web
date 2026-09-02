@@ -8,11 +8,13 @@ import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 
 export const useUpdateAttendanceStatus = (roomId: number) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: AttendanceApi.updateAttendanceStatus,
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["attendances", roomId] });
+      router.refresh();
     },
     onError: (error: AxiosError<Error>) => {
       toast.error(

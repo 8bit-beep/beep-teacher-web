@@ -1,9 +1,9 @@
 "use client";
 
-import { Button, DatePicker, Dropdown, modal } from "@bds-web/ui";
+import { Button, DatePicker, Dropdown, modal } from "@beep-ds/ui";
 import { useCreateAbsence } from "../hooks/useCreateAbsence";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
-import SelectStudentsModal from "./SelectStudentsModal";
+import SelectStudentsModal from "@/entities/students/ui/SelectStudentsModal";
 
 interface Props {
   initialSelectedStudents?: number[];
@@ -150,7 +150,7 @@ const CreateAbsenceModal = ({
           buttonSize="medium"
           buttonType="ghost"
           showIcon
-          style={{ width: "160px" }}
+          className="whitespace-nowrap"
           onClick={() =>
             modal.open({
               title: "대상 선택하기",
