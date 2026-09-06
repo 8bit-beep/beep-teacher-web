@@ -2,9 +2,12 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { getAccessToken } from "./cookie";
 import type { Error } from "../types/error";
 
+const REQUEST_TIMEOUT_MS = 10_000;
+
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
+  timeout: REQUEST_TIMEOUT_MS,
 });
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
@@ -21,6 +24,42 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 let isRefreshing = false;
 let queue: Array<(token?: string) => void> = [];
 
+const refreshAccessToken = async () => {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    const refreshRes = await fetch("/api/auth/refresh", {
+      method: "POST",
+      credentials: "include",
+      signal: controller.signal,
+    });
+
+    if (!refreshRes.ok) {
+      throw new Error("Token refresh failed");
+    }
+
+    const { accessToken } = await refreshRes.json();
+
+    if (typeof accessToken !== "string" || !accessToken) {
+      throw new Error("Token refresh returned an invalid access token");
+    }
+
+    return accessToken;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+};
+
+const redirectToLogin = () => {
+  if (typeof window !== "undefined") {
+    window.location.assign("/login");
+    return;
+  }
+
+  return import("next/navigation").then(({ redirect }) => redirect("/login"));
+};
+
 api.interceptors.response.use(
   (res) => {
     return res;
@@ -30,8 +69,20 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
-    // 401 에러가 아니거나 이미 재시도한 경우 에러 반환
-    if (error.response?.status !== 401 || original._retry) {
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
+
+    // Server Components에서 내부 refresh API를 호출해도 Set-Cookie를 원래 응답에
+    // 전달할 수 없으므로, 만료된 세션은 명시적으로 로그인으로 보낸다.
+    if (typeof window === "undefined") {
+      await redirectToLogin();
+      return Promise.reject(error);
+    }
+
+    // 새 토큰으로 재시도한 요청까지 401이면 세션을 복구할 수 없다.
+    if (original._retry) {
+      window.location.assign("/login");
       return Promise.reject(error);
     }
 
@@ -54,19 +105,7 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const refreshRes = await fetch(
-        `${process.env.NEXT_PUBLIC_WEB_URL}/api/auth/refresh`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-
-      if (!refreshRes.ok) {
-        throw new Error("Token refresh failed");
-      }
-
-      const { accessToken } = await refreshRes.json();
+      const accessToken = await refreshAccessToken();
 
       // 큐에 있는 요청들에 새 토큰 전달
       queue.forEach((cb) => cb(accessToken));
@@ -80,12 +119,7 @@ api.interceptors.response.use(
       queue.forEach((cb) => cb());
       queue = [];
       
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
-      } else {
-        const { redirect } = await import("next/navigation");
-        redirect("/login");
-      }
+      await redirectToLogin();
       
       return Promise.reject(e);
     } finally {
