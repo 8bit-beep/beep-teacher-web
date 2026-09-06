@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_MAX_AGE,
-  REFRESH_TOKEN_MAX_AGE,
-} from "@/shared/constants/auth";
+import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
 
 const PUBLIC_PATHS = [
   "/login",
@@ -37,7 +34,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  if (PUBLIC_PATHS.some((path) => pathname === path)) {
     return NextResponse.next();
   }
 
@@ -83,14 +80,8 @@ export default async function middleware(req: NextRequest) {
       const res = NextResponse.next({ request: { headers: req.headers } });
 
       // 브라우저 쿠키도 갱신
-      res.cookies.set("accessToken", newAccess, {
-        path: "/",
-        maxAge: ACCESS_TOKEN_MAX_AGE,
-      });
-      res.cookies.set("refreshToken", newRefresh, {
-        path: "/",
-        maxAge: REFRESH_TOKEN_MAX_AGE,
-      });
+      res.cookies.set("accessToken", newAccess, authCookieOptions);
+      res.cookies.set("refreshToken", newRefresh, refreshCookieOptions);
 
       return res;
     } catch (e) {

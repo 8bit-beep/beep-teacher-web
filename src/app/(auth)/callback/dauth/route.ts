@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_MAX_AGE,
-  REFRESH_TOKEN_MAX_AGE,
-} from "@/shared/constants/auth";
+import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -18,15 +15,9 @@ export async function GET(request: Request) {
 
   const response = NextResponse.redirect(`${webUrl}/`);
 
-  response.cookies.set("accessToken", accessToken, {
-    path: "/",
-    maxAge: ACCESS_TOKEN_MAX_AGE,
-  });
-
-  response.cookies.set("refreshToken", refreshToken, {
-    path: "/",
-    maxAge: REFRESH_TOKEN_MAX_AGE,
-  });
+  response.cookies.set("accessToken", accessToken, authCookieOptions);
+  response.cookies.set("refreshToken", refreshToken, refreshCookieOptions);
+  response.headers.set("Referrer-Policy", "no-referrer");
 
   return response;
 }

@@ -1,9 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_MAX_AGE,
-  REFRESH_TOKEN_MAX_AGE,
-} from "@/shared/constants/auth";
+import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
 
 const REFRESH_TIMEOUT_MS = 10_000;
 
@@ -57,15 +54,8 @@ export async function POST() {
     refreshToken: string;
   };
 
-  cookieStore.set("accessToken", accessToken, {
-    path: "/",
-    maxAge: ACCESS_TOKEN_MAX_AGE,
-  });
-
-  cookieStore.set("refreshToken", newRefresh, {
-    path: "/",
-    maxAge: REFRESH_TOKEN_MAX_AGE,
-  });
+  cookieStore.set("accessToken", accessToken, authCookieOptions);
+  cookieStore.set("refreshToken", newRefresh, refreshCookieOptions);
 
   return NextResponse.json({ accessToken });
 }
