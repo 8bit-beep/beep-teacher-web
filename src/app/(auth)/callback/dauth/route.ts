@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -13,15 +14,12 @@ export async function GET(request: Request) {
 
   const cookieStore = await cookies();
 
-  cookieStore.set("accessToken", accessToken, {
-    path: "/",
-    maxAge: 60 * 60 * 12,
-  });
+  cookieStore.set("accessToken", accessToken, authCookieOptions);
 
-  cookieStore.set("refreshToken", refreshToken, {
-    path: "/",
-    maxAge: 60 * 60 * 24,
-  });
+  cookieStore.set("refreshToken", refreshToken, refreshCookieOptions);
 
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_WEB_URL || ""}/`);
+  const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_WEB_URL || ""}/`);
+  response.headers.set("Referrer-Policy", "no-referrer");
+
+  return response;
 }

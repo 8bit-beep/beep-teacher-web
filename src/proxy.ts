@@ -20,7 +20,7 @@ export default function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  if (PUBLIC_PATHS.some((path) => pathname === path)) {
     return NextResponse.next();
   }
 
