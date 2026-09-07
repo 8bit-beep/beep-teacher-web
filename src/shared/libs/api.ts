@@ -1,13 +1,12 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { getAccessToken } from "./cookie";
 import type { Error } from "../types/error";
-
-const REQUEST_TIMEOUT_MS = 10_000;
+import { AUTH_REQUEST_TIMEOUT_MS } from "../constants/auth";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
-  timeout: REQUEST_TIMEOUT_MS,
+  timeout: AUTH_REQUEST_TIMEOUT_MS,
 });
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
@@ -26,7 +25,10 @@ let queue: Array<(token?: string) => void> = [];
 
 const refreshAccessToken = async () => {
   const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timeoutId = window.setTimeout(
+    () => controller.abort(),
+    AUTH_REQUEST_TIMEOUT_MS,
+  );
 
   try {
     const refreshRes = await fetch("/api/auth/refresh", {

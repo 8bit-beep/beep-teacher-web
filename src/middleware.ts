@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
+import { refreshAuthTokens } from "@/shared/libs/refresh-token";
 
 const PUBLIC_PATHS = [
   "/login",
@@ -57,21 +58,8 @@ export default async function middleware(req: NextRequest) {
   // 브라우저 쿠키까지 갱신 가능한 지점은 미들웨어뿐이다.
   if (refreshToken && (!accessToken || isExpired(accessToken))) {
     try {
-      const refreshRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ refreshToken }),
-        },
-      );
-
-      if (!refreshRes.ok) {
-        throw new Error(`refresh failed: ${refreshRes.status}`);
-      }
-
       const { accessToken: newAccess, refreshToken: newRefresh } =
-        await refreshRes.json();
+        await refreshAuthTokens(refreshToken);
 
       // 이번 요청의 SSR이 새 토큰을 읽도록 요청 쿠키를 교체
       req.cookies.set("accessToken", newAccess);

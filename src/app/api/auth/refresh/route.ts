@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
-
-const REFRESH_TIMEOUT_MS = 10_000;
+import {
+  refreshAuthTokens,
+  TokenRefreshRequestError,
+} from "@/shared/libs/refresh-token";
 
 export async function POST() {
   const cookieStore = await cookies();
@@ -12,47 +14,21 @@ export async function POST() {
     return NextResponse.json({ message: "No refresh token" }, { status: 401 });
   }
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REFRESH_TIMEOUT_MS);
-
-  let res: Response;
+  let accessToken: string;
+  let newRefresh: string;
 
   try {
-    res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
-      signal: controller.signal,
-    });
+    const tokens = await refreshAuthTokens(refreshToken);
+    accessToken = tokens.accessToken;
+    newRefresh = tokens.refreshToken;
   } catch (error) {
-    const isTimeout = error instanceof DOMException && error.name === "AbortError";
+    const status =
+      error instanceof TokenRefreshRequestError ? error.status : 502;
     return NextResponse.json(
-      { message: isTimeout ? "Refresh request timed out" : "Refresh request failed" },
-      { status: isTimeout ? 504 : 502 },
+      { message: error instanceof Error ? error.message : "Refresh request failed" },
+      { status },
     );
-  } finally {
-    clearTimeout(timeoutId);
   }
-
-  if (!res.ok) {
-    return NextResponse.json({ message: "Refresh failed" }, { status: 401 });
-  }
-
-  const payload: unknown = await res.json().catch(() => null);
-
-  if (
-    !payload ||
-    typeof payload !== "object" ||
-    typeof (payload as { accessToken?: unknown }).accessToken !== "string" ||
-    typeof (payload as { refreshToken?: unknown }).refreshToken !== "string"
-  ) {
-    return NextResponse.json({ message: "Invalid refresh response" }, { status: 502 });
-  }
-
-  const { accessToken, refreshToken: newRefresh } = payload as {
-    accessToken: string;
-    refreshToken: string;
-  };
 
   cookieStore.set("accessToken", accessToken, authCookieOptions);
   cookieStore.set("refreshToken", newRefresh, refreshCookieOptions);
