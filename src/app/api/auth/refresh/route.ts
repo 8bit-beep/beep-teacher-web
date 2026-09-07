@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { authCookieOptions, refreshCookieOptions } from "@/shared/libs/auth-cookie";
 import {
-  ACCESS_TOKEN_MAX_AGE,
-  REFRESH_TOKEN_MAX_AGE,
-} from "@/shared/constants/auth";
+  refreshAuthTokens,
+  TokenRefreshRequestError,
+} from "@/shared/libs/refresh-token";
 
 export async function POST() {
   const cookieStore = await cookies();
@@ -13,27 +14,24 @@ export async function POST() {
     return NextResponse.json({ message: "No refresh token" }, { status: 401 });
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refreshToken }),
-  });
+  let accessToken: string;
+  let newRefresh: string;
 
-  if (!res.ok) {
-    return NextResponse.json({ message: "Refresh failed" }, { status: 401 });
+  try {
+    const tokens = await refreshAuthTokens(refreshToken);
+    accessToken = tokens.accessToken;
+    newRefresh = tokens.refreshToken;
+  } catch (error) {
+    const status =
+      error instanceof TokenRefreshRequestError ? error.status : 502;
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Refresh request failed" },
+      { status },
+    );
   }
 
-  const { accessToken, refreshToken: newRefresh } = await res.json();
-
-  cookieStore.set("accessToken", accessToken, {
-    path: "/",
-    maxAge: ACCESS_TOKEN_MAX_AGE,
-  });
-
-  cookieStore.set("refreshToken", newRefresh, {
-    path: "/",
-    maxAge: REFRESH_TOKEN_MAX_AGE,
-  });
+  cookieStore.set("accessToken", accessToken, authCookieOptions);
+  cookieStore.set("refreshToken", newRefresh, refreshCookieOptions);
 
   return NextResponse.json({ accessToken });
 }

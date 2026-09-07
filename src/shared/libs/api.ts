@@ -1,10 +1,12 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { getAccessToken } from "./cookie";
 import type { Error } from "../types/error";
+import { AUTH_REQUEST_TIMEOUT_MS } from "../constants/auth";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
+  timeout: AUTH_REQUEST_TIMEOUT_MS,
 });
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
@@ -21,6 +23,45 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 let isRefreshing = false;
 let queue: Array<(token?: string) => void> = [];
 
+const refreshAccessToken = async () => {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(
+    () => controller.abort(),
+    AUTH_REQUEST_TIMEOUT_MS,
+  );
+
+  try {
+    const refreshRes = await fetch("/api/auth/refresh", {
+      method: "POST",
+      credentials: "include",
+      signal: controller.signal,
+    });
+
+    if (!refreshRes.ok) {
+      throw new Error("Token refresh failed");
+    }
+
+    const { accessToken } = await refreshRes.json();
+
+    if (typeof accessToken !== "string" || !accessToken) {
+      throw new Error("Token refresh returned an invalid access token");
+    }
+
+    return accessToken;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+};
+
+const redirectToLogin = () => {
+  if (typeof window !== "undefined") {
+    window.location.assign("/login");
+    return;
+  }
+
+  return import("next/navigation").then(({ redirect }) => redirect("/login"));
+};
+
 api.interceptors.response.use(
   (res) => {
     return res;
@@ -30,17 +71,21 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
-    // 401 에러가 아니거나 이미 재시도한 경우 에러 반환
-    if (error.response?.status !== 401 || original._retry) {
+    if (error.response?.status !== 401) {
       return Promise.reject(error);
     }
 
-    // 서버 사이드에서는 refresh를 시도하지 않는다.
-    // refreshToken이 1회용(회전)이라 SSR 중 갱신하면 새 토큰을 브라우저에
-    // 전달할 방법이 없어 세션이 어긋난다. 만료 토큰 갱신은 미들웨어가 담당한다.
+    // Server Components에서 내부 refresh API를 호출해도 Set-Cookie를 원래 응답에
+    // 전달할 수 없으므로, 만료된 세션은 명시적으로 로그인으로 보낸다.
     if (typeof window === "undefined") {
-      const { redirect } = await import("next/navigation");
-      redirect("/login");
+      await redirectToLogin();
+      return Promise.reject(error);
+    }
+
+    // 새 토큰으로 재시도한 요청까지 401이면 세션을 복구할 수 없다.
+    if (original._retry) {
+      window.location.assign("/login");
+      return Promise.reject(error);
     }
 
     // 토큰 갱신 중이면 큐에 추가
@@ -62,19 +107,7 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const refreshRes = await fetch(
-        `${process.env.NEXT_PUBLIC_WEB_URL}/api/auth/refresh`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-
-      if (!refreshRes.ok) {
-        throw new Error("Token refresh failed");
-      }
-
-      const { accessToken } = await refreshRes.json();
+      const accessToken = await refreshAccessToken();
 
       // 큐에 있는 요청들에 새 토큰 전달
       queue.forEach((cb) => cb(accessToken));
@@ -87,8 +120,7 @@ api.interceptors.response.use(
       // 큐에 있는 요청들 실패 처리
       queue.forEach((cb) => cb());
       queue = [];
-
-      window.location.href = "/login";
+      await redirectToLogin();
 
       return Promise.reject(e);
     } finally {
