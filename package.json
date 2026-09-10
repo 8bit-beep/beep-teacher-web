@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:auth": "node --test tests/dauth-callback.integration.test.mjs"
   },
   "dependencies": {
     "@beep-ds/colors": "^1.1.0",
