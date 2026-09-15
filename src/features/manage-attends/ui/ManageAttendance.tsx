@@ -1,12 +1,13 @@
 "use client";
 
-import { Suspense, useCallback } from "react";
+import { Suspense, useCallback, useRef } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
 import { Button } from "@beep-ds/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
+import { useHasOverflow } from "@/shared/hooks/useHasOverflow";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
@@ -30,6 +31,8 @@ const ManageAttendance = ({ room }: Props) => {
     toggleSelect,
     applyBatch,
   } = useBatchUpdateAttendance(room?.id || 0);
+  const listRef = useRef<HTMLDivElement>(null);
+  const hasOverflow = useHasOverflow(listRef, attendances.length);
   const handleClose = useCallback(() => {
     if (!isApproved) {
       toast.warning(
@@ -99,7 +102,7 @@ const ManageAttendance = ({ room }: Props) => {
         </div>
       </div>
       <div className="w-full flex-1 min-h-0 rounded-medium shadow-modal flex flex-col overflow-hidden">
-        <div className="w-full flex-1 overflow-scroll">
+        <div ref={listRef} className="w-full flex-1 overflow-scroll">
           <Suspense
             fallback={
               <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
@@ -116,7 +119,9 @@ const ManageAttendance = ({ room }: Props) => {
                     selected={selectedIds.includes(attendance.userId)}
                     onToggleSelect={() => toggleSelect(attendance.userId)}
                     openDirection={
-                      index >= attendances.length - 5 && index >= 4
+                      hasOverflow &&
+                      index >= attendances.length - 5 &&
+                      index >= 4
                         ? "up"
                         : "down"
                     }
