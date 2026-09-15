@@ -10,7 +10,6 @@ import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
-import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import Refresh from "@/features/manage-attends/ui/Refresh";
 import BatchChangeBar from "./BatchChangeBar";
 import { useBatchUpdateAttendance } from "../hooks/useBatchUpdateAttendance";
@@ -100,7 +99,7 @@ const ManageAttendance = ({ room }: Props) => {
         </div>
       </div>
       <div className="w-full flex-1 min-h-0 rounded-medium shadow-modal flex flex-col overflow-hidden">
-        <div className={`w-full flex-1 overflow-scroll ${DROPDOWN_CLEARANCE}`}>
+        <div className="w-full flex-1 overflow-scroll">
           <Suspense
             fallback={
               <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
@@ -109,13 +108,18 @@ const ManageAttendance = ({ room }: Props) => {
             }
           >
               {!!room &&
-                attendances.map((attendance) => (
+                attendances.map((attendance, index) => (
                   <AttendanceItem
                     data={attendance}
                     key={attendance.userId}
                     roomId={room.id}
                     selected={selectedIds.includes(attendance.userId)}
                     onToggleSelect={() => toggleSelect(attendance.userId)}
+                    openDirection={
+                      index >= attendances.length - 5 && index >= 4
+                        ? "up"
+                        : "down"
+                    }
                   />
                 ))}
           </Suspense>
