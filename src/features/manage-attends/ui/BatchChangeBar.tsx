@@ -41,7 +41,8 @@ const BatchChangeBar = ({
           buttonSize="small"
           buttonType="primary"
           disabled={!status || isPending}
-          onClick={onApply}>
+          onClick={onApply}
+          style={{ width: "100px", height: "30px", borderRadius: "8px" }}>
           {isPending ? "변경 중..." : "완료"}
         </Button>
       </div>
@@ -49,8 +50,8 @@ const BatchChangeBar = ({
         type="button"
         disabled={!status || isPending}
         onClick={onApply}
-        className="min-[453px]:hidden w-9 h-9 shrink-0 rounded-full bg-blue-light text-static-white flex items-center justify-center cursor-pointer disabled:bg-greyscale-20">
-        <CheckIcon size={20} />
+        className="min-[453px]:hidden w-[35px] h-[35px] shrink-0 rounded-full bg-blue-light text-static-white flex items-center justify-center cursor-pointer disabled:bg-greyscale-20">
+        <CheckIcon size={24} />
       </button>
     </div>
   );
