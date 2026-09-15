@@ -14,6 +14,7 @@ import {
 import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
+import { DropdownOpenDirection } from "@beep-ds/ui";
 import { Suspense } from "react";
 
 export default async function ClassroomPage({
@@ -27,6 +28,9 @@ export default async function ClassroomPage({
     grade,
     classNumber,
   );
+
+  const getOpenDirection = (index: number): DropdownOpenDirection =>
+    index >= data.length - 5 && index >= 4 ? "up" : "down";
 
   const firstStatuses = data[0]?.statuses ?? [];
   const { dropdownWidth, headerWidth, lastHeaderWidth } = getClassroomTableWidths(firstStatuses.length);
@@ -66,7 +70,7 @@ export default async function ClassroomPage({
               { title: "학번/이름" },
               ...desktopStatusHeaders,
             ]}
-            rows={data.map((attendance) => {
+            rows={data.map((attendance, index) => {
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
               );
@@ -84,6 +88,7 @@ export default async function ClassroomPage({
                   data: attendance,
                   isHighlighted: isAbsent || isOut,
                   desktopWidth: dropdownWidth,
+                  openDirection: getOpenDirection(index),
                 }),
               };
             })}
@@ -93,7 +98,7 @@ export default async function ClassroomPage({
           <Table
             bodyScrollable={false}
             header={mobileStatusHeaders}
-            rows={data.map((attendance) => {
+            rows={data.map((attendance, index) => {
               const isAbsent = attendance.statuses.some((s) =>
                 isAbsenceStatusName(s.status?.name),
               );
@@ -118,7 +123,10 @@ export default async function ClassroomPage({
                     </p>
                   </div>
                 ),
-                cells: MobileClassroomItem({ data: attendance }),
+                cells: MobileClassroomItem({
+                  data: attendance,
+                  openDirection: getOpenDirection(index),
+                }),
               };
             })}
           />
