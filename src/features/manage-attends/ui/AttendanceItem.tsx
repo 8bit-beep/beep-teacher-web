@@ -5,15 +5,17 @@ import {
   isAbsenceStatusName,
   isOutStatusName,
 } from "@/shared/utils/attendance-status";
-import { Dropdown } from "@beep-ds/ui";
+import { Checkbox, Dropdown } from "@beep-ds/ui";
 import { useUpdateAttendance } from "../hooks/useUpdateAttendance";
 
 interface Props {
   data: Attendance;
   roomId: number;
+  selected: boolean;
+  onToggleSelect: () => void;
 }
 
-const AttendanceItem = ({ data, roomId }: Props) => {
+const AttendanceItem = ({ data, roomId, selected, onToggleSelect }: Props) => {
   const { status, statusName, setStatus, options } = useUpdateAttendance(
     data,
     roomId,
@@ -25,6 +27,7 @@ const AttendanceItem = ({ data, roomId }: Props) => {
   return (
     <div
       className={`w-full h-15 flex items-center px-4 gap-4 ${currentStatus ? (isAbsent ? "bg-red-light" : isOut ? "bg-green-light" : "bg-static-white") : "bg-greyscale-10"}`}>
+      <Checkbox checked={selected} onChange={onToggleSelect} />
       <div
         className={`w-4.5 h-4.5 rounded-full shrink-0 ${data.isLate ? "bg-yellow-400" : "bg-transparent"}`}
       />

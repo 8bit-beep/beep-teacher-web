@@ -12,6 +12,8 @@ import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
 import { DROPDOWN_CLEARANCE } from "@/shared/constants/dropdown";
 import Refresh from "@/features/manage-attends/ui/Refresh";
+import BatchChangeBar from "./BatchChangeBar";
+import { useBatchUpdateAttendance } from "../hooks/useBatchUpdateAttendance";
 
 interface Props {
   room: Room;
@@ -20,6 +22,15 @@ interface Props {
 const ManageAttendance = ({ room }: Props) => {
   const attendances = useGetAttendancesByRoomId(room?.id || 0).data.data;
   const { isApproved, toggleApproval } = useApprove(room?.id || 0);
+  const {
+    options,
+    selectedIds,
+    batchStatus,
+    setBatchStatus,
+    isPending,
+    toggleSelect,
+    applyBatch,
+  } = useBatchUpdateAttendance(room?.id || 0);
   const handleClose = useCallback(() => {
     if (!isApproved) {
       toast.warning(
@@ -88,24 +99,37 @@ const ManageAttendance = ({ room }: Props) => {
           </div>
         </div>
       </div>
-      <div
-        className={`w-full flex-1 rounded-medium shadow-modal overflow-scroll ${DROPDOWN_CLEARANCE}`}>
-        <Suspense
-          fallback={
-            <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
-              로딩중...
-            </div>
-          }
-        >
-            {!!room &&
-              attendances.map((attendance) => (
-                <AttendanceItem
-                  data={attendance}
-                  key={attendance.userId}
-                  roomId={room.id}
-                />
-              ))}
-        </Suspense>
+      <div className="w-full flex-1 min-h-0 rounded-medium shadow-modal flex flex-col overflow-hidden">
+        <div className={`w-full flex-1 overflow-scroll ${DROPDOWN_CLEARANCE}`}>
+          <Suspense
+            fallback={
+              <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
+                로딩중...
+              </div>
+            }
+          >
+              {!!room &&
+                attendances.map((attendance) => (
+                  <AttendanceItem
+                    data={attendance}
+                    key={attendance.userId}
+                    roomId={room.id}
+                    selected={selectedIds.includes(attendance.userId)}
+                    onToggleSelect={() => toggleSelect(attendance.userId)}
+                  />
+                ))}
+          </Suspense>
+        </div>
+        {selectedIds.length > 0 && (
+          <BatchChangeBar
+            count={selectedIds.length}
+            options={options}
+            status={batchStatus}
+            setStatus={setBatchStatus}
+            isPending={isPending}
+            onApply={applyBatch}
+          />
+        )}
       </div>
     </div>
   );
