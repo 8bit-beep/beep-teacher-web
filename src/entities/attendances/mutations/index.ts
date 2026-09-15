@@ -43,3 +43,34 @@ export const useUpdateAttendanceStatusWithCheckpoint = () => {
     },
   });
 };
+
+export const useUpdateAttendanceStatusBatch = (roomId: number) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: ({
+      userIds,
+      statusId,
+    }: {
+      userIds: number[];
+      statusId: number;
+    }) =>
+      Promise.all(
+        userIds.map((userId) =>
+          AttendanceApi.updateAttendanceStatus({ userId, statusId }),
+        ),
+      ),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ["attendances", roomId] });
+      router.refresh();
+    },
+    onError: (error: AxiosError<Error>) => {
+      toast.error(
+        "출석 상태 일괄 변경에 실패했습니다.",
+        error.response?.data.message || "네트워크 오류",
+        TOAST_ISSUE_DURATION,
+      );
+    },
+  });
+};
