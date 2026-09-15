@@ -1,13 +1,12 @@
 "use client";
 
-import { Suspense, useCallback, useRef } from "react";
+import { Suspense, useCallback } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
 import { Button } from "@beep-ds/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
-import { useHasOverflow } from "@/shared/hooks/useHasOverflow";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
 import { toast } from "@cher1shrxd/toast";
 import { TOAST_ISSUE_DURATION } from "@/shared/constants/toast";
@@ -31,8 +30,6 @@ const ManageAttendance = ({ room }: Props) => {
     toggleSelect,
     applyBatch,
   } = useBatchUpdateAttendance(room?.id || 0);
-  const listRef = useRef<HTMLDivElement>(null);
-  const hasOverflow = useHasOverflow(listRef, attendances.length);
   const handleClose = useCallback(() => {
     if (!isApproved) {
       toast.warning(
@@ -48,7 +45,7 @@ const ManageAttendance = ({ room }: Props) => {
 
   return (
     <div
-      className={`w-screen max-w-xl h-screen fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
+      className={`w-screen max-w-xl h-dvh fixed top-0 right-0 bg-static-white z-10 border-greyscale-10 xl:border-l xl:rounded-l-large flex flex-col items-start gap-4 p-4 ${animationClass}`}
       {...handlers}
     >
       <div className="w-full flex justify-between items-center">
@@ -102,7 +99,7 @@ const ManageAttendance = ({ room }: Props) => {
         </div>
       </div>
       <div className="w-full flex-1 min-h-0 rounded-medium shadow-modal flex flex-col overflow-hidden">
-        <div ref={listRef} className="w-full flex-1 overflow-scroll">
+        <div className="w-full flex-1 overflow-scroll">
           <Suspense
             fallback={
               <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
@@ -111,20 +108,14 @@ const ManageAttendance = ({ room }: Props) => {
             }
           >
               {!!room &&
-                attendances.map((attendance, index) => (
+                attendances.map((attendance) => (
                   <AttendanceItem
                     data={attendance}
                     key={attendance.userId}
                     roomId={room.id}
                     selected={selectedIds.includes(attendance.userId)}
                     onToggleSelect={() => toggleSelect(attendance.userId)}
-                    openDirection={
-                      hasOverflow &&
-                      index >= attendances.length - 5 &&
-                      index >= 4
-                        ? "up"
-                        : "down"
-                    }
+                    openDirection="auto"
                   />
                 ))}
           </Suspense>
