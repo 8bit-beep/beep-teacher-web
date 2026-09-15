@@ -30,7 +30,7 @@ export default async function ClassroomPage({
   );
 
   const getOpenDirection = (index: number): DropdownOpenDirection =>
-    data.length > 4 && index >= data.length - 2 ? "up" : "down";
+    index >= data.length - 5 && index >= 4 ? "up" : "down";
 
   const firstStatuses = data[0]?.statuses ?? [];
   const { dropdownWidth, headerWidth, lastHeaderWidth } = getClassroomTableWidths(firstStatuses.length);
