@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Dropdown, DropdownItem } from "@beep-ds/ui";
+import CheckIcon from "@/shared/icons/CheckIcon";
 
 interface Props {
   count: number;
@@ -35,13 +36,22 @@ const BatchChangeBar = ({
           (으)로 변경하기
         </p>
       </div>
-      <Button
-        buttonSize="small"
-        buttonType="primary"
+      <div className="hidden min-[453px]:block">
+        <Button
+          buttonSize="small"
+          buttonType="primary"
+          disabled={!status || isPending}
+          onClick={onApply}>
+          {isPending ? "변경 중..." : "완료"}
+        </Button>
+      </div>
+      <button
+        type="button"
         disabled={!status || isPending}
-        onClick={onApply}>
-        {isPending ? "변경 중..." : "완료"}
-      </Button>
+        onClick={onApply}
+        className="min-[453px]:hidden w-9 h-9 shrink-0 rounded-full bg-blue-light text-static-white flex items-center justify-center cursor-pointer disabled:bg-greyscale-20">
+        <CheckIcon size={20} />
+      </button>
     </div>
   );
 };
