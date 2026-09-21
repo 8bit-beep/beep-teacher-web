@@ -9,10 +9,12 @@ import { CloseIcon } from "@/shared/icons/CloseIcon";
 import DeleteAbsenceModal from "./DeleteAbsenceModal";
 import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { useResolveAbsenceUserIds } from "../hooks/useResolveAbsenceUserIds";
+import { useAbsenceConflictStatus } from "../hooks/useAbsenceConflictStatus";
 import { AbsenceApi } from "@/entities/absences/api";
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import {
+  TOAST_DETAIL_DURATION,
   TOAST_ISSUE_DURATION,
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
@@ -40,6 +42,16 @@ const UpdateAbsenceModal = ({ data }: Props) => {
   const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
   const [isPending, setIsPending] = useState(false);
+  const ownAbsenceIds = useMemo(
+    () =>
+      absences
+        .map((absence) => absence.absenceId)
+        .filter((id): id is number => id !== null),
+    [absences],
+  );
+  const getLockedStatusName = useAbsenceConflictStatus(absences, {
+    ownAbsenceIds,
+  });
   const persistedAbsences = absences.filter(
     (absence) =>
       absence.absenceId !== null && absence.source !== "ATTENDANCE",
@@ -71,15 +83,15 @@ const UpdateAbsenceModal = ({ data }: Props) => {
         ),
       );
 
-      const skippedUserIds = updateResponses.flatMap(
-        (response) => response.data.skippedUserIds,
+      const skippedUserIds = new Set(
+        updateResponses.flatMap((response) => response.data.skippedUserIds),
       );
 
-      if (skippedUserIds.length > 0) {
+      if (skippedUserIds.size > 0) {
         toast.warning(
           "일부 대상 변경 실패",
-          `다음 학생들은 선택한 외박 대상에 반영되지 않았습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
-          TOAST_ISSUE_DURATION,
+          `${skippedUserIds.size}명은 선택한 외박 대상에 반영되지 않았습니다. 이미 등록된 기간과 겹치는지 확인해주세요.`,
+          TOAST_DETAIL_DURATION,
         );
       } else {
         toast.success(
@@ -213,6 +225,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                 <SelectStudentsModal
                   initialSelectedStudents={selectedStudents}
                   onApply={setSelectedStudents}
+                  getLockedStatusName={getLockedStatusName}
                 />
               ),
             })

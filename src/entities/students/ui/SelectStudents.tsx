@@ -12,12 +12,14 @@ interface Props {
   selectedStudents: number[];
   toggleSelected: (studentId: number, student?: Student) => void;
   onDone: () => void;
+  getLockedStatusName?: (student: Student) => string | undefined;
 }
 
 const SelectStudents = ({
   selectedStudents,
   toggleSelected,
   onDone,
+  getLockedStatusName,
 }: Props) => {
   const { onChange, query, result } = useSearch();
 
@@ -31,6 +33,7 @@ const SelectStudents = ({
                 data={student}
                 selectedStudents={selectedStudents}
                 toggleSelected={toggleSelected}
+                getLockedStatusName={getLockedStatusName}
                 key={student.id}
               />
             ))
@@ -39,6 +42,7 @@ const SelectStudents = ({
                 grade={grade}
                 selectedStudents={selectedStudents}
                 toggleSelected={toggleSelected}
+                getLockedStatusName={getLockedStatusName}
                 key={grade}
               />
             ))}
