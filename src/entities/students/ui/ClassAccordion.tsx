@@ -11,6 +11,7 @@ interface Props {
   classNumber: number;
   selectedStudents: number[];
   toggleSelected: (studentId: number, student?: Student) => void;
+  getLockedStatusName?: (student: Student) => string | undefined;
 }
 
 const ClassAccordion = ({
@@ -18,12 +19,14 @@ const ClassAccordion = ({
   classNumber,
   selectedStudents,
   toggleSelected,
+  getLockedStatusName,
 }: Props) => {
   const { isOpened, setIsOpened, students, selectAllInClass } = useAllInClass(
     selectedStudents,
     grade,
     classNumber,
     toggleSelected,
+    getLockedStatusName,
   );
 
   return (
@@ -52,6 +55,7 @@ const ClassAccordion = ({
             key={student.id}
             selectedStudents={selectedStudents}
             toggleSelected={toggleSelected}
+            getLockedStatusName={getLockedStatusName}
           />
         ))}
     </div>

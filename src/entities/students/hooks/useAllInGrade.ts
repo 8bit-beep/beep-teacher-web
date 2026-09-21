@@ -8,6 +8,7 @@ export const useAllInGrade = (
   grade: number,
   selectedStudents: number[],
   toggleSelected: (studentId: number, student?: Student) => void,
+  getLockedStatusName?: (student: Student) => string | undefined,
 ) => {
   const queryClient = useQueryClient();
 
@@ -37,7 +38,9 @@ export const useAllInGrade = (
     );
     const students = results
       .flatMap((result) => result.data)
-      .filter((student) => !student.typeId);
+      .filter((student) =>
+        getLockedStatusName ? !getLockedStatusName(student) : !student.typeId,
+      );
 
     const hasSelected = students.some((student) =>
       selectedStudents.includes(student.id),

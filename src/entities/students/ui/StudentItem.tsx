@@ -13,13 +13,21 @@ interface Props {
   data: Student;
   selectedStudents: number[];
   toggleSelected: (studentId: number, student?: Student) => void;
+  getLockedStatusName?: (student: Student) => string | undefined;
 }
 
-const StudentItem = ({ data, selectedStudents, toggleSelected }: Props) => {
+const StudentItem = ({
+  data,
+  selectedStudents,
+  toggleSelected,
+  getLockedStatusName,
+}: Props) => {
   const types = useGetAttendTypesQuery().data?.data;
-  const statusName = data.typeId
-    ? types?.find((type) => type.id === data.typeId)?.name
-    : undefined;
+  const statusName = getLockedStatusName
+    ? getLockedStatusName(data)
+    : data.typeId
+      ? types?.find((type) => type.id === data.typeId)?.name
+      : undefined;
 
   const statusColor = isAbsenceStatusName(statusName)
     ? "text-red-light"
