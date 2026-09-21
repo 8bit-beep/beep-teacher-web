@@ -35,6 +35,13 @@ export const AttendanceApi = {
     return await api.patch(`/attendances/status`, data);
   },
 
+  updateAttendanceStatuses: async (data: {
+    userIds: number[];
+    typeId: number;
+  }) => {
+    return await api.patch(`/attendances/statuses`, data);
+  },
+
   updateAttendanceStatusWithCheckpoint: async (data: {
     userId: number;
     statusId: number;

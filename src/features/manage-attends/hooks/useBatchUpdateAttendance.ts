@@ -35,7 +35,7 @@ export const useBatchUpdateAttendance = (roomId: number) => {
     try {
       await mutateAsync({
         userIds: selectedIds,
-        statusId: Number(batchStatus.value),
+        typeId: Number(batchStatus.value),
       });
       setSelectedIds([]);
       setBatchStatus(null);

@@ -49,18 +49,7 @@ export const useUpdateAttendanceStatusBatch = (roomId: number) => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: ({
-      userIds,
-      statusId,
-    }: {
-      userIds: number[];
-      statusId: number;
-    }) =>
-      Promise.all(
-        userIds.map((userId) =>
-          AttendanceApi.updateAttendanceStatus({ userId, statusId }),
-        ),
-      ),
+    mutationFn: AttendanceApi.updateAttendanceStatuses,
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["attendances", roomId] });
       router.refresh();
