@@ -4,7 +4,7 @@ import { Suspense, useCallback } from "react";
 import AttendanceItem from "./AttendanceItem";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import { useGetAttendancesByRoomId } from "@/entities/attendances/queries";
-import { Button } from "@beep-ds/ui";
+import { Button, Checkbox } from "@beep-ds/ui";
 import { useApprove } from "@/features/manage-approvals/hooks/useApprove";
 import { Room } from "@/entities/rooms/types";
 import { useSwipeToClose } from "@/shared/hooks/useSwipeToClose";
@@ -28,8 +28,11 @@ const ManageAttendance = ({ room }: Props) => {
     setBatchStatus,
     isPending,
     toggleSelect,
+    toggleSelectAll,
     applyBatch,
   } = useBatchUpdateAttendance(room?.id || 0);
+  const allSelected =
+    attendances.length > 0 && selectedIds.length === attendances.length;
   const handleClose = useCallback(() => {
     if (!isApproved) {
       toast.warning(
@@ -100,6 +103,26 @@ const ManageAttendance = ({ room }: Props) => {
       </div>
       <div className="w-full flex-1 min-h-0 rounded-medium shadow-modal flex flex-col overflow-hidden">
         <div className="w-full flex-1 overflow-scroll">
+          {attendances.length > 0 && (
+            <div className="w-full h-12 flex items-center px-4 gap-2.5 min-[453px]:gap-4 border-b border-greyscale-20 bg-static-white sticky top-0 z-[1]">
+              <Checkbox
+                checked={allSelected}
+                onChange={() =>
+                  toggleSelectAll(attendances.map((a) => a.userId))
+                }
+              />
+              <p
+                className={`text-caption1 min-[453px]:text-body ${allSelected ? "text-blue-light" : "text-greyscale-40"}`}>
+                {allSelected ? "전체 해제" : "전체 선택"}
+              </p>
+              <div className="flex-1" />
+              {selectedIds.length > 0 && (
+                <p className="text-caption1 text-greyscale-40">
+                  {selectedIds.length}명 선택됨
+                </p>
+              )}
+            </div>
+          )}
           <Suspense
             fallback={
               <div className="w-full h-20 flex items-center justify-center text-greyscale-40">
