@@ -28,6 +28,12 @@ interface DraftAbsence {
 
 const MAX_TOAST_ABSENCES = 3;
 
+const toDate = (value: string) => {
+  const [year, month, day] = value.split("-").map(Number);
+
+  return new Date(year, month - 1, day);
+};
+
 interface RegisteredAbsence {
   absence: Absence;
   studentNames: string[];
@@ -71,17 +77,28 @@ export const useCreateAbsence = ({
   const [startAt, setStartAt] = useState<Date>(new Date());
   const [endAt, setEndAt] = useState<Date>(new Date());
   const [drafts, setDrafts] = useState<DraftAbsence[]>([]);
+  const [editingDraftId, setEditingDraftId] = useState<number | null>(null);
   const [isPending, setIsPending] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
 
   const resetDraftForm = () => {
+    setEditingDraftId(null);
     setSelectedType(null);
     setReason("");
     setStartAt(new Date());
     setEndAt(new Date());
   };
 
-  const addDraft = async () => {
+  const startEditDraft = (draft: DraftAbsence) => {
+    setEditingDraftId(draft.id);
+    setSelectedType(draft.type);
+    setReason(draft.reason);
+    setStartAt(toDate(draft.startDate));
+    setEndAt(toDate(draft.endDate));
+    setPhase("add");
+  };
+
+  const submitDraft = async () => {
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
@@ -101,13 +118,15 @@ export const useCreateAbsence = ({
 
     const startDate = parseDate(startAt);
     const endDate = parseDate(endAt);
-    const hasConflictingDraft = drafts.some((draft) =>
-      hasOverlappingDateRange(
-        draft.startDate,
-        draft.endDate,
-        startDate,
-        endDate,
-      ),
+    const hasConflictingDraft = drafts.some(
+      (draft) =>
+        draft.id !== editingDraftId &&
+        hasOverlappingDateRange(
+          draft.startDate,
+          draft.endDate,
+          startDate,
+          endDate,
+        ),
     );
 
     if (hasConflictingDraft) {
@@ -137,16 +156,20 @@ export const useCreateAbsence = ({
       return;
     }
 
-    setDrafts((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        type: selectedType,
-        reason: reason.trim(),
-        startDate,
-        endDate,
-      },
-    ]);
+    const draftValues = {
+      type: selectedType,
+      reason: reason.trim(),
+      startDate,
+      endDate,
+    };
+
+    setDrafts((prev) =>
+      editingDraftId === null
+        ? [...prev, { id: Date.now(), ...draftValues }]
+        : prev.map((draft) =>
+            draft.id === editingDraftId ? { ...draft, ...draftValues } : draft,
+          ),
+    );
     resetDraftForm();
     setPhase("list");
   };
@@ -306,7 +329,9 @@ export const useCreateAbsence = ({
     options,
     drafts,
     deleteDraft,
-    addDraft,
+    startEditDraft,
+    isEditingDraft: editingDraftId !== null,
+    submitDraft,
     addDisabled,
     resetDraftForm,
     submit,
