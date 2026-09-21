@@ -14,6 +14,7 @@ import { AbsenceApi } from "@/entities/absences/api";
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
 import {
+  TOAST_DETAIL_DURATION,
   TOAST_ISSUE_DURATION,
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
@@ -82,15 +83,15 @@ const UpdateAbsenceModal = ({ data }: Props) => {
         ),
       );
 
-      const skippedUserIds = updateResponses.flatMap(
-        (response) => response.data.skippedUserIds,
+      const skippedUserIds = new Set(
+        updateResponses.flatMap((response) => response.data.skippedUserIds),
       );
 
-      if (skippedUserIds.length > 0) {
+      if (skippedUserIds.size > 0) {
         toast.warning(
           "일부 대상 변경 실패",
-          `다음 학생들은 선택한 외박 대상에 반영되지 않았습니다: ${Array.from(new Set(skippedUserIds)).join(", ")}`,
-          TOAST_ISSUE_DURATION,
+          `${skippedUserIds.size}명은 선택한 외박 대상에 반영되지 않았습니다. 이미 등록된 기간과 겹치는지 확인해주세요.`,
+          TOAST_DETAIL_DURATION,
         );
       } else {
         toast.success(

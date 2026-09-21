@@ -59,23 +59,28 @@ export const useFindRegisteredAbsences = () => {
         ),
       );
 
-      const selectedInfoIds = new Set(
+      const userIdByInfoId = new Map(
         responses
           .flatMap((response) => response.data)
           .filter((student) => userIds.includes(student.id))
-          .map((student) => student.studentInfo.id),
+          .map((student) => [student.studentInfo.id, student.id] as const),
       );
 
       return overlappedAbsences
-        .map((absence) => ({
-          absence,
-          studentNames: absence.targetStudents
-            .filter(
-              (student) => student.info && selectedInfoIds.has(student.info.id),
-            )
-            .map((student) => student.name),
-        }))
-        .filter(({ studentNames }) => studentNames.length > 0);
+        .map((absence) => {
+          const matchedStudents = absence.targetStudents.filter(
+            (student) => student.info && userIdByInfoId.has(student.info.id),
+          );
+
+          return {
+            absence,
+            studentNames: matchedStudents.map((student) => student.name),
+            userIds: matchedStudents.map(
+              (student) => userIdByInfoId.get(student.info.id)!,
+            ),
+          };
+        })
+        .filter(({ userIds: matchedUserIds }) => matchedUserIds.length > 0);
     },
     [absences, queryClient],
   );

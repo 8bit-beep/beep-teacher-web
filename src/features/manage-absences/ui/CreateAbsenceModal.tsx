@@ -19,7 +19,7 @@ const CreateAbsenceModal = ({
     phase,
     setPhase,
     selectedStudents,
-    setSelectedStudents,
+    applySelectedStudents,
     setSelectedType,
     selectedType,
     reason,
@@ -161,7 +161,7 @@ const CreateAbsenceModal = ({
               content: (
                 <SelectStudentsModal
                   initialSelectedStudents={selectedStudents}
-                  onApply={setSelectedStudents}
+                  onApply={applySelectedStudents}
                   getLockedStatusName={getLockedStatusName}
                 />
               ),

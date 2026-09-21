@@ -1,4 +1,5 @@
 import { DropdownItem, modal } from "@beep-ds/ui";
+import { Absence } from "@/entities/absences/types";
 import { useState } from "react";
 import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { parseDate } from "@/shared/utils/pare-date";
@@ -26,6 +27,28 @@ interface DraftAbsence {
 }
 
 const MAX_TOAST_ABSENCES = 3;
+
+interface RegisteredAbsence {
+  absence: Absence;
+  studentNames: string[];
+}
+
+const summarizeRegisteredAbsences = (
+  registeredAbsences: RegisteredAbsence[],
+  nameById: Map<number, string>,
+) => {
+  const summary = registeredAbsences
+    .slice(0, MAX_TOAST_ABSENCES)
+    .map(({ absence, studentNames }) => {
+      const typeName = nameById.get(absence.typeId) ?? "외박";
+
+      return `${studentNames.join(", ")} ${typeName} ${absence.startDate} ~ ${absence.endDate}`;
+    })
+    .join(" / ");
+  const restCount = registeredAbsences.length - MAX_TOAST_ABSENCES;
+
+  return `${summary}${restCount > 0 ? ` 외 ${restCount}건` : ""}`;
+};
 
 interface Props {
   initialSelectedStudents?: number[];
@@ -106,19 +129,9 @@ export const useCreateAbsence = ({
       .finally(() => setIsChecking(false));
 
     if (registeredAbsences.length > 0) {
-      const registeredSummary = registeredAbsences
-        .slice(0, MAX_TOAST_ABSENCES)
-        .map(({ absence, studentNames }) => {
-          const typeName = nameById.get(absence.typeId) ?? "외박";
-
-          return `${studentNames.join(", ")} ${typeName} ${absence.startDate} ~ ${absence.endDate}`;
-        })
-        .join(" / ");
-      const restCount = registeredAbsences.length - MAX_TOAST_ABSENCES;
-
       toast.warning(
         "이미 등록된 날짜입니다",
-        `${registeredSummary}${restCount > 0 ? ` 외 ${restCount}건` : ""} 일정이 이미 등록되어 있어 추가할 수 없습니다.`,
+        `${summarizeRegisteredAbsences(registeredAbsences, nameById)} 일정이 이미 등록되어 있어 추가할 수 없습니다.`,
         TOAST_DETAIL_DURATION,
       );
       return;
@@ -136,6 +149,43 @@ export const useCreateAbsence = ({
     ]);
     resetDraftForm();
     setPhase("list");
+  };
+
+  const applySelectedStudents = async (userIds: number[]) => {
+    if (drafts.length === 0) {
+      setSelectedStudents(userIds);
+      return true;
+    }
+
+    const results = (
+      await Promise.all(
+        drafts.map((draft) =>
+          findRegisteredAbsences(userIds, draft).catch(() => []),
+        ),
+      )
+    ).flat();
+
+    if (results.length === 0) {
+      setSelectedStudents(userIds);
+      return true;
+    }
+
+    const uniqueResults = Array.from(
+      new Map(
+        results.map((result) => [
+          `${result.absence.source}-${result.absence.absenceId}-${result.absence.startDate}-${result.absence.endDate}-${result.userIds.join(",")}`,
+          result,
+        ]),
+      ).values(),
+    );
+
+    toast.warning(
+      "이미 등록된 날짜입니다",
+      `${summarizeRegisteredAbsences(uniqueResults, nameById)} 일정이 이미 등록되어 있어 대상으로 선택할 수 없습니다.`,
+      TOAST_DETAIL_DURATION,
+    );
+
+    return false;
   };
 
   const deleteDraft = (id: number) => {
@@ -244,6 +294,7 @@ export const useCreateAbsence = ({
     setPhase,
     selectedStudents,
     setSelectedStudents,
+    applySelectedStudents,
     selectedType,
     setSelectedType,
     reason,

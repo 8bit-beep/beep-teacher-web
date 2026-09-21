@@ -7,7 +7,9 @@ import SelectStudents from "./SelectStudents";
 
 interface Props {
   initialSelectedStudents: number[];
-  onApply: (selectedStudents: number[]) => void;
+  onApply: (
+    selectedStudents: number[],
+  ) => boolean | void | Promise<boolean | void>;
   getLockedStatusName?: (student: Student) => string | undefined;
 }
 
@@ -25,9 +27,12 @@ const SelectStudentsModal = ({
       selectedStudents={selectedStudents}
       toggleSelected={toggleSelected}
       getLockedStatusName={getLockedStatusName}
-      onDone={() => {
-        onApply(selectedStudents);
-        modal.close();
+      onDone={async () => {
+        const isApplied = await onApply(selectedStudents);
+
+        if (isApplied !== false) {
+          modal.close();
+        }
       }}
     />
   );
