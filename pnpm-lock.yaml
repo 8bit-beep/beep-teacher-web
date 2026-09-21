@@ -21,8 +21,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@beep-ds/ui':
-        specifier: ^1.22.0
-        version: 1.22.0(3fegcmt23ncijcradgmntr4gam)
+        specifier: ^1.23.0
+        version: 1.23.0(24340766a8466a35be17b76bc28c7aa9)
       '@cher1shrxd/loading':
         specifier: ^1.0.3
         version: 1.0.3(next@16.1.4(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.3))
@@ -235,8 +235,8 @@ packages:
       react: '>=19'
       react-dom: '>=19'
 
-  '@beep-ds/ui@1.22.0':
-    resolution: {integrity: sha512-Ul2mitnw6MJ69475jxmBboMkHpbZn8vtGElSfOKXICPIulvjYoUuNRMVV46NDgvkJUp537mt0WC73PX/EjupaA==}
+  '@beep-ds/ui@1.23.0':
+    resolution: {integrity: sha512-uQdjCBmQD4sXI43ILAjl/jVS13qpyWBiPd0UJ8B7mZ7/uOrF9NKwhNGmaPV/wrlVB/9P5yHI/iznS1Zuqg3CtA==}
     peerDependencies:
       '@beep-ds/colors': ^1.1.0
       '@beep-ds/shapes': ^1.1.0
@@ -2456,7 +2456,7 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@beep-ds/ui@1.22.0(3fegcmt23ncijcradgmntr4gam)':
+  '@beep-ds/ui@1.23.0(24340766a8466a35be17b76bc28c7aa9)':
     dependencies:
       '@beep-ds/colors': 1.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@beep-ds/shapes': 1.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)

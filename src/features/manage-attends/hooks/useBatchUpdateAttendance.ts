@@ -29,13 +29,17 @@ export const useBatchUpdateAttendance = (roomId: number) => {
     );
   };
 
+  const toggleSelectAll = (allIds: number[]) => {
+    setSelectedIds((prev) => (prev.length === allIds.length ? [] : allIds));
+  };
+
   const applyBatch = async () => {
     if (!batchStatus || selectedIds.length === 0) return;
 
     try {
       await mutateAsync({
         userIds: selectedIds,
-        statusId: Number(batchStatus.value),
+        typeId: Number(batchStatus.value),
       });
       setSelectedIds([]);
       setBatchStatus(null);
@@ -51,6 +55,7 @@ export const useBatchUpdateAttendance = (roomId: number) => {
     setBatchStatus,
     isPending,
     toggleSelect,
+    toggleSelectAll,
     applyBatch,
   };
 };
