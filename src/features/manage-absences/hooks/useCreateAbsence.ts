@@ -2,12 +2,15 @@ import { DropdownItem, modal } from "@beep-ds/ui";
 import { useState } from "react";
 import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { parseDate } from "@/shared/utils/pare-date";
+import { hasOverlappingDateRange } from "@/shared/utils/date-range";
 import { toast } from "@cher1shrxd/toast";
 import {
+  TOAST_DETAIL_DURATION,
   TOAST_ISSUE_DURATION,
   TOAST_SUCCESS_DURATION,
 } from "@/shared/constants/toast";
 import { useGetAbsenceReason } from "./useGetAbsenceReason";
+import { useFindRegisteredAbsences } from "./useFindRegisteredAbsences";
 import { useRouter } from "@cher1shrxd/loading";
 import {
   getCreateAbsenceToastState,
@@ -22,12 +25,7 @@ interface DraftAbsence {
   endDate: string;
 }
 
-const hasOverlappingDateRange = (
-  startDate: string,
-  endDate: string,
-  targetStartDate: string,
-  targetEndDate: string,
-) => startDate <= targetEndDate && targetStartDate <= endDate;
+const MAX_TOAST_ABSENCES = 3;
 
 interface Props {
   initialSelectedStudents?: number[];
@@ -39,8 +37,9 @@ export const useCreateAbsence = ({
   initialPhase = "list",
 }: Props = {}) => {
   const router = useRouter();
-  const { options } = useGetAbsenceReason();
+  const { options, nameById } = useGetAbsenceReason();
   const { mutateAsync } = useCreateAbsenceMutation();
+  const findRegisteredAbsences = useFindRegisteredAbsences();
   const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
   const [phase, setPhase] = useState<"list" | "add">(initialPhase);
@@ -50,6 +49,7 @@ export const useCreateAbsence = ({
   const [endAt, setEndAt] = useState<Date>(new Date());
   const [drafts, setDrafts] = useState<DraftAbsence[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
   const resetDraftForm = () => {
     setSelectedType(null);
@@ -58,7 +58,7 @@ export const useCreateAbsence = ({
     setEndAt(new Date());
   };
 
-  const addDraft = () => {
+  const addDraft = async () => {
     if (!selectedType) {
       toast.warning(
         "조건 미충족",
@@ -92,6 +92,34 @@ export const useCreateAbsence = ({
         "중복된 외박 기간",
         "이미 추가된 날짜에 외박 정보를 추가할 수 없습니다.",
         TOAST_ISSUE_DURATION,
+      );
+      return;
+    }
+
+    setIsChecking(true);
+
+    const registeredAbsences = await findRegisteredAbsences(selectedStudents, {
+      startDate,
+      endDate,
+    })
+      .catch(() => [])
+      .finally(() => setIsChecking(false));
+
+    if (registeredAbsences.length > 0) {
+      const registeredSummary = registeredAbsences
+        .slice(0, MAX_TOAST_ABSENCES)
+        .map(({ absence, studentNames }) => {
+          const typeName = nameById.get(absence.typeId) ?? "외박";
+
+          return `${studentNames.join(", ")} ${typeName} ${absence.startDate} ~ ${absence.endDate}`;
+        })
+        .join(" / ");
+      const restCount = registeredAbsences.length - MAX_TOAST_ABSENCES;
+
+      toast.warning(
+        "이미 등록된 날짜입니다",
+        `${registeredSummary}${restCount > 0 ? ` 외 ${restCount}건` : ""} 일정이 이미 등록되어 있어 추가할 수 없습니다.`,
+        TOAST_DETAIL_DURATION,
       );
       return;
     }
@@ -165,13 +193,23 @@ export const useCreateAbsence = ({
         ),
       );
 
-      const skippedUserIds = responses.flatMap(
-        (response) => response.data.skippedUserIds,
+      const duplicatedDrafts = drafts.filter(
+        (_, index) => responses[index].data.skippedUserIds.length > 0,
       );
-      const toastState = getCreateAbsenceToastState(
-        skippedUserIds,
-        selectedStudents.length * drafts.length,
-      );
+      const duplicatedDates = duplicatedDrafts
+        .map((draft) => `${draft.startDate} ~ ${draft.endDate}`)
+        .join(", ");
+      const toastState =
+        duplicatedDrafts.length === 0
+          ? getCreateAbsenceToastState([], 0)
+          : {
+              type: "warning" as const,
+              title: "이미 등록된 날짜입니다",
+              description:
+                duplicatedDrafts.length === drafts.length
+                  ? `${duplicatedDates}에는 이미 외박 정보가 등록되어 있어 추가할 수 없습니다.`
+                  : `${duplicatedDates}는 이미 등록되어 제외하고, 나머지 날짜만 등록되었습니다.`,
+            };
 
       if (toastState.type === "success") {
         toast.success(
@@ -199,7 +237,7 @@ export const useCreateAbsence = ({
     drafts.length === 0 ||
     isPending;
 
-  const addDisabled = !selectedType || !reason.trim();
+  const addDisabled = !selectedType || !reason.trim() || isChecking;
 
   return {
     phase,

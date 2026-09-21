@@ -9,6 +9,7 @@ import { CloseIcon } from "@/shared/icons/CloseIcon";
 import DeleteAbsenceModal from "./DeleteAbsenceModal";
 import { useSelectStudents } from "@/entities/students/hooks/useSelectStudents";
 import { useResolveAbsenceUserIds } from "../hooks/useResolveAbsenceUserIds";
+import { useAbsenceConflictStatus } from "../hooks/useAbsenceConflictStatus";
 import { AbsenceApi } from "@/entities/absences/api";
 import { parseDate } from "@/shared/utils/pare-date";
 import { toast } from "@cher1shrxd/toast";
@@ -40,6 +41,16 @@ const UpdateAbsenceModal = ({ data }: Props) => {
   const { selectedStudents, setSelectedStudents } =
     useSelectStudents(initialSelectedStudents);
   const [isPending, setIsPending] = useState(false);
+  const ownAbsenceIds = useMemo(
+    () =>
+      absences
+        .map((absence) => absence.absenceId)
+        .filter((id): id is number => id !== null),
+    [absences],
+  );
+  const getLockedStatusName = useAbsenceConflictStatus(absences, {
+    ownAbsenceIds,
+  });
   const persistedAbsences = absences.filter(
     (absence) =>
       absence.absenceId !== null && absence.source !== "ATTENDANCE",
@@ -213,6 +224,7 @@ const UpdateAbsenceModal = ({ data }: Props) => {
                 <SelectStudentsModal
                   initialSelectedStudents={selectedStudents}
                   onApply={setSelectedStudents}
+                  getLockedStatusName={getLockedStatusName}
                 />
               ),
             })
