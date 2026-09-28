@@ -7,11 +7,14 @@ export const useAllInClass = (
   grade: number,
   classNumber: number,
   toggleSelected: (studentId: number, student?: Student) => void,
+  getLockedStatusName?: (student: Student) => string | undefined,
 ) => {
   const students = useGetStudentsByClass(grade, classNumber).data.data;
   const [isOpened, setIsOpened] = useState(false);
 
-  const selectableStudents = students.filter((student) => !student.typeId);
+  const selectableStudents = students.filter((student) =>
+    getLockedStatusName ? !getLockedStatusName(student) : !student.typeId,
+  );
 
   const selectAllInClass = () => {
     const allSelected = selectedStudents.some((studentId) =>

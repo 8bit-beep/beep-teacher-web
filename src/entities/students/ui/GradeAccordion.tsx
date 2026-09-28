@@ -12,14 +12,21 @@ interface Props {
   grade: number;
   selectedStudents: number[];
   toggleSelected: (studentId: number, student?: Student) => void;
+  getLockedStatusName?: (student: Student) => string | undefined;
 }
 
-const GradeAccordion = ({ grade, selectedStudents, toggleSelected }: Props) => {
+const GradeAccordion = ({
+  grade,
+  selectedStudents,
+  toggleSelected,
+  getLockedStatusName,
+}: Props) => {
   const [isOpened, setIsOpened] = useState(false);
   const { isSomeSelected, selectAllInGrade } = useAllInGrade(
     grade,
     selectedStudents,
     toggleSelected,
+    getLockedStatusName,
   );
 
   return (
@@ -45,6 +52,7 @@ const GradeAccordion = ({ grade, selectedStudents, toggleSelected }: Props) => {
             classNumber={classNumber}
             selectedStudents={selectedStudents}
             toggleSelected={toggleSelected}
+            getLockedStatusName={getLockedStatusName}
             key={classNumber}
           />
         ))}

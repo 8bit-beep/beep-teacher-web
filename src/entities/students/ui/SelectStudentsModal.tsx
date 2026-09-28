@@ -1,17 +1,22 @@
 "use client";
 
 import { modal } from "@beep-ds/ui";
+import { Student } from "../types";
 import { useSelectStudents } from "../hooks/useSelectStudents";
 import SelectStudents from "./SelectStudents";
 
 interface Props {
   initialSelectedStudents: number[];
-  onApply: (selectedStudents: number[]) => void;
+  onApply: (
+    selectedStudents: number[],
+  ) => boolean | void | Promise<boolean | void>;
+  getLockedStatusName?: (student: Student) => string | undefined;
 }
 
 const SelectStudentsModal = ({
   initialSelectedStudents,
   onApply,
+  getLockedStatusName,
 }: Props) => {
   const { selectedStudents, toggleSelected } = useSelectStudents(
     initialSelectedStudents,
@@ -21,9 +26,13 @@ const SelectStudentsModal = ({
     <SelectStudents
       selectedStudents={selectedStudents}
       toggleSelected={toggleSelected}
-      onDone={() => {
-        onApply(selectedStudents);
-        modal.close();
+      getLockedStatusName={getLockedStatusName}
+      onDone={async () => {
+        const isApplied = await onApply(selectedStudents);
+
+        if (isApplied !== false) {
+          modal.close();
+        }
       }}
     />
   );

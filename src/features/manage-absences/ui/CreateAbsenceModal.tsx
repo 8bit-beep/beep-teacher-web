@@ -2,6 +2,7 @@
 
 import { Button, DatePicker, Dropdown, modal } from "@beep-ds/ui";
 import { useCreateAbsence } from "../hooks/useCreateAbsence";
+import { useAbsenceConflictStatus } from "../hooks/useAbsenceConflictStatus";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import SelectStudentsModal from "@/entities/students/ui/SelectStudentsModal";
 
@@ -18,7 +19,7 @@ const CreateAbsenceModal = ({
     phase,
     setPhase,
     selectedStudents,
-    setSelectedStudents,
+    applySelectedStudents,
     setSelectedType,
     selectedType,
     reason,
@@ -38,6 +39,9 @@ const CreateAbsenceModal = ({
   } = useCreateAbsence({
     initialSelectedStudents,
     initialPhase,
+  });
+  const getLockedStatusName = useAbsenceConflictStatus(drafts, {
+    requireAll: true,
   });
 
   if (phase === "add") {
@@ -157,7 +161,8 @@ const CreateAbsenceModal = ({
               content: (
                 <SelectStudentsModal
                   initialSelectedStudents={selectedStudents}
-                  onApply={setSelectedStudents}
+                  onApply={applySelectedStudents}
+                  getLockedStatusName={getLockedStatusName}
                 />
               ),
             })
