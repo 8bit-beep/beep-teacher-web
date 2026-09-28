@@ -101,6 +101,8 @@ const AddAbsenceReasonModal = ({
         });
       }
 
+      const isAllSkipped =
+        response.data.skippedUserIds.length >= selectedStudents.length;
       const toastState = getCreateAbsenceToastState(
         response.data.skippedUserIds,
         selectedStudents.length,
@@ -120,7 +122,7 @@ const AddAbsenceReasonModal = ({
         );
       }
 
-      if (response.data.absenceId === null) {
+      if (response.data.absenceId === null && !isAllSkipped) {
         toast.warning(
           "목록 갱신 필요",
           "생성은 처리됐지만 목록 반영을 위해 상세 및 수정을 다시 열어주세요.",

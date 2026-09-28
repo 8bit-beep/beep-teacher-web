@@ -2,6 +2,7 @@
 
 import { Button, DatePicker, Dropdown, modal } from "@beep-ds/ui";
 import { useCreateAbsence } from "../hooks/useCreateAbsence";
+import { useAbsenceConflictStatus } from "../hooks/useAbsenceConflictStatus";
 import { CloseIcon } from "@/shared/icons/CloseIcon";
 import SelectStudentsModal from "@/entities/students/ui/SelectStudentsModal";
 
@@ -18,7 +19,7 @@ const CreateAbsenceModal = ({
     phase,
     setPhase,
     selectedStudents,
-    setSelectedStudents,
+    applySelectedStudents,
     setSelectedType,
     selectedType,
     reason,
@@ -30,7 +31,9 @@ const CreateAbsenceModal = ({
     options,
     drafts,
     deleteDraft,
-    addDraft,
+    startEditDraft,
+    isEditingDraft,
+    submitDraft,
     addDisabled,
     resetDraftForm,
     submit,
@@ -38,6 +41,9 @@ const CreateAbsenceModal = ({
   } = useCreateAbsence({
     initialSelectedStudents,
     initialPhase,
+  });
+  const getLockedStatusName = useAbsenceConflictStatus(drafts, {
+    requireAll: true,
   });
 
   if (phase === "add") {
@@ -91,10 +97,10 @@ const CreateAbsenceModal = ({
             buttonSize="large"
             buttonType="primary"
             style={{ flex: 1 }}
-            onClick={addDraft}
+            onClick={submitDraft}
             disabled={addDisabled}
           >
-            추가
+            {isEditingDraft ? "수정" : "추가"}
           </Button>
         </div>
       </div>
@@ -109,15 +115,27 @@ const CreateAbsenceModal = ({
             <div
               key={draft.id}
               className="w-full flex items-center gap-4 rounded-medium border border-greyscale-20 px-4 py-3">
-              <p className="flex items-center gap-4">
-                <span className="text-accent text-blue-light">
-                  {draft.type.name}
-                </span>
-                <span className="text-body text-static-black">
-                  {draft.startDate} ~ {draft.endDate}
-                </span>
-              </p>
-              <div className="flex-1" />
+              <Button
+                buttonSize="medium"
+                buttonType="text"
+                onClick={() => startEditDraft(draft)}
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-start",
+                  padding: 0,
+                  minWidth: "auto",
+                  height: "auto",
+                }}
+              >
+                <p className="flex items-center gap-4">
+                  <span className="text-accent text-blue-light">
+                    {draft.type.name}
+                  </span>
+                  <span className="text-body text-static-black">
+                    {draft.startDate} ~ {draft.endDate}
+                  </span>
+                </p>
+              </Button>
               <Button
                 buttonSize="small"
                 buttonType="text"
@@ -157,7 +175,8 @@ const CreateAbsenceModal = ({
               content: (
                 <SelectStudentsModal
                   initialSelectedStudents={selectedStudents}
-                  onApply={setSelectedStudents}
+                  onApply={applySelectedStudents}
+                  getLockedStatusName={getLockedStatusName}
                 />
               ),
             })

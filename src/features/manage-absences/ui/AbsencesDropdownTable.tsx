@@ -21,11 +21,6 @@ interface AbsenceRow {
   studentName: string;
 }
 
-type StudentAbsenceRow = Pick<
-  AbsenceRow,
-  "absences" | "studentNum" | "studentName"
->;
-
 interface AbsenceGroup {
   label: string;
   items: AbsenceRow[];
@@ -54,9 +49,20 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
 
   const groups = useMemo<AbsenceGroup[]>(() => {
     const grouped = new Map<string, AbsenceRow[]>();
-    const rowsByStudentId = new Map<number, StudentAbsenceRow>();
+    const absencesByStudentType = new Map<string, Map<string, Absence>>();
 
-    safeAllData.forEach((absence) => {
+    const getTypeName = (absence: Absence) =>
+      nameById.get(absence.typeId) ?? "기타";
+
+    const getStudentTypeKey = (typeName: string, studentId: number) =>
+      `${typeName}-${studentId}`;
+
+    const getAbsenceKey = (absence: Absence) =>
+      `${absence.source}-${absence.absenceId ?? `${absence.startDate}-${absence.endDate}`}`;
+
+    [...safeAllData, ...safeData].forEach((absence) => {
+      const typeName = getTypeName(absence);
+
       absence.targetStudents.forEach((student) => {
         const studentId = student.info?.id;
 
@@ -64,52 +70,43 @@ const AbsencesDropdownTable = ({ data, allData = data }: Props) => {
           return;
         }
 
-        const current = rowsByStudentId.get(studentId);
+        const key = getStudentTypeKey(typeName, studentId);
+        const current = absencesByStudentType.get(key) ?? new Map();
 
-        if (current) {
-          current.absences.push(absence);
-          return;
-        }
-
-        rowsByStudentId.set(studentId, {
-          absences: [absence],
-          studentNum: studentCode(
-            student.info.grade,
-            student.info.classNumber,
-            student.info.num,
-          ),
-          studentName: student.name,
-        });
+        current.set(getAbsenceKey(absence), absence);
+        absencesByStudentType.set(key, current);
       });
     });
 
     safeData.forEach((absence) => {
-      const attendTypeName = nameById.get(absence.typeId) ?? "기타";
+      const attendTypeName = getTypeName(absence);
       const current = grouped.get(attendTypeName) ?? [];
 
-      absence.targetStudents.forEach((student, index) => {
+      absence.targetStudents.forEach((student) => {
         const studentId = student.info?.id;
 
         if (!student.info || !studentId) {
           return;
         }
 
-        const studentRow = rowsByStudentId.get(studentId) ?? {
-          absences: [absence],
+        const rowKey = getStudentTypeKey(attendTypeName, studentId);
+
+        if (current.some((row) => row.rowKey === rowKey)) {
+          return;
+        }
+
+        current.push({
+          rowKey,
+          absences: Array.from(
+            absencesByStudentType.get(rowKey)?.values() ?? [],
+          ),
+          attendTypeName,
           studentNum: studentCode(
             student.info.grade,
             student.info.classNumber,
             student.info.num,
           ),
           studentName: student.name,
-        };
-
-        current.push({
-          rowKey: `${absence.source}-${student.info.id}-${absence.startDate}-${index}`,
-          absences: studentRow.absences,
-          attendTypeName,
-          studentNum: studentRow.studentNum,
-          studentName: studentRow.studentName,
         });
       });
 
