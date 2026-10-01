@@ -9,10 +9,11 @@ interface Props {
   statusIndex: number;
   desktopWidth?: string;
   openDirection?: DropdownOpenDirection;
+  date?: string;
 }
 
-const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px", openDirection = "down" }: Props) => {
-  const { status, setStatus, options } = useUpdateClassroom(data, statusIndex);
+const ClassroomDropdown = ({ data, statusIndex, desktopWidth = "180px", openDirection = "down", date }: Props) => {
+  const { status, setStatus, options } = useUpdateClassroom(data, statusIndex, date);
 
   return (
     <>

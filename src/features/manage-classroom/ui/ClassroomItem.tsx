@@ -7,9 +7,10 @@ interface Props {
   isHighlighted?: boolean;
   desktopWidth?: string;
   openDirection?: DropdownOpenDirection;
+  date?: string;
 }
 
-const ClassroomItem = ({ data, isHighlighted, desktopWidth, openDirection }: Props): React.ReactNode[] => [
+const ClassroomItem = ({ data, isHighlighted, desktopWidth, openDirection, date }: Props): React.ReactNode[] => [
   <div key="student" className="flex gap-4">
     <p className={`text-body ${isHighlighted ? "text-greyscale-10" : "text-greyscale-40"}`}>
       {data.studentId}
@@ -25,6 +26,7 @@ const ClassroomItem = ({ data, isHighlighted, desktopWidth, openDirection }: Pro
         statusIndex={statusIndex}
         desktopWidth={desktopWidth}
         openDirection={openDirection}
+        date={date}
       />
     </div>
   )),

@@ -4,7 +4,11 @@ import { useUpdateAttendanceStatusWithCheckpoint } from "@/entities/attendances/
 import { DropdownItem } from "@beep-ds/ui";
 import { useEffect, useRef, useState, useMemo } from "react";
 
-export const useUpdateClassroom = (data: Attendance, statusIndex: number) => {
+export const useUpdateClassroom = (
+  data: Attendance,
+  statusIndex: number,
+  date?: string,
+) => {
   const statuses = useGetAttendTypes().data.data;
 
   const options: DropdownItem[] = useMemo(
@@ -36,7 +40,7 @@ export const useUpdateClassroom = (data: Attendance, statusIndex: number) => {
     const currentName = data.statuses[statusIndex]?.status?.name ?? "미출석";
     if (!status || status.name === currentName) return;
     try {
-      await mutateAsync({ userId: data.userId, statusId: Number(status.value), checkpointId });
+      await mutateAsync({ userId: data.userId, statusId: Number(status.value), checkpointId, date });
     } catch {
       setTimeout(() => setStatus(getStatusFromData()), 100);
     }

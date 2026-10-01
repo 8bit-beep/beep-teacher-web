@@ -12,10 +12,14 @@ export const AttendanceApi = {
     }
   },
 
-  getAttendancesByClassroom: async (grade: number, classNumber: number) => {
+  getAttendancesByClassroom: async (
+    grade: number,
+    classNumber: number,
+    date?: string,
+  ) => {
     try {
       return await api.get<Attendance[]>(
-        `/attendances?grade=${grade}&classNumber=${classNumber}&isCurrentCheckpoint=false`,
+        `/attendances?grade=${grade}&classNumber=${classNumber}&isCurrentCheckpoint=false${date ? `&date=${encodeURIComponent(date)}` : ""}`,
       );
     } catch {
       return { data: [] as Attendance[] };
@@ -46,6 +50,7 @@ export const AttendanceApi = {
     userId: number;
     statusId: number;
     checkpointId: number;
+    date?: string;
   }) => {
     return await api.patch(`/attendances/status`, data);
   },

@@ -1,5 +1,6 @@
 import { AttendanceApi } from "@/entities/attendances/api";
 import FilterClassroom from "@/features/filter/ui/FilterClassroom";
+import FilterDate from "@/features/filter/ui/FilterDate";
 import { getClassroomTableWidths } from "@/shared/constants/tableWidths";
 import ClassroomItem from "@/features/manage-classroom/ui/ClassroomItem";
 import MobileClassroomItem from "@/features/manage-classroom/ui/MobileClassroomItem";
@@ -11,21 +12,21 @@ import {
   isAbsenceStatusName,
   isOutStatusName,
 } from "@/shared/utils/attendance-status";
-import { parseDate } from "@/shared/utils/pare-date";
 import Section from "@/widgets/section/ui/Section";
 import Table from "@/widgets/table/ui/Table";
 import { Suspense } from "react";
 
 export default async function ClassroomPage({
   searchParams,
-}: SearchParams<{ classroom?: string }>) {
-  const { classroom } = await searchParams;
+}: SearchParams<{ classroom?: string; date?: string }>) {
+  const { classroom, date } = await searchParams;
   const [gradeStr, classNumberStr] = classroom ? classroom.split("-") : [];
   const grade = gradeStr ? Number(gradeStr) : 1;
   const classNumber = classNumberStr ? Number(classNumberStr) : 1;
   const { data } = await AttendanceApi.getAttendancesByClassroom(
     grade,
     classNumber,
+    date,
   );
 
   const firstStatuses = data[0]?.statuses ?? [];
@@ -52,7 +53,7 @@ export default async function ClassroomPage({
         icon={<DashboardIcon size={24} />}
         headerOptions={
           <div className="flex items-center gap-3">
-            <p className="text-h4 text-greyscale-40">{parseDate(new Date())}</p>
+            <Suspense><FilterDate /></Suspense>
             <div className="hidden lg:block"><Suspense><FilterClassroom /></Suspense></div>
           </div>}
         mobileFilter={
@@ -85,6 +86,7 @@ export default async function ClassroomPage({
                   isHighlighted: isAbsent || isOut,
                   desktopWidth: dropdownWidth,
                   openDirection: "auto",
+                  date,
                 }),
               };
             })}
@@ -122,6 +124,7 @@ export default async function ClassroomPage({
                 cells: MobileClassroomItem({
                   data: attendance,
                   openDirection: "auto",
+                  date,
                 }),
               };
             })}
