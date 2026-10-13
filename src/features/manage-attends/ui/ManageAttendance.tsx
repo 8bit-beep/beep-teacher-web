@@ -33,6 +33,11 @@ const ManageAttendance = ({ room }: Props) => {
   } = useBatchUpdateAttendance(room?.id || 0);
   const allSelected =
     attendances.length > 0 && selectedIds.length === attendances.length;
+  const currentStudentCount = attendances.filter((attendance) => {
+    const status = attendance.statuses[0]?.status;
+
+    return status != null && !["외박", "외출"].includes(status.name);
+  }).length;
   const handleClose = useCallback(() => {
     if (!isApproved) {
       toast.warning(
@@ -66,7 +71,7 @@ const ManageAttendance = ({ room }: Props) => {
       </div>
       <div className="w-full flex flex-col min-[453px]:flex-row justify-between items-end min-[453px]:items-center gap-2">
         <p className="text-blue-light text-accent">
-          {`인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명`}
+          {`인원 ${currentStudentCount}/${attendances.length}명`}
           {" · "}
           {`외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명`}
           {" · "}
