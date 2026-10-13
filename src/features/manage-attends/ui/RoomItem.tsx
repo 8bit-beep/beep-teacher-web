@@ -20,7 +20,13 @@ const RoomItem = ({ data, approvedAt, approvedTeacher }: Props) => {
     ? `${data.grade}-${data.classNumber} (${data.name})`
     : data.name;
 
-  const stats = `인원 ${attendances.filter((a) => a.statuses[0].status).length}/${attendances.length}명 · 외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명 · 외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`;
+  const currentStudentCount = attendances.filter((attendance) => {
+    const status = attendance.statuses[0]?.status;
+
+    return status != null && !["외박", "외출"].includes(status.name);
+  }).length;
+
+  const stats = `인원 ${currentStudentCount}/${attendances.length}명 · 외박 ${attendances.filter((a) => a.statuses[0].status?.name === "외박").length}명 · 외출 ${attendances.filter((a) => a.statuses[0].status?.name === "외출").length}명`;
 
   return (
     <div
