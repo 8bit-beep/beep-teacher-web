@@ -8,6 +8,7 @@ export interface AttendanceSortMode {
     "startAt" | "endAt" | "attendanceStartAt" | "attendanceEndAt"
   >;
   type: AttendType | null;
+  defaultType?: AttendType | null;
 }
 
 export interface AttendanceSortModes {
